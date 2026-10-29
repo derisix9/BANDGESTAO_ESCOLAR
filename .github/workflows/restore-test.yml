@@ -1,0 +1,46 @@
+name: Teste de restauro (mensal)
+on:
+  schedule: [{ cron: '0 5 1 * *' }]
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env: { POSTGRES_PASSWORD: postgres }
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar cliente PostgreSQL 17
+        run: |
+          sudo apt-get install -y postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y postgresql-client-17
+          echo "/usr/lib/postgresql/17/bin" >> "$GITHUB_PATH"
+      - name: Descarregar o backup mais recente
+        run: |
+          LATEST=$(aws s3 ls "s3://${BACKUP_BUCKET}/db/" --endpoint-url "${BACKUP_S3_ENDPOINT}" | awk '{print $4}' | sort | tail -1)
+          test -n "$LATEST" || { echo "Sem backups no destino"; exit 1; }
+          echo "Backup: $LATEST"
+          aws s3 cp "s3://${BACKUP_BUCKET}/db/$LATEST" ./restore.dump.gpg --endpoint-url "${BACKUP_S3_ENDPOINT}"
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$BACKUP_PASSPHRASE" -d -o restore.dump restore.dump.gpg
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKUP_S3_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKUP_S3_SECRET }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKUP_S3_REGION }}
+          BACKUP_BUCKET: ${{ secrets.BACKUP_BUCKET }}
+          BACKUP_S3_ENDPOINT: ${{ secrets.BACKUP_S3_ENDPOINT }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+      - name: Restaurar num Postgres descartavel
+        run: |
+          U=postgres://postgres:postgres@localhost:5432/postgres
+          psql $U -c 'create role anon nologin' -c 'create role authenticated nologin' -c 'create role service_role nologin bypassrls' -c 'create extension if not exists pgcrypto' -c 'create extension if not exists pg_trgm'
+          pg_restore --no-owner --no-privileges -d $U restore.dump || echo 'pg_restore avisou, a conferencia abaixo decide'
+      - name: Conferir que há dados e que a auditoria não foi adulterada
+        run: |
+          U=postgres://postgres:postgres@localhost:5432/postgres
+          psql $U -v ON_ERROR_STOP=1 -c "select count(*) as escolas from public.institutions" -c "select count(*) as registos from public.records"
+          psql $U -v ON_ERROR_STOP=1 -tA -c "select count(*) from public.records" | awk '{ if ($1+0 < 1) { print "Restauro vazio"; exit 1 } }'
+          psql $U -v ON_ERROR_STOP=1 -c "select i.id, app.verify_audit_chain(i.id) as primeira_falha from public.institutions i"

@@ -1,0 +1,24 @@
+name: Backup das escolas para a nuvem (agendador)
+# Alternativa ao pg_cron (ver docs/BACKUP_EXTERNO.md). A função só processa escolas com backup DEVIDO, por isso 15 em 15 min é barato.
+# Secrets do repositório: SUPABASE_PROJECT_URL (ex.: https://abcd.supabase.co) e BACKUP_CRON_SECRET (igual ao da função).
+on:
+  schedule: [{ cron: '*/15 * * * *' }]
+  workflow_dispatch:
+concurrency: backup-escolas
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar a função school-backups
+        run: |
+          [ -n "${SUPABASE_PROJECT_URL}" ] || { echo "ERRO: o secret SUPABASE_PROJECT_URL está vazio ou não existe (Settings > Secrets and variables > Actions > Secrets)."; exit 1; }
+          [ -n "${BACKUP_CRON_SECRET}" ] || { echo "ERRO: o secret BACKUP_CRON_SECRET está vazio ou não existe."; exit 1; }
+          case "${SUPABASE_PROJECT_URL}" in https://*) ;; *) echo "ERRO: SUPABASE_PROJECT_URL tem de começar por https://"; exit 1;; esac
+          code=$(curl -sS -o out.json -w '%{http_code}' --max-time 150 -X POST \
+            -H 'Content-Type: application/json' -H "x-cron-secret: ${BACKUP_CRON_SECRET}" -d '{}' \
+            "${SUPABASE_PROJECT_URL%/}/functions/v1/school-backups")
+          cat out.json; echo
+          [ "$code" = "200" ] || { echo "HTTP $code"; exit 1; }
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          BACKUP_CRON_SECRET: ${{ secrets.BACKUP_CRON_SECRET }}

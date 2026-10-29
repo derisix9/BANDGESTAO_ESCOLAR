@@ -1,0 +1,26 @@
+name: Notificações das escolas (agendador)
+# Entrega a fila de SMS/WhatsApp das escolas que ligaram o SEU fornecedor (repetições com recuo e avisos que ficaram para trás).
+# O envio imediato já é pedido pela app; isto só apanha o que sobrou. A função não faz nada se a fila estiver vazia.
+# Alternativa ao pg_cron (ver docs/NOTIFICACOES_POR_ESCOLA.md).
+# Secrets do repositório: SUPABASE_PROJECT_URL (ex.: https://abcd.supabase.co) e NOTIFY_CRON_SECRET (igual ao da função).
+on:
+  schedule: [{ cron: '*/5 * * * *' }]
+  workflow_dispatch:
+concurrency: notificacoes-escolas
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar a função notifications
+        run: |
+          [ -n "${SUPABASE_PROJECT_URL}" ] || { echo "ERRO: o secret SUPABASE_PROJECT_URL está vazio ou não existe."; exit 1; }
+          [ -n "${NOTIFY_CRON_SECRET}" ] || { echo "ERRO: o secret NOTIFY_CRON_SECRET está vazio ou não existe."; exit 1; }
+          case "${SUPABASE_PROJECT_URL}" in https://*) ;; *) echo "ERRO: SUPABASE_PROJECT_URL tem de começar por https://"; exit 1;; esac
+          code=$(curl -sS -o out.json -w '%{http_code}' --max-time 150 -X POST \
+            -H 'Content-Type: application/json' -H "x-cron-secret: ${NOTIFY_CRON_SECRET}" -d '{}' \
+            "${SUPABASE_PROJECT_URL%/}/functions/v1/notifications")
+          cat out.json; echo
+          [ "$code" = "200" ] || { echo "HTTP $code"; exit 1; }
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          NOTIFY_CRON_SECRET: ${{ secrets.NOTIFY_CRON_SECRET }}

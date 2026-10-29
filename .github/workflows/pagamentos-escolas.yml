@@ -1,0 +1,28 @@
+name: Pagamentos por referência (agendador)
+# Rede de segurança do webhook: de 5 em 5 minutos a função `payments`
+#   1) marca como expiradas as referências vencidas (a factura volta a poder pedir uma nova);
+#   2) consulta o fornecedor (ProxyPay) de cada escola ligada e paga as facturas cujo aviso se perdeu.
+# Sem este agendador o pagamento só é apanhado se o webhook chegar; com ele, em ≤ 5 minutos.
+# Alternativa ao pg_cron (ver docs/PAGAMENTOS_REFERENCIA.md).
+# Secrets do repositório: SUPABASE_PROJECT_URL (ex.: https://abcd.supabase.co) e PAYMENTS_CRON_SECRET (igual ao da função).
+on:
+  schedule: [{ cron: '*/5 * * * *' }]
+  workflow_dispatch:
+concurrency: pagamentos-escolas
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chamar a função payments
+        run: |
+          [ -n "${SUPABASE_PROJECT_URL}" ] || { echo "ERRO: o secret SUPABASE_PROJECT_URL está vazio ou não existe."; exit 1; }
+          [ -n "${PAYMENTS_CRON_SECRET}" ] || { echo "ERRO: o secret PAYMENTS_CRON_SECRET está vazio ou não existe."; exit 1; }
+          case "${SUPABASE_PROJECT_URL}" in https://*) ;; *) echo "ERRO: SUPABASE_PROJECT_URL tem de começar por https://"; exit 1;; esac
+          code=$(curl -sS -o out.json -w '%{http_code}' --max-time 150 -X POST \
+            -H 'Content-Type: application/json' -H "x-cron-secret: ${PAYMENTS_CRON_SECRET}" -d '{}' \
+            "${SUPABASE_PROJECT_URL%/}/functions/v1/payments")
+          cat out.json; echo
+          [ "$code" = "200" ] || { echo "HTTP $code"; exit 1; }
+        env:
+          SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
+          PAYMENTS_CRON_SECRET: ${{ secrets.PAYMENTS_CRON_SECRET }}

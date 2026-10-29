@@ -1,0 +1,39 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run check:acl
+  db-security:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_PASSWORD: postgres }
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: PGURL=postgres://postgres:postgres@localhost:5432/postgres npm run test:db
+  security:
+    # Dependências com falhas conhecidas e segredos esquecidos no código/histórico.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }          # histórico completo, para o gitleaks ver commits antigos
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci
+      - name: npm audit (falha com vulnerabilidades altas ou críticas em dependências de produção)
+        run: npm audit --omit=dev --audit-level=high
+      - name: gitleaks (segredos no código e no histórico)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
