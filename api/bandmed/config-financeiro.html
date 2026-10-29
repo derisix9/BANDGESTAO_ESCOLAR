@@ -1,0 +1,663 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed-variant":"#003ea8","surface":"#f8f9ff","on-secondary":"#ffffff","tertiary-fixed":"#dbe1ff","secondary-fixed-dim":"#ffb4aa","secondary":"#ac332b","tertiary":"#00051b","inverse-primary":"#b5c7ea","surface-container-lowest":"#ffffff","secondary-container":"#fd6e60","on-primary-fixed":"#071c36","surface-container-low":"#eff4ff","surface-variant":"#d3e4fe","surface-dim":"#cbdbf5","on-surface":"#0b1c30","background":"#f8f9ff","outline":"#75777e","on-tertiary-fixed":"#00174b","surface-tint":"#4d5f7d","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","surface-container":"#e5eeff","primary-container":"#0b1f3a","on-error-container":"#93000a","secondary-fixed":"#ffdad5","outline-variant":"#c4c6ce","primary-fixed-dim":"#b5c7ea","surface-container-highest":"#d3e4fe","on-secondary-fixed-variant":"#8a1a16","error-container":"#ffdad6","on-secondary-container":"#6d0105","on-primary":"#ffffff","primary-fixed":"#d6e3ff","on-secondary-fixed":"#410002","on-tertiary":"#ffffff","on-surface-variant":"#44474d","tertiary-container":"#001a52","on-background":"#0b1c30","on-primary-container":"#7587a7","inverse-on-surface":"#eaf1ff","on-error":"#ffffff","on-tertiary-container":"#4e7fff","on-primary-fixed-variant":"#364764","tertiary-fixed-dim":"#b4c5ff","primary":"#000615","inverse-surface":"#213145","error":"#ba1a1a"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-md":"1rem","margin":"2rem","gutter-mobile":"0.75rem","space-lg":"1.5rem","gutter":"1.5rem","space-xl":"2rem","margin-mobile":"1rem","space-sm":"0.5rem","space-xs":"0.25rem"},"fontFamily":{"headline-md":["Plus Jakarta Sans"],"body-lg":["Inter"],"headline-xl":["Plus Jakarta Sans"],"label-sm":["Inter"],"headline-xl-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-md":["Inter"],"label-md":["Inter"],"headline-sm":["Plus Jakarta Sans"],"label-lg":["Inter"],"body-sm":["Inter"]},"fontSize":{"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}]}}}}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-64 bg-primary-container text-white z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.08)] overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-primary/20"><img alt="BandMed Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WKq_WaRjlYDpAZx3sElQ-ZuC7uP1jLe3oiulMggMOuN4WfBIl2pSWuc0fRgitkxGkqBoVNeI2JjrXF45HSdJgzsAwjX30wiUk1kF2hPt_kEatBLmz1-MmIig_6qIK_ojPc2HYtJ1UybZaM_C2I7Ophkmt3Qoznvz8UC_9TQsWsN2QP2lY-8qrHIiFtlmyY6PmE0FT-a6S2Pgm74KUKn0KEzF4DNh8FwZroBdFvJmNIgv7m4sY5xNRlREvQ"><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm font-bold text-white tracking-tight truncate">BandMed</span><span class="font-label-sm text-label-sm text-primary-fixed-dim tracking-wider text-[9px] truncate">Plataforma Académica</span></div></div><nav class="flex flex-col gap-space-xs p-space-sm" data-active-classes="bg-surface-container-highest text-on-surface font-bold rounded-lg shadow-sm"><span class="px-space-sm pt-space-sm pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Geral</span>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="dashboard" href="../dashboard/index.html"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="">Dashboard</span></a>
+
+<span class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Académico</span>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="alunos" href="../alunos/index.html"><span class="material-symbols-outlined text-[18px]">school</span><span class="">Alunos</span></a>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="professores" href="../professores/index.html"><span class="material-symbols-outlined text-[18px]">badge</span><span class="">Professores</span></a>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="turmas-&amp;-disciplinas" href="../turmas/index.html"><span class="material-symbols-outlined text-[18px]">menu_book</span><span class="">Turmas &amp; Disciplinas</span></a>
+
+<span class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Operacional</span>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="assiduidade" href="../assiduidade/index.html"><span class="material-symbols-outlined text-[18px]">event_available</span><span class="">Assiduidade</span></a>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="exames-&amp;-notas" href="../pautas/index.html"><span class="material-symbols-outlined text-[18px]">edit_note</span><span class="">Exames &amp; Notas</span></a>
+
+<span class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Financeiro</span>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="propinas-&amp;-pagamentos" href="../propinas/index.html"><span class="material-symbols-outlined text-[18px]">credit_card</span><span class="">Propinas &amp; Pagamentos</span></a>
+
+<span class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-wider">Estatística &amp; Sistema</span>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded text-primary-fixed-dim hover:bg-white/10 hover:text-white transition-all font-label-lg text-label-lg" data-path="relatorios" href="../relatorios/index.html"><span class="material-symbols-outlined text-[18px]">bar_chart</span><span class="">Relatórios</span></a>
+<a class="flex items-center gap-space-sm px-space-sm py-space-xs bg-surface-container-lowest text-on-surface font-bold rounded-lg shadow-sm transition-all font-label-lg text-label-lg" data-path="configuracoes" href="../config/index.html"><span class="material-symbols-outlined text-[18px] text-primary">settings</span><span class="">Configurações</span></a></nav></div><div class="p-space-sm bg-primary/30 m-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary-container text-[16px]">shield</span><span class="font-label-sm text-label-sm text-primary-fixed-dim">Licença Académica AO</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high/20 text-white font-mono text-[10px]">v4.2</span></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md w-1/3"><div class="relative w-full max-w-sm"><span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="w-full pl-9 pr-space-sm py-1.5 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg outline-none focus:ring-1 focus:ring-primary-container placeholder:text-outline transition-all" placeholder="Pesquisar aluno, processo, turma..." type="text"></div><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1.5 rounded-lg text-on-surface font-label-md text-label-md shrink-0"><span class="material-symbols-outlined text-[16px] text-outline">calendar_month</span><span class="">2024 / 2025</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><button class="relative p-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">campaign</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-secondary"></span></button><button class="relative p-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 px-1 min-w-[14px] h-[14px] rounded-full bg-secondary text-white font-label-sm text-[9px] flex items-center justify-center leading-none">3</span></button></div><div class="h-6 w-px bg-outline-variant/40"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md font-bold text-on-surface leading-tight">Dr. Carlos Mendes</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Administrador Geral</span></div><span class="material-symbols-outlined text-outline text-[18px]">expand_more</span></div></div></header><main class="relative pt-16 min-h-screen bg-background flex flex-col justify-between"><div class="w-full p-space-lg flex-1"><div class="flex flex-col w-full">
+<!-- Breadcrumb & Administrative Header Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<span class="">Governação Institucional</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary font-bold">Finanças &amp; Emolumentos</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">Configurações do Sistema &amp; Parâmetros</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+        Parametrização institucional, ano letivo 2024/2025, taxas de propinas em Kwanza (Kz), regras de avaliação e permissões de utilizadores.
+      </p>
+</div>
+<!-- Quick Action / Global State -->
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container text-on-surface font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+        AGT Conforme - Regime Isenção IVA
+      </span>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span class="">Histórico de Versões</span>
+</button>
+</div>
+</div>
+<!-- Primary Layout Grid: Settings Submenu (Sidebar) + Main Module Body -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Submenu Navigation (Settings Modules) -->
+<div class="lg:col-span-3 flex flex-col gap-space-sm bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="px-space-sm py-1 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+        Módulos do Sistema
+      </div>
+<nav class="flex flex-col gap-1"><a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-label-md text-label-md group" href="#dados-instituicao">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">account_balance</span>
+<span class="">1. Dados da Instituição</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-outline transition-colors">chevron_right</span>
+</a>
+
+<a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-label-md text-label-md group" href="#ano-letivo">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">date_range</span>
+<span class="">2. Ano Letivo &amp; Calendário</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-outline transition-colors">chevron_right</span>
+</a>
+
+<a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg bg-primary-container text-white font-label-md text-label-md shadow-sm" href="#tabela-financeira">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">payments</span>
+<span class="font-bold text-white">3. Tabela Financeira &amp; Emolumentos</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary text-white font-mono text-[10px] font-bold uppercase tracking-wider shadow-sm">AOA</span>
+</a>
+
+<a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-label-md text-label-md group" href="#regras-escala">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">rule</span>
+<span class="">4. Regras &amp; Escala de Notas</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-outline transition-colors">chevron_right</span>
+</a>
+
+<a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-label-md text-label-md group" href="#perfis-permissoes">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">admin_panel_settings</span>
+<span class="">5. Perfis &amp; Permissões</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-outline transition-colors">chevron_right</span>
+</a>
+
+<a class="flex items-center justify-between px-space-sm py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-label-md text-label-md group" href="#integracoes-seguranca">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline group-hover:text-primary transition-colors">security</span>
+<span class="">6. Integrações &amp; Segurança</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant group-hover:text-outline transition-colors">chevron_right</span>
+</a></nav>
+<!-- Institutional Crest Banner -->
+<div class="mt-space-md p-space-md rounded-lg bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-white text-[22px]">verified</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-primary truncate">BandMed Académico</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Ano 2024/2025 • Em Vigor</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Module 3 Details -->
+<div class="lg:col-span-9 flex flex-col gap-space-lg">
+<!-- Top Overview KPI Strip -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Moeda Base do Sistema</span>
+<span class="material-symbols-outlined text-primary text-[20px]">currency_exchange</span>
+</div>
+<div class="mt-space-xs">
+<div class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">Kwanza (Kz)</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Código ISO: AOA • Câmbio Estável</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Ciclos &amp; Cursos Cobertos</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">school</span>
+</div>
+<div class="mt-space-xs">
+<div class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">5 Escalões</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ensino Primário ao Técnico de Saúde</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Vencimento Mensal Padrão</span>
+<span class="material-symbols-outlined text-outline text-[20px]">event_upcoming</span>
+</div>
+<div class="mt-space-xs">
+<div class="font-headline-lg text-headline-lg text-primary font-bold tracking-tight">Dia 10 de Cada Mês</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Carência: 0 dias • Multa automática</span>
+</div>
+</div>
+</div>
+<!-- Section 1: Tabela de Propinas por Ciclo e Turno -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Tabela de Propinas por Ciclo e Turno</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Valores mensais de mensalidades por escalão de ensino oficial (Moeda: Kwanza Angolano - Kz / AOA).
+            </p>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="inline-flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span class="">Exportar PDF</span>
+</button>
+</div>
+</div>
+<!-- Table 1: Monthly Tuition Rates -->
+<div class="overflow-x-auto rounded-lg bg-surface-container-low">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Nível / Ciclo Académico</th>
+<th class="py-3 px-space-md">Turnos Disponíveis</th>
+<th class="py-3 px-space-md">Periodicidade</th>
+<th class="py-3 px-space-md text-right">Valor Mensal (Kz)</th>
+<th class="py-3 px-space-md text-center">Estado</th>
+<th class="py-3 px-space-md text-center">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md text-on-surface">
+<div class="font-bold text-primary">Iniciação à 6ª Classe</div>
+<div class="text-on-surface-variant text-[11px]">1.º Ciclo do Ensino Primário</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+<span class="inline-block px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Manhã / Tarde</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant font-label-sm">10 Prestações (Out - Jul)</td>
+<td class="py-3.5 px-space-md text-right font-mono font-bold text-primary text-headline-sm">
+                  65.000,00 Kz
+                </td>
+<td class="py-3.5 px-space-md text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Ativo</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Editar Escalão" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md text-on-surface">
+<div class="font-bold text-primary">7ª à 9ª Classe</div>
+<div class="text-on-surface-variant text-[11px]">2.º Ciclo do Ensino Secundário Geral</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+<span class="inline-block px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Manhã / Tarde</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant font-label-sm">10 Prestações (Out - Jul)</td>
+<td class="py-3.5 px-space-md text-right font-mono font-bold text-primary text-headline-sm">
+                  75.000,00 Kz
+                </td>
+<td class="py-3.5 px-space-md text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Ativo</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Editar Escalão" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md text-on-surface">
+<div class="font-bold text-primary">10ª à 12ª Classe - Ciências Físicas e Biológicas</div>
+<div class="text-on-surface-variant text-[11px]">Ensino Secundário Geral (CFB)</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+<span class="inline-block px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Manhã / Tarde</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant font-label-sm">10 Prestações (Out - Jul)</td>
+<td class="py-3.5 px-space-md text-right font-mono font-bold text-primary text-headline-sm">
+                  95.000,00 Kz
+                </td>
+<td class="py-3.5 px-space-md text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Ativo</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Editar Escalão" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md text-on-surface">
+<div class="font-bold text-primary">10ª à 12ª Classe - Ciências Económicas e Jurídicas</div>
+<div class="text-on-surface-variant text-[11px]">Ensino Secundário Geral (CEJ)</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+<span class="inline-block px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Manhã / Tarde</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant font-label-sm">10 Prestações (Out - Jul)</td>
+<td class="py-3.5 px-space-md text-right font-mono font-bold text-primary text-headline-sm">
+                  90.000,00 Kz
+                </td>
+<td class="py-3.5 px-space-md text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Ativo</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Editar Escalão" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors bg-surface-container/20">
+<td class="py-3.5 px-space-md font-label-md text-label-md text-on-surface">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">medical_services</span>
+<span class="font-bold text-primary">Curso Técnico de Enfermagem / Farmácia</span>
+</div>
+<div class="text-on-surface-variant text-[11px]">Pré-Universitário de Saúde • Regime Especial com Estágio</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+<span class="inline-block px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Integral (M/T)</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant font-label-sm">10 Prestações (Out - Jul)</td>
+<td class="py-3.5 px-space-md text-right font-mono font-bold text-secondary text-headline-sm">
+                  120.000,00 Kz
+                </td>
+<td class="py-3.5 px-space-md text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Ativo</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Editar Escalão" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 2: Tabela de Outras Taxas & Emolumentos Secretaria -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Outras Taxas &amp; Emolumentos da Secretaria</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Tabela de serviços burocráticos, atos de secretaria, emissão de documentos oficiais e inscrições em exames.
+            </p>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-primary text-white font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" id="btnOpenNewFee" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="">Adicionar Novo Emolumento</span>
+</button>
+</div>
+<div class="overflow-x-auto rounded-lg bg-surface-container-low">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-high text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Código</th>
+<th class="py-3 px-space-md">Descrição do Emolumento / Serviço</th>
+<th class="py-3 px-space-md">Tipo de Cobrança</th>
+<th class="py-3 px-space-md text-right">Valor em Kz</th>
+<th class="py-3 px-space-md text-center">Prazo Emissão</th>
+<th class="py-3 px-space-md text-center">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-001</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">Matrícula Nova</td>
+<td class="py-3 px-space-md text-on-surface-variant">Ato Único (Início do Ano)</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">35.000,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">Imediato</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-002</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">Confirmação de Matrícula (Renovação)</td>
+<td class="py-3 px-space-md text-on-surface-variant">Anual (Alunos Existentes)</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">25.000,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">Imediato</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-003</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">Certificado de Habilitações com Notas</td>
+<td class="py-3 px-space-md text-on-surface-variant">Por Requerimento</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">15.000,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">5 dias úteis</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-004</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">Declaração de Frequência com Aproveitamento</td>
+<td class="py-3 px-space-md text-on-surface-variant">Por Requerimento</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">5.000,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">48 horas</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-005</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">2ª Via de Cartão de Estudante</td>
+<td class="py-3 px-space-md text-on-surface-variant">Por Solicitação (Extravio/Dano)</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">3.500,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">24 horas</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/60 transition-colors">
+<td class="py-3 px-space-md font-mono text-label-sm text-on-surface-variant">EMOL-006</td>
+<td class="py-3 px-space-md font-label-md text-label-md font-bold text-primary">Exame de Recurso / Época Especial</td>
+<td class="py-3 px-space-md text-on-surface-variant">Por Disciplina Inscrita</td>
+<td class="py-3 px-space-md text-right font-mono font-bold text-on-surface">12.000,00 Kz</td>
+<td class="py-3 px-space-md text-center text-on-surface-variant">Conforme Calendário</td>
+<td class="py-3 px-space-md text-center">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 3: Regras de Vencimento, Multas de Mora e Descontos -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Bloco de Vencimento e Multa de Mora -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm pb-space-xs">
+<span class="material-symbols-outlined text-secondary text-[24px]">alarm_on</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary">Prazos de Pagamento &amp; Multas de Mora</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Configurações para liquidação de propinas mensais.</p>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Dia de Vencimento Mensal
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none" max="31" min="1" type="number" value="10">
+<span class="font-body-sm text-body-sm text-on-surface-variant">de cada mês corrente (ex.: 10 de Novembro)</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Taxa de Multa Diária por Atraso
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none" type="text" value="0.25%">
+<span class="font-body-sm text-body-sm text-on-surface-variant">ao dia sobre o valor base da prestação</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Teto Limite Máximo de Multa
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none font-bold text-secondary" type="text" value="10.0%">
+<span class="font-body-sm text-body-sm text-on-surface-variant">limite legal estipulado pelo estatuto académico</span>
+</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 mt-0.5">info</span>
+<span class="">A cobrança automática de multas inicia no dia 11. O sistema recalcula o montante da guia antes da emissão da referência RUPE/Multicaixa Express.</span>
+</div>
+</div>
+</div>
+<!-- Bloco de Políticas de Descontos e Incentivos -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm pb-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">percent</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary">Política de Descontos e Fraternidade</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Incentivos para irmãos e liquidação integral antecipada.</p>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Desconto para o 2.º Filho / Irmão
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none font-bold text-primary" type="text" value="10%">
+<span class="font-body-sm text-body-sm text-on-surface-variant">aplicado na propina do segundo estudante do mesmo agregado</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Desconto a Partir do 3.º Irmão
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none font-bold text-primary" type="text" value="15%">
+<span class="font-body-sm text-body-sm text-on-surface-variant">aplicado ao terceiro e seguintes educandos</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+                Liquidação Integral do Ano Letivo
+              </label>
+<div class="flex items-center gap-space-sm">
+<input class="w-24 px-space-sm py-2 bg-surface-container-low text-on-surface font-label-md text-label-md rounded focus:ring-1 focus:ring-primary outline-none font-bold text-primary" type="text" value="8%">
+<span class="font-body-sm text-body-sm text-on-surface-variant">para pronto pagamento das 10 propinas até 31 de Outubro</span>
+</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container text-on-surface font-body-sm text-body-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">verified_user</span>
+<span class="">Os descontos por irmãos necessitam da validação documental do encarregado de educação (Cédula / Bilhete de Identidade com filiação comum).</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Configuração Fiscal AGT e Faturação -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">receipt_long</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary">Faturação Certificada &amp; Isenções Fiscais AGT</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Enquadramento no Regime Geral de Facturação da Administração Geral Tributária de Angola.
+              </p>
+</div>
+</div>
+<span class="px-space-sm py-1 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-bold">
+            AGT Software Certificado N.º 312/AGT/2024
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-xs">
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Regime de IVA</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Isenção Legal (Art. 12.º CIVA)</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Serviços de Ensino, Formação Profissional e Alimentação/Alojamento Escolar conexos.</p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Motivo de Isenção nas Faturas</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">M04 - Isento Artigo 12.º</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Carimbo obrigatório e menção automática em todas as faturas-recibo geradas pelo software.</p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Exportação SAF-T AO (Faturação)</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Ativa Mensal</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Geração de ficheiro XML conforme a especificação do Decreto Presidencial n.º 292/18.</p>
+</div>
+</div>
+</div>
+<!-- Action Footer Toolbar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+<span class="">Alterações nesta tabela exigem privilégio de Administrador Geral e registo em log de auditoria.</span>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="px-space-md py-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors" type="button">
+            Descartar
+          </button>
+<button class="px-space-lg py-2 rounded bg-primary text-white font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm inline-flex items-center gap-space-xs" id="btnSaveFinancialTable" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span class="">Guardar Tabela Financeira</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal: Adicionar Novo Emolumento (Initially hidden) -->
+<div class="fixed inset-0 z-50 bg-primary/60 flex items-center justify-center p-space-md hidden" id="newFeeModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-space-lg shadow-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">post_add</span>
+<h3 class="font-headline-md text-headline-md font-bold text-primary">Novo Emolumento de Secretaria</h3>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" id="btnCloseModal" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+            Nome do Emolumento / Serviço
+          </label>
+<input class="w-full px-space-sm py-2 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded focus:ring-1 focus:ring-primary outline-none" placeholder="Ex: Declaração para Efeitos de Passaporte" type="text">
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+              Valor (Kwanza - Kz)
+            </label>
+<input class="w-full px-space-sm py-2 bg-surface-container-low text-on-surface font-mono font-bold text-body-sm rounded focus:ring-1 focus:ring-primary outline-none" placeholder="8500" type="number">
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+              Prazo de Emissão
+            </label>
+<input class="w-full px-space-sm py-2 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded focus:ring-1 focus:ring-primary outline-none" placeholder="Ex: 3 dias úteis" type="text">
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">
+            Tipo de Cobrança
+          </label>
+<select class="w-full px-space-sm py-2 bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded focus:ring-1 focus:ring-primary outline-none">
+<option>Por Requerimento</option>
+<option>Ato Único Anual</option>
+<option>Por Disciplina</option>
+<option>Segunda Via / Penalização</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-2 rounded bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" id="btnCancelModal" type="button">
+          Cancelar
+        </button>
+<button class="px-space-md py-2 rounded bg-primary text-white font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" id="btnConfirmNewFee" type="button">
+          Adicionar à Tabela
+        </button>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const openModalBtn = document.getElementById('btnOpenNewFee');
+      const closeModalBtn = document.getElementById('btnCloseModal');
+      const cancelModalBtn = document.getElementById('btnCancelModal');
+      const confirmModalBtn = document.getElementById('btnConfirmNewFee');
+      const modal = document.getElementById('newFeeModal');
+      const saveBtn = document.getElementById('btnSaveFinancialTable');
+
+      function openModal() {
+        if (modal) modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        if (modal) modal.classList.add('hidden');
+      }
+
+      if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+      if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+      
+      if (confirmModalBtn) {
+        confirmModalBtn.addEventListener('click', function() {
+          closeModal();
+          const feedback = document.createElement('div');
+          feedback.className = 'fixed bottom-6 right-6 z-50 bg-primary text-white px-space-md py-space-sm rounded-lg shadow-xl flex items-center gap-space-xs font-label-md text-label-md animate-bounce';
+          feedback.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary-container">check_circle</span> Novo emolumento registado na tabela com sucesso!';
+          document.body.appendChild(feedback);
+          setTimeout(() => feedback.remove(), 4000);
+        });
+      }
+
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+          const toast = document.createElement('div');
+          toast.className = 'fixed bottom-6 right-6 z-50 bg-primary text-white px-space-md py-space-sm rounded-lg shadow-xl flex items-center gap-space-xs font-label-md text-label-md';
+          toast.innerHTML = '<span class="material-symbols-outlined text-[18px] text-secondary-container">done_all</span> Tabela Financeira & Regras de Cobrança 2024/2025 atualizadas.';
+          document.body.appendChild(toast);
+          setTimeout(() => toast.remove(), 4000);
+        });
+      }
+    })();
+  </script>
+</div></div><footer class="w-full bg-surface-container-lowest py-space-sm px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex items-center justify-between font-label-md text-label-md text-on-surface-variant"><div class="flex items-center gap-space-sm"><span class="">© 2025 BandMed - Plataforma Académica de Gestão (Angola). Todos os direitos reservados.</span></div><div class="flex items-center gap-space-md font-label-sm text-label-sm"><span class="">Moeda Oficial: Kwanza (Kz)</span><span class="font-mono">BUILD-2025.04.1</span></div></footer></main></div>
+
+
+<script>
+(function(){
+  var moduleTargets = [
+    ["Dados da Institui", "../config/index.html"],
+    ["Ano Letivo", "../config-calendario/index.html"],
+    ["Tabela Financeira", "../config-financeiro/index.html"],
+    ["Regras", "../config-avaliacao/index.html"],
+    ["Perfis", "../config-perfis/index.html"],
+    ["Integrações", "../config-integracoes/index.html"]
+  ];
+  document.querySelectorAll('*').forEach(function(header){
+    if (header.children.length === 0 && header.textContent.trim() === 'Módulos de Sistema') {
+      var container = header.parentElement;
+      Array.prototype.forEach.call(container.children, function(item){
+        if (item === header) return;
+        var label = item.querySelector('.truncate') || item;
+        var text = label.textContent || '';
+        for (var i = 0; i < moduleTargets.length; i++) {
+          if (text.indexOf(moduleTargets[i][0]) !== -1) {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', (function(href){
+              return function(){ window.location.href = href; };
+            })(moduleTargets[i][1]));
+            break;
+          }
+        }
+      });
+    }
+  });
+})();
+</script>
+</body></html>

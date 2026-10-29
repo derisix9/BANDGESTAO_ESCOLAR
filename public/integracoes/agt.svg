@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="AGT SAF-T">
+  <rect width="128" height="128" rx="28" fill="#ac332b"/>
+  <path d="M64 20l34 12v26c0 22-14 38-34 48-20-10-34-26-34-48V32z" fill="#ffffff"/>
+  <path d="M47 62l12 12 23-25" fill="none" stroke="#ac332b" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

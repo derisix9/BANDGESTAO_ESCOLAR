@@ -1,0 +1,808 @@
+<!DOCTYPE html><html lang="pt"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BandMed — Homologação de Pauta Oficial &amp; Mini-Pauta MED</title>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              sidebar: '#0b1f3a',
+              navy: '#0f274a',
+              gold: '#d4af37',
+              wine: '#7a0c0c',
+              wineHover: '#5e0909',
+              border: '#e2e8f0',
+              badgeGreen: '#e6f7ed',
+              badgeGreenText: '#0e7a3d',
+              badgeRed: '#fdeeed',
+              badgeRedText: '#b3261e',
+              badgeYellow: '#fef7e0',
+              badgeYellowText: '#b06000'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: CustomStyles -->
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+<style data-purpose="table-styling">
+    /* Subtle zebra and border adjustments for legal document clarity */
+    .table-pauta th {
+      letter-spacing: 0.03em;
+    }
+    .score-box {
+      min-width: 3.2rem;
+      text-align: center;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+  </style>
+<!-- END: CustomStyles -->
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<div class="flex flex-1 min-h-screen">
+<!-- BEGIN: MainSidebar -->
+<aside class="w-72 bg-[#0b1f3a] text-slate-300 flex flex-col justify-between shrink-0 shadow-xl z-20" data-purpose="institutional-sidebar">
+<div>
+<!-- Brand / Identity Header -->
+<div class="p-6 border-b border-slate-700/60 flex items-center justify-between"><div class="flex items-center space-x-3"><img src="https://lh3.googleusercontent.com/aida/AEtjO1V9Q7ckBjIezN9c0dQhMMnf7XPItHxwNrA7Ub2mwx_FYHtRHMoXxSO6kE_OPZpkqcNT5I3xwa3jBNd_gEdKUy8nuIgYYUPFLP7NAg93IRrRea2uEQGan6O1UIgyCdoVid8j8M-7s2rd5E5T-13-ahshXOQhWXi8pyhlaK1Ew1zsLoTKOCye3US4GXcWkPmudOG-rwgBSRPo8WzpAEOXyII2DHSErxk5xoWPr739boBG1Rb7HFhAQbMZwjQU" alt="BandMed Logo" class="w-9 h-9 object-cover rounded"><div><div class="font-extrabold text-lg tracking-wide text-white flex items-center gap-1.5">BandMed</div><p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Plataforma Académica</p></div></div></div>
+<!-- Navigation Links Grouped -->
+<nav class="p-4 space-y-6 text-sm">
+<!-- Grupo: GERAL -->
+<div>
+<span class="text-[11px] font-bold text-slate-400 tracking-wider uppercase px-3">Geral</span>
+<ul class="mt-2 space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../dashboard/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Dashboard</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Grupo: ACADÉMICO -->
+<div>
+<span class="text-[11px] font-bold text-slate-400 tracking-wider uppercase px-3">Académico</span>
+<ul class="mt-2 space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../alunos/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Alunos</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../professores/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Professores</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../turmas/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Turmas &amp; Disciplinas</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Grupo: OPERACIONAL (COM ITEM SELECIONADO) -->
+<div>
+<span class="text-[11px] font-bold text-slate-400 tracking-wider uppercase px-3">Operacional</span>
+<ul class="mt-2 space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../assiduidade/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Assiduidade</span>
+</a>
+</li>
+<li class="">
+<!-- Item Ativo conforme solicitação -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white text-[#0b1f3a] font-bold shadow-md transition" href="../pautas/index.html">
+<svg class="w-5 h-5 text-[#0b1f3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+<span class="">Exames &amp; Notas</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Grupo: FINANCEIRO -->
+<div>
+<span class="text-[11px] font-bold text-slate-400 tracking-wider uppercase px-3">Financeiro</span>
+<ul class="mt-2 space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../propinas/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Propinas &amp; Pagamentos</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Grupo: ESTATÍSTICA & SISTEMA -->
+<div>
+<span class="text-[11px] font-bold text-slate-400 tracking-wider uppercase px-3">Estatística &amp; Sistema</span>
+<ul class="mt-2 space-y-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../relatorios/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Relatórios</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/80 hover:text-white transition" href="../config/index.html">
+<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Configurações</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</div>
+<!-- Rodapé Sidebar -->
+<div class="p-4 border-t border-slate-800 bg-[#08172c]">
+<div class="flex items-center justify-between text-[11px] text-slate-400">
+<div>
+<span class="block font-semibold text-slate-200">Licença Académica AO</span>
+<span class="">SIGE / MED Conforme</span>
+</div>
+
+</div>
+</div>
+</aside>
+<!-- END: MainSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+<!-- BEGIN: GlobalTopHeader -->
+<header class="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-10" data-purpose="top-navigation">
+<!-- Search bar -->
+<div class="w-96 relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<input class="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition" placeholder="Pesquisar alunos, turmas, pautas..." type="text">
+</div>
+<!-- Right Side Widgets & User Profile -->
+<div class="flex items-center gap-5">
+<!-- Ano Letivo Selector -->
+<div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700">
+<span class="text-slate-500 font-normal">Ano Letivo:</span>
+<span class="bg-blue-600 text-white text-[11px] px-2 py-0.5 rounded font-mono">2025 / 2026</span>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-full transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-600 border-2 border-white rounded-full"></span>
+</button>
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- User Card -->
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs ring-2 ring-blue-600/30">
+              CM
+            </div>
+<div class="text-left">
+<span class="block text-xs font-bold text-slate-800 leading-tight">Dr. Carlos Mendes</span>
+<span class="block text-[11px] text-slate-500 font-medium">Administrador Geral / Pedagógico</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: GlobalTopHeader -->
+<!-- Main Scrollable Body Content -->
+<main class="p-8 space-y-6 flex-1">
+<!-- BEGIN: ScreenBreadcrumbAndTitle -->
+<section class="space-y-3" data-purpose="screen-header">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-2 text-xs font-semibold tracking-wider text-slate-400 uppercase">
+<span class="">Governação Pedagógica</span>
+<span class="">›</span>
+<a href="../pautas/index.html" class="hover:underline">Avaliação &amp; Exames</a>
+<span class="">›</span>
+<span class="text-blue-700">Homologação Oficial MED</span>
+</nav>
+<!-- Main Title & Action Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<div>
+<div class="flex items-center gap-3">
+<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Homologação de Pauta Oficial Trimestral &amp; Final</h1>
+<span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded-full border border-blue-200">Norma MED 2025/2026</span>
+</div>
+<p class="text-xs text-slate-600 mt-1 max-w-3xl">
+                Em estrita observância ao <strong class="text-slate-800">Decreto Executivo N.º 04/2026</strong> e ao <strong class="text-slate-800">Decreto Executivo n.º 424/25</strong> do Ministério da Educação (MED - República de Angola). Documento digital com valor probatório.
+              </p>
+</div>
+<!-- Top Action Buttons -->
+<div class="flex items-center gap-2.5 shrink-0">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-sm transition" type="button" onclick="window.location.href='../pautas/index.html'">
+<svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 17l-5-5m0 0l5-5m-5 5h12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Voltar à Edição
+              </button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-sm transition" type="button">
+<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" fill-rule="evenodd"></path></svg>
+                Descarregar PDF Oficial Timbrado
+              </button>
+<!-- Main Red Wine Stamp Button -->
+<button class="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#7a0c0c] hover:bg-[#5e0909] rounded-lg shadow-sm transition" type="button">
+<svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Homologar &amp; Assinar com Chave Digital (MED)
+              </button>
+</div>
+</div>
+<!-- Metadata Tags -->
+<div class="flex flex-wrap items-center gap-3 pt-1 text-xs">
+<div class="flex items-center gap-1.5 text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-md font-medium">
+<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+              Em Tramitação de Assinatura Institucional
+            </div>
+<div class="text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md font-mono text-[11px]">
+              Chave Identificadora: <strong>HOM-MED-2026-LA-0492</strong>
+</div>
+<div class="text-slate-500 text-[11px]">
+              Última validação da pauta: 22 de Fevereiro de 2026 às 11:22 (GMT+1)
+            </div>
+</div>
+</section>
+<!-- END: ScreenBreadcrumbAndTitle -->
+<!-- BEGIN: PautaParametersCard -->
+<section class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm" data-purpose="class-parameters">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 text-xs">
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Ano Letivo</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block">2025 / 2026</span>
+</div>
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Período / Trimestre</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block">2.º Trimestre Regular</span>
+</div>
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Classe &amp; Turma</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block">10.ª Classe — Turma A</span>
+<span class="text-[10px] text-slate-500">Turno Manhã (Sala 14)</span>
+</div>
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Curso / Especialidade</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block">Ciências Físicas e Biol.</span>
+<span class="text-[10px] text-slate-500">Opção Geral (CFB)</span>
+</div>
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Disciplina Curricular</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block">Física e Química</span>
+<span class="text-[10px] text-slate-500">Carga Horária: 4h/sem</span>
+</div>
+<div>
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Professor(a) Titular</span>
+<span class="text-slate-900 font-bold text-sm mt-0.5 block truncate">Prof.ª Margarida Fontes</span>
+<span class="text-[10px] text-blue-700 font-mono font-medium">DOC-AO-8841</span>
+</div>
+<div class="col-span-2 md:col-span-1">
+<span class="text-slate-500 block text-[11px] uppercase tracking-wider font-semibold">Estado do Documento</span>
+<span class="inline-block mt-1 px-2 py-1 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold text-[10px] uppercase tracking-tight">
+                Pendente Parecer Pedagógico
+              </span>
+</div>
+</div>
+</section>
+<!-- END: PautaParametersCard -->
+<!-- BEGIN: KPIsSummaryCards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5" data-purpose="kpis-performance">
+<!-- Total Alunos -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Efetivo da Turma</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-slate-800">28</span>
+<span class="text-xs text-slate-400 font-normal">Matriculados</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">100% com dados avaliativos</span>
+</div>
+<!-- Média da Turma -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Média Global (MT)</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-blue-700">13.8</span>
+<span class="text-[11px] text-blue-600 font-semibold">Escala 0-20</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">+0.6 vs 1.º Trimestre</span>
+</div>
+<!-- Taxa de Aproveitamento -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Aproveitamento Global</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-emerald-700">85.7%</span>
+<span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">24 Aptos</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">Meta Institucional MED: 80%</span>
+</div>
+<!-- Dispensa de Exame (>=14) -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Dispensa Exame (≥ 14.0)</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-emerald-600">11</span>
+<span class="text-xs text-emerald-600 font-medium">39.3%</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">Notas de Mérito / Dispensa</span>
+</div>
+<!-- Em Risco / Recurso (7.0 - 9.4) -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Risco / Recurso (7.0–9.4)</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-amber-600">3</span>
+<span class="text-xs text-amber-600 font-medium">10.7%</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">Plano de Recuperação Obrigatório</span>
+</div>
+<!-- Reprovação Direta (< 7.0) -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<span class="text-xs text-slate-500 font-medium">Reprovação (&lt; 7.0)</span>
+<div class="mt-2 flex items-baseline justify-between">
+<span class="text-2xl font-extrabold text-rose-600">1</span>
+<span class="text-xs text-rose-600 font-medium">3.5%</span>
+</div>
+<span class="text-[11px] text-slate-500 mt-1">Acima do limite de exclusão</span>
+</div>
+</section>
+<!-- END: KPIsSummaryCards -->
+<!-- BEGIN: PautaDataTableSection -->
+<section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" data-purpose="grades-table-container">
+<!-- Table Toolbar Header -->
+<div class="p-4 border-b border-slate-200 bg-slate-50/60 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+<div>
+<h2 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+<span class="">Registo Individual de Provas e Ponderações Oficiais</span>
+<span class="text-[11px] text-slate-400 font-mono font-normal">| Ref. Dec. 04/2026 Art. 18.º</span>
+</h2>
+<p class="text-xs text-slate-500 font-mono mt-0.5">
+                Fórmula de Cálculo: <strong>MT = (MAC × 0.30) + (NPP × 0.30) + (NPT × 0.40)</strong>
+</p>
+</div>
+<!-- Quick Table Controls -->
+<div class="flex items-center gap-2">
+<div class="relative">
+<input class="text-xs bg-white border border-slate-300 rounded-lg pl-3 pr-8 py-1.5 focus:ring-1 focus:ring-blue-600 w-48 shadow-sm" placeholder="Filtrar aluno..." type="text">
+<svg class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<button class="p-1.5 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 transition shadow-sm" title="Recarregar pauta">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<!-- Main Table Responsive Wrapper -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs table-pauta divide-y divide-slate-200">
+<thead class="bg-slate-100/90 text-slate-700 font-bold uppercase text-[10px]">
+<tr>
+<th class="py-3 px-3 text-center w-12" scope="col">N.º</th>
+<th class="py-3 px-4 min-w-[240px]" scope="col">Identificação do Aluno</th>
+<th class="py-3 px-3 text-center min-w-[90px] bg-slate-200/50" scope="col">
+                    MAC<br><span class="text-[9px] font-semibold text-slate-500 lowercase">peso 30%</span>
+</th>
+<th class="py-3 px-3 text-center min-w-[90px]" scope="col">
+                    NPP / PP<br><span class="text-[9px] font-semibold text-slate-500 lowercase">peso 30%</span>
+</th>
+<th class="py-3 px-3 text-center min-w-[90px] bg-slate-200/50" scope="col">
+                    NPT / PT<br><span class="text-[9px] font-semibold text-slate-500 lowercase">peso 40%</span>
+</th>
+<th class="py-3 px-4 text-center min-w-[110px] bg-blue-50/80 text-blue-950 font-extrabold border-x border-blue-200/60" scope="col">
+                    NOTA FINAL (MT)<br><span class="text-[9px] font-bold text-blue-800 uppercase">Escala 0-20</span>
+</th>
+<th class="py-3 px-3 text-center min-w-[110px]" scope="col">Menção Qualitativa</th>
+<th class="py-3 px-3 text-center min-w-[120px]" scope="col">Situação</th>
+<th class="py-3 px-4 min-w-[190px]" scope="col">Observações / Despacho</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 bg-white text-slate-700 font-medium">
+<!-- Aluno 01 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">01</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 01" class="w-8 h-8 rounded-full object-cover border border-slate-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6QOkfzUzsrvGZRSS5GuOQt025mXX3-dcVAdVHsBqNsV6iPGljjUgemiBi100H9-9L1LrfOvYz7oFxlhfC3Zz6QXtAqmANhkVn0dzyWVqBqYCeHdF5UPatzM6quqOv-Rk86J6-4JBUGdH_LK9xGDKzrQjUAIeFyCUhtgOLJrlzpoDkkyFx8tEzAYZytWFNv-O61AwDDteGzd930stBTRGUmtdEkf3A1cainbwQWcpkVdsUAd-vmAfY4RPWeOk-E3ubFT8">
+<div>
+<div class="font-bold text-slate-900 text-xs">Afonso Miguel Santos Ramos</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-041 • M • 15 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">19,4</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">19,0</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">18,5</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">19.1</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      Excelente
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita (Dispensa)
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Proposta ao Quadro de Honra
+                  </td>
+</tr>
+<!-- Aluno 02 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">02</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 02" class="w-8 h-8 rounded-full object-cover border border-slate-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWYIk1SZi_nkQjuKmzUhIrBtTWdtp42Yc600Dzzp7KjNbpyw86FZHe4UljOzBWSZ4nQcM3OkxF9WbI9RIfzSL275anZGtHyxdlwnE3LecP0MWaYrOzV6vPkhNDIeaMqjtSVYdwhwVC4L3qIhcFd0Za-3oXNEUKFqhQ7i-J8sz6vTyZAGZ9Tot5VUSq1k-tXz_oHJ4n0V4Ji2wF2rL8UZ9rH3zrowqHm7OxHU68Q2xwBvQlqbtmARcKUWJ3ry1Ggr1FPf4">
+<div>
+<div class="font-bold text-slate-900 text-xs">Beatriz Lourenço Valente</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-052 • F • 16 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">14,8</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">15,2</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">16,0</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">15.4</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Bom
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita (Dispensa)
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Excelente postura laboratorial
+                  </td>
+</tr>
+<!-- Aluno 03 (Não Aprovado - Em Destaque Vermelho Conforme MED) -->
+<tr class="hover:bg-rose-50/40 transition-colors bg-rose-50/20">
+<td class="py-3 px-3 text-center font-mono font-bold text-rose-700">03</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 03" class="w-8 h-8 rounded-full object-cover border border-rose-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmlGhRF-3GDLSqJm_7IhLIBVLH_Y-ICNnb5fUvRg1er9h9qZXnq0tObwsaVvihBmOoKc2eZY7wobiLlV8Bg7O70UPVnS4MoqAMpNMAgnjHXbhykq7mlbjVWCeXlyt1QYwpPJ81_pS6W_47XnO9lYo3uLwX5CNsCk9nIxPK6sW8lNSLKtf9COsrIXtxwCM7O_XbsTTQdlmyS7z4sNwjazxmsc1CGrhCxCWkgWnlGgwQKD9T-Zt7yDdhZ1cxkkFWN64qKxg">
+<div>
+<div class="font-bold text-rose-950 text-xs">Duarte Nuno Figueiredo</div>
+<div class="text-[11px] text-rose-600 font-mono">Proc. 2024-068 • M • 16 anos</div>
+</div>
+</div>
+</td>
+<!-- Notas < 10 em caixa avermelhada -->
+<td class="py-3 px-3 text-center bg-rose-100/60 font-semibold font-mono text-rose-800">7,2</td>
+<td class="py-3 px-3 text-center bg-rose-100/40 font-semibold font-mono text-rose-800">8,5</td>
+<td class="py-3 px-3 text-center bg-rose-100/60 font-semibold font-mono text-rose-800">8,0</td>
+<td class="py-3 px-4 text-center bg-rose-100/70 border-x border-rose-300">
+<div class="text-sm font-black text-rose-900 font-mono">7.9</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-rose-700 text-white rounded">NÃO APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300">
+                      Insuficiente
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-200 text-rose-900">
+                      Exame de Recurso
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-rose-700 font-medium">
+                    Apoio Pedagógico Obrigatório
+                  </td>
+</tr>
+<!-- Aluno 04 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">04</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 04" class="w-8 h-8 rounded-full object-cover border border-slate-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDph5kdJwucC2t2gO8aWxBEUk7zEEAc545Fzn2w1hVceRjS4-K2dI4aWo_lzyGZNLZ_QchVkLuPdz0wDu6-Lksc5bOQt-jMRIVOTnoWebfaduP-CcDb1Gcj7oYYVMlwfNJWvW0dnaub7XlsFcpgNdGB_M-hTMHTjsmmy4v560IQkzl5j4spbxlfpepxEQbAfceuid1zvkAruh9nt-IRcjyjAxZZIDtzuL0fraAqaVe_2iPw9V_GRwn28kCEzOqZlFGfEK0">
+<div>
+<div class="font-bold text-slate-900 text-xs">Inês Carmo Silveira</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-073 • F • 15 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">10,2</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">11,5</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">13,0</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">11.7</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                      Suficiente
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Evolução contínua positiva
+                  </td>
+</tr>
+<!-- Aluno 05 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">05</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 05" class="w-8 h-8 rounded-full object-cover border border-slate-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQqDHTBDthtv7gyb_4Jte3MOPAYniucWT3wXfWP3YdB1eNRoB9t3bOEYMRLy4MxyAQslIYGV5fjBuM3md-7OVa2f4PXQmeNRRZETpUXJvwQKEZ7DSNunKDCgJy3t7It4QLaM3GWVMropbgcfw4FwSI3QP9T51z9j1z6H8hxq3_OCml2U1vE5m-km1ZI3s0bELeFJDtbBujIQ_s9RmYfpzRAYXKe6OC8BT3p7Wq9NxkeAV9PF58sgwJHcS6V1ti7ZaiWrY">
+<div>
+<div class="font-bold text-slate-900 text-xs">Rodrigo Manuel Paiva</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-089 • M • 15 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">16,5</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">17,0</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">17,5</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">17.1</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Muito Bom
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita (Dispensa)
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Candidato a Monitoria de Química
+                  </td>
+</tr>
+<!-- Aluno 06 (Não Aprovado) -->
+<tr class="hover:bg-rose-50/40 transition-colors bg-rose-50/20">
+<td class="py-3 px-3 text-center font-mono font-bold text-rose-700">06</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img alt="Foto Aluno 06" class="w-8 h-8 rounded-full object-cover border border-rose-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAm5xdQ6GDsAhGzEnosSOYU_QrL0G60r82B0cfB8NDi1q8yAGl_U1kQFE5cC_N6uNTIYMj7IJqPBFOOgciF2_b_4WLl4Vi1Ii9Wdq-QIWPAXAjJ9nT7cJPGh-9BW8DkpCD8GOf3qMwOW0PF7UfvOj2fpKzyX4PLfUk02cADerJ4Lm8IWs8sThyhwApAaJ2wRO8FxJq5XVJ_e244s_b9Cm2o3ft9WvbfixyK6sEjICGDuHJ5rua8_hV8-PcPbheGe3Rt-0">
+<div>
+<div class="font-bold text-rose-950 text-xs">Sara Cristina Moreira</div>
+<div class="text-[11px] text-rose-600 font-mono">Proc. 2024-095 • F • 15 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-rose-100/60 font-semibold font-mono text-rose-800">8,9</td>
+<td class="py-3 px-3 text-center bg-rose-100/40 font-semibold font-mono text-rose-800">9,4</td>
+<td class="py-3 px-3 text-center bg-slate-50 font-semibold font-mono text-slate-800">10,0</td>
+<td class="py-3 px-4 text-center bg-rose-100/70 border-x border-rose-300">
+<div class="text-sm font-black text-rose-900 font-mono">9.5</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-rose-700 text-white rounded">NÃO APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300">
+                      Insuficiente
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-200 text-rose-900">
+                      Exame de Recurso
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-rose-700 font-medium">
+                    Convocatória aos Encarregados
+                  </td>
+</tr>
+<!-- Aluno 07 (Complementar Angola) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">07</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700 text-white font-bold text-xs flex items-center justify-center">PK</div>
+<div>
+<div class="font-bold text-slate-900 text-xs">Paulo Kiala Sebastião</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-102 • M • 17 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">12,0</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">11,0</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">13,5</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">12.3</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                      Suficiente
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Faltas devidamente justificadas
+                  </td>
+</tr>
+<!-- Aluno 08 (Complementar Angola) -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 px-3 text-center font-mono font-bold text-slate-500">08</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700 text-white font-bold text-xs flex items-center justify-center">TN</div>
+<div>
+<div class="font-bold text-slate-900 text-xs">Tatiana Nzola Gaspar</div>
+<div class="text-[11px] text-slate-500 font-mono">Proc. 2024-118 • F • 15 anos</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">15,0</td>
+<td class="py-3 px-3 text-center font-semibold font-mono text-slate-800">14,5</td>
+<td class="py-3 px-3 text-center bg-slate-50/50 font-semibold font-mono text-slate-800">16,0</td>
+<td class="py-3 px-4 text-center bg-blue-50/40 border-x border-blue-200/50">
+<div class="text-sm font-black text-slate-900 font-mono">15.3</div>
+<span class="inline-block mt-0.5 text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded">APROVADO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      Bom
+                    </span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100/70 text-emerald-800">
+                      Transita (Dispensa)
+                    </span>
+</td>
+<td class="py-3 px-4 text-[11px] text-slate-600">
+                    Excelente empenho prático
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Bottom Pagination and Status -->
+<div class="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+<div class="">
+              A apresentar <strong class="text-slate-800 font-semibold">8</strong> de <strong class="text-slate-800 font-semibold">28</strong> registos de alunos da pauta (Modo de Prévia e Homologação MED).
+            </div>
+<div class="flex items-center gap-1 font-mono">
+<button class="w-8 h-8 rounded border border-blue-600 bg-blue-600 text-white font-bold flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 flex items-center justify-center">3</button>
+<button class="w-8 h-8 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 flex items-center justify-center">4</button>
+</div>
+</div>
+</section>
+<!-- END: PautaDataTableSection -->
+<!-- BEGIN: HomologationAndSignaturesBlock -->
+<section class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6" data-purpose="signatures-and-dispatch">
+<!-- Legal Clause / Term Header -->
+<div class="border-b border-slate-200 pb-4">
+<h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+<svg class="w-5 h-5 text-blue-700" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+              Termo de Encerramento de Pauta e Ata do Conselho Pedagógico
+            </h3>
+<p class="text-xs text-slate-600 mt-1">
+              Em cumprimento do Artigo 42.º do Regulamento Escolar Geral e em conformidade com o Decreto Executivo N.º 04/2026, a presente pauta foi conferida pelo corpo docente e diretor de turma, estando apta à chancela e validação definitiva pela Direção Pedagógica.
+            </p>
+</div>
+<!-- 3 Signature Panels -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+<!-- Assinatura 1: Professor Titular -->
+<div class="border border-emerald-200 bg-emerald-50/40 rounded-lg p-4 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-bold text-emerald-800 uppercase tracking-wider text-[10px]">1. Professor(a) Titular</span>
+<span class="inline-flex items-center text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Assinado</span>
+</div>
+<p class="mt-2 font-bold text-slate-800 text-sm">Prof.ª Margarida Fontes</p>
+<p class="text-slate-500 text-[11px]">ID MED: DOC-AO-8841</p>
+<p class="text-[11px] text-emerald-700 mt-2 font-mono">
+                  Submetido via Chave RSA-2048 às 10:40 (22/02/2026)
+                </p>
+</div>
+<div class="mt-4 pt-3 border-t border-emerald-200/60 flex items-center gap-2 text-[11px] text-emerald-800 font-semibold">
+<svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                Notas Lançadas &amp; Validadas
+              </div>
+</div>
+<!-- Assinatura 2: Diretor de Turma -->
+<div class="border border-emerald-200 bg-emerald-50/40 rounded-lg p-4 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-bold text-emerald-800 uppercase tracking-wider text-[10px]">2. Diretor de Turma</span>
+<span class="inline-flex items-center text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Parecer Favorável</span>
+</div>
+<p class="mt-2 font-bold text-slate-800 text-sm">Prof. Alberto Gusmão</p>
+<p class="text-slate-500 text-[11px]">Coordenação 10.ª Classe</p>
+<p class="text-[11px] text-emerald-700 mt-2 font-mono">
+                  Rubricado eletronicamente às 11:15 (22/02/2026)
+                </p>
+</div>
+<div class="mt-4 pt-3 border-t border-emerald-200/60 flex items-center gap-2 text-[11px] text-emerald-800 font-semibold">
+<svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                Conformidade de Assiduidade
+              </div>
+</div>
+<!-- Assinatura 3: Diretor Pedagógico (Pendente / Ação Atual) -->
+<div class="border-2 border-amber-300 bg-amber-50/50 rounded-lg p-4 flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-bold text-amber-900 uppercase tracking-wider text-[10px]">3. Direção Pedagógica</span>
+<span class="inline-flex items-center text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold animate-pulse">Aguardando Despacho</span>
+</div>
+<p class="mt-2 font-bold text-slate-900 text-sm">Dr. Carlos Mendes</p>
+<p class="text-slate-500 text-[11px]">Diretor Geral / Pedagógico BandMed</p>
+<p class="text-[11px] text-amber-800 mt-2">
+                  Ação requerida: Inserir Chave PIN &amp; Assinar Documento.
+                </p>
+</div>
+<div class="mt-4 pt-3 border-t border-amber-200 flex items-center gap-2 text-[11px] text-amber-900 font-semibold">
+<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Trancamento Definitivo MED
+              </div>
+</div>
+</div>
+<!-- Digital Certificate & PIN Confirmation Section -->
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3 text-xs">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex items-start gap-3">
+<input checked="" class="mt-1 rounded border-slate-300 text-blue-600 focus:ring-blue-500" id="honorDeclaration" type="checkbox">
+<label class="text-slate-700 leading-snug cursor-pointer font-medium" for="honorDeclaration">
+                  Declaro sob compromisso de honra que a presente pauta oficial reflete com fidedignidade absoluta as classificações apuradas nas provas, minitestes e folhas de ponto arquivadas no arquivo institucional desta instituição de ensino, cumprindo na íntegra o Decreto Executivo N.º 04/2026.
+                </label>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<span class="text-slate-500 font-mono text-[11px]">Chave PIN (MED-PKI):</span>
+<input class="w-24 text-center py-1.5 px-2 bg-white border border-slate-300 rounded font-mono text-sm tracking-widest focus:ring-1 focus:ring-blue-600" type="password" value="••••••">
+</div>
+</div>
+</div>
+<!-- Action Footer of Homologation Section -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+<div class="text-[11px] text-slate-500 flex items-center gap-2">
+<svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Timestamping ICP-Angola ativo: Carimbo oficial com validade jurídica nacional.</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-100 transition shadow-sm" type="button">
+                Devolver com Apontamentos de Correção
+              </button>
+<button class="px-5 py-2 bg-[#7a0c0c] hover:bg-[#5e0909] text-white rounded-lg text-xs font-bold shadow-md hover:shadow-lg transition flex items-center gap-2" type="button">
+<svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" fill-rule="evenodd"></path></svg>
+                Homologar &amp; Trancar Pauta Definitivamente
+              </button>
+</div>
+</div>
+</section>
+<!-- END: HomologationAndSignaturesBlock -->
+</main>
+<!-- BEGIN: OfficialFooter -->
+<footer class="border-t border-slate-200 bg-white px-8 py-4 text-xs text-slate-500 mt-auto" data-purpose="institutional-footer">
+<div class="flex flex-col md:flex-row items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-700">BandMed — Gestão Académica &amp; Pedagógica</span>
+<span class="">•</span>
+<span class="">© 2026 BandMed Angola. Todos os direitos reservados.</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] text-slate-600">
+<span class="">Decreto Executivo N.º 04/2026 &amp; n.º 424/25 (MED)</span>
+<span class="">Moeda Oficial: <strong>Kwanza (Kz)</strong></span>
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-500" title="Sistema Operacional Online"></span>
+</div>
+</div>
+</footer>
+<!-- END: OfficialFooter -->
+</div>
+<!-- END: MainContentArea -->
+</div>
+
+
+</body></html>
