@@ -1,0 +1,48 @@
+/* Zona de perigo: cores próprias (claro e escuro) para não depender das regras globais de tema. */
+.dz { --dz-bg:#ffffff; --dz-head:#fef2f2; --dz-border:#dc2626; --dz-title:#991b1b; --dz-text:#1f2937; --dz-muted:#4b5563;
+      --dz-input-bg:#ffffff; --dz-input-bd:#9ca3af; --dz-ok:#15803d; --dz-btn:#b91c1c; --dz-btn-h:#991b1b; --dz-soft:#f3f4f6; --dz-warn-bg:#fef2f2; --dz-warn-bd:#fca5a5; }
+html[data-color-mode='dark'] .dz { --dz-bg:#2a2230; --dz-head:#3b1d22; --dz-border:#f87171; --dz-title:#fecaca; --dz-text:#f1f5f9; --dz-muted:#cbd5e1;
+      --dz-input-bg:#161b25; --dz-input-bd:#64748b; --dz-ok:#4ade80; --dz-btn:#dc2626; --dz-btn-h:#ef4444; --dz-soft:#1f2937; --dz-warn-bg:#3b1d22; --dz-warn-bd:#b91c1c; }
+
+.dz-card { background:var(--dz-bg); border:2px solid var(--dz-border); border-radius:16px; overflow:hidden; }
+.dz-head { background:var(--dz-head); padding:16px 24px; border-bottom:2px solid var(--dz-border); display:flex; align-items:center; gap:10px; }
+.dz-title { color:var(--dz-title); font-weight:800; font-size:18px; margin:0; }
+.dz-body { padding:20px 24px; display:flex; flex-direction:column; gap:14px; color:var(--dz-text); font-size:13px; line-height:1.5; }
+.dz-body p, .dz-modal p, .dz-modal li, .dz-modal label { color:var(--dz-text); }
+.dz-muted { color:var(--dz-muted) !important; font-size:12px; }
+.dz-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 20px; border-radius:10px; border:0; cursor:pointer;
+          background:var(--dz-btn); color:#fff; font-weight:700; font-size:13px; transition:background .15s; }
+.dz-btn:hover:not(:disabled) { background:var(--dz-btn-h); }
+.dz-btn:disabled { opacity:.45; cursor:not-allowed; }
+.dz-btn-ghost { background:var(--dz-soft); color:var(--dz-text); border:1px solid var(--dz-input-bd); }
+.dz-btn-ghost:hover:not(:disabled) { background:var(--dz-soft); filter:brightness(.95); }
+.dz-btn-outline { background:transparent; color:var(--dz-title); border:2px solid var(--dz-border); }
+.dz-btn-outline:hover:not(:disabled) { background:var(--dz-head); }
+
+.dz-section { padding:16px 24px; border-bottom:1px solid var(--dz-input-bd); display:flex; flex-direction:column; gap:10px; }
+.dz-warn { display:flex; gap:12px; background:var(--dz-warn-bg); border:1px solid var(--dz-warn-bd); border-radius:10px; padding:12px; }
+.dz-label { font-size:12px; font-weight:700; }
+.dz-code { font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:700; color:var(--dz-title); background:var(--dz-warn-bg); padding:1px 6px; border-radius:4px; }
+.dz-input { width:100%; box-sizing:border-box; padding:10px 12px; border-radius:8px; background:var(--dz-input-bg); color:var(--dz-text);
+            border:1.5px solid var(--dz-input-bd); font-size:14px; outline:none; }
+.dz-input:focus { border-color:var(--dz-border); box-shadow:0 0 0 3px color-mix(in srgb, var(--dz-border) 30%, transparent); }
+.dz-input::placeholder { color:var(--dz-muted); opacity:.8; }
+.dz-checks { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:4px; }
+.dz-checks li { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--dz-muted) !important; }
+.dz-checks li.ok { color:var(--dz-ok) !important; font-weight:600; }
+
+.dz-done { color:var(--dz-ok); font-weight:700; font-size:12px; }
+.dz-err { background:var(--dz-warn-bg); border:1px solid var(--dz-warn-bd); border-radius:8px; padding:10px; font-size:12px; color:var(--dz-text); }
+.dz-check-row { display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-size:13px; }
+.dz-check-row input { width:18px; height:18px; margin-top:1px; accent-color:var(--dz-btn); }
+.dz-check-row.off { opacity:.5; cursor:not-allowed; }
+
+/* O painel segue o modo claro/escuro do sistema (bg-white é remapeado pelo tema); só os textos próprios usam as variáveis. */
+.dz-modal { color:var(--dz-text); }
+.dz-section:last-child { border-bottom:0; }
+
+/* O tema global força cantos retos em <button>/<input> com !important: aqui os botões ficam arredondados (maior especificidade). */
+.dz .dz-btn.dz-btn { border-radius:10px !important; }
+.dz .dz-input.dz-input { border-radius:8px !important; }
+.dz .dz-card.dz-card { border-radius:16px !important; }
+.dz .dz-warn.dz-warn, .dz .dz-err.dz-err, .dz .dz-code.dz-code { border-radius:8px !important; }

@@ -1,0 +1,159 @@
+/* Ecrã de entrada/registo — fundo em imagem + cartão de vidro quase transparente.
+   Só muda o aspecto; os textos e o comportamento são os do LoginView.
+   Imagem de fundo: public/login-bg.jpg (ver LOGIN_BG em LoginView.tsx). Sem ela, fica o degradê azul.
+   Os seletores têm especificidade alta e !important para ganharem aos temas globais (laravel / escuro). */
+
+.lg-root { min-height: 100vh; width: 100%; position: relative; overflow-x: hidden; color: #fff; }
+.lg-shell { position: relative; z-index: 1; min-height: 100vh; width: 100%; display: flex; }
+.lg-left {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-width: 0;
+  width: 57%; padding: 32px 40px;
+  transition: opacity .45s ease, transform .8s cubic-bezier(.77,0,.18,1);
+}
+.lg-feature { display: flex; gap: 12px; align-items: flex-start; }
+.lg-feature-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.12); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.18);
+}
+
+/* Coluna de login: ocupa toda a metade direita (de cima a baixo, até à borda do ecrã).
+   Ao clicar em "Registar" alarga-se da direita para a esquerda até cobrir o ecrã inteiro. */
+.lg-right {
+  position: fixed; top: 0; bottom: 0; right: 0; z-index: 2;
+  width: 43%; min-width: 380px;
+  overflow-x: hidden; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.25) transparent;
+  transition: width .85s cubic-bezier(.77, 0, .18, 1);
+}
+/* película suave que surge com a expansão (mesmo fundo, só ajuda a leitura do formulário) */
+.lg-right::before {
+  content: ''; position: fixed; top: 0; bottom: 0; right: 0; width: 100%; pointer-events: none; z-index: -1;
+  background: linear-gradient(90deg, rgba(3,14,40,.30) 0%, rgba(3,14,40,.55) 100%);
+  opacity: 0; transition: opacity .85s ease;
+}
+/* rasto luminoso na borda esquerda durante a expansão */
+.lg-right::after {
+  content: ''; position: fixed; top: 0; bottom: 0; left: 57%; width: 3px; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, transparent 0%, #38bdf8 50%, transparent 100%);
+  box-shadow: 0 0 24px 4px rgba(56,189,248,.55);
+}
+.lg-expanded .lg-right { width: 100%; }
+.lg-expanded .lg-right::before { opacity: 1; }
+.lg-expanded .lg-right::after { animation: lgEdge .85s cubic-bezier(.77,0,.18,1) forwards; }
+.lg-expanded .lg-left { opacity: 0; transform: translateX(-48px); pointer-events: none; }
+@keyframes lgEdge { 0% { left: 57%; opacity: 0; } 15% { opacity: 1; } 100% { left: 0; opacity: 0; } }
+
+/* Cartão: sem borda, sem fundo, sem sombra — fica só o conteúdo (textos, campos e botões) */
+.lg-panel {
+  width: 100%; min-height: 100%; padding: 40px clamp(28px, 5vw, 72px);
+  background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  color: #fff; display: flex; justify-content: center;
+}
+.lg-inner {
+  width: 100%; max-width: 420px; min-height: calc(100vh - 80px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: max-width .85s cubic-bezier(.77, 0, .18, 1);
+}
+.lg-body { margin: auto 0; padding: 24px 0; }
+.lg-expanded .lg-panel { justify-content: flex-end; }
+.lg-expanded .lg-inner { max-width: 640px; }
+.lg-expanded .lg-body { animation: lgFadeIn .7s .35s both ease; }
+@keyframes lgFadeIn { from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-right, .lg-right::before, .lg-left, .lg-inner { transition: none; }
+  .lg-expanded .lg-right::after, .lg-expanded .lg-body { animation: none; }
+}
+
+@media (max-width: 1023px) {
+  .lg-shell { flex-direction: column; }
+  .lg-left { width: 100%; padding: 20px 16px; }
+  .lg-left .lg-features { display: none; }
+  .lg-right { position: static; width: 100%; min-width: 0; overflow: visible; transition: none; }
+  .lg-right::before, .lg-right::after { display: none; }
+  .lg-panel { padding: 26px 20px; background: rgba(6, 22, 56, 0.28); }
+  .lg-inner { min-height: 0; max-width: 560px; }
+  .lg-expanded .lg-panel { justify-content: center; }
+  .lg-expanded .lg-left { opacity: 1; transform: none; pointer-events: auto; }
+}
+
+/* ----- cores dentro do cartão (ganha aos temas globais) ----- */
+html body .lg-root .lg-panel h2,
+html body .lg-root .lg-panel .text-slate-900 { color: #fff !important; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+html body .lg-root .lg-panel .text-slate-800,
+html body .lg-root .lg-panel .text-slate-700 { color: #e6f0ff !important; }
+html body .lg-root .lg-panel .text-slate-600,
+html body .lg-root .lg-panel label { color: #d6e4ff !important; }
+html body .lg-root .lg-panel .text-slate-500,
+html body .lg-root .lg-panel .text-slate-400,
+html body .lg-root .lg-panel code { color: #a9c1ee !important; }
+html body .lg-root .lg-panel [class*="text-[#0b1f3a]"],
+html body .lg-root .lg-panel [class*="text-[#7a0c0c]"],
+html body .lg-root .lg-panel a { color: #38bdf8 !important; }
+html body .lg-root .lg-panel [class*="hover:text-[#7a0c0c]"]:hover,
+html body .lg-root .lg-panel [class*="hover:text-[#0b1f3a]"]:hover,
+html body .lg-root .lg-panel a:hover { color: #7dd3fc !important; }
+html body .lg-root .lg-panel .border-slate-100,
+html body .lg-root .lg-panel .border-t { border-color: rgba(255,255,255,.14) !important; }
+html body .lg-root .lg-panel .material-symbols-outlined { color: inherit; }
+html body .lg-root .lg-panel .text-slate-400.material-symbols-outlined { color: #7fa3e0 !important; }
+
+/* campos */
+html body .lg-root .lg-panel .bg-slate-100,
+html body .lg-root .lg-panel .bg-slate-50,
+html body .lg-root .lg-panel input:not([type="checkbox"]):not(.bg-transparent):not([type="file"]) {
+  background: rgba(8, 32, 84, 0.34) !important;
+  border: 1px solid rgba(120, 170, 255, 0.30) !important;
+  border-radius: 12px !important; color: #fff !important; box-shadow: none !important;
+}
+html body .lg-root .lg-panel input.bg-transparent { background: transparent !important; border: 0 !important; color: #fff !important; box-shadow: none !important; }
+html body .lg-root .lg-panel .bg-slate-100:focus-within,
+html body .lg-root .lg-panel input:not([type="checkbox"]):not(.bg-transparent):focus {
+  background: rgba(8, 32, 84, 0.5) !important; border-color: #38bdf8 !important; outline: none !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22) !important;
+}
+html body .lg-root .lg-panel input::placeholder { color: rgba(190, 212, 255, 0.55) !important; }
+html body .lg-root .lg-panel input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important; caret-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px rgba(8, 32, 84, 0.85) inset !important;
+}
+html body .lg-root .lg-panel input[type="checkbox"] { accent-color: #1e8bff; }
+
+/* botão principal e secundário */
+html body .lg-root .lg-panel button[class*="bg-[#0b1f3a]"],
+html body .lg-root .lg-panel button[type="submit"] {
+  background: linear-gradient(90deg, #1b66ff 0%, #14a8ff 100%) !important; border: 0 !important; color: #fff !important;
+  border-radius: 12px !important; box-shadow: 0 8px 24px rgba(20, 120, 255, 0.35) !important;
+}
+html body .lg-root .lg-panel button[class*="bg-[#0b1f3a]"]:hover:not(:disabled),
+html body .lg-root .lg-panel button[type="submit"]:hover:not(:disabled) { filter: brightness(1.1); }
+html body .lg-root .lg-panel button.bg-slate-100 {
+  background: rgba(255,255,255,.1) !important; border: 1px solid rgba(255,255,255,.2) !important; color: #fff !important; box-shadow: none !important;
+}
+html body .lg-root .lg-panel button.bg-slate-100:hover { background: rgba(255,255,255,.18) !important; }
+html body .lg-root .lg-panel button:disabled { opacity: .5 !important; cursor: not-allowed !important; }
+
+/* avisos */
+html body .lg-root .lg-panel .bg-red-50 { background: rgba(220, 38, 38, 0.18) !important; border-color: rgba(252,165,165,.45) !important; color: #fecaca !important; }
+html body .lg-root .lg-panel .bg-red-50 * { color: #fecaca !important; }
+html body .lg-root .lg-panel .bg-green-50 { background: rgba(16, 185, 129, 0.18) !important; border-color: rgba(110,231,183,.45) !important; color: #a7f3d0 !important; }
+html body .lg-root .lg-panel .text-emerald-700 { color: #6ee7b7 !important; }
+html body .lg-root .lg-panel p.text-red-700, html body .lg-root .lg-panel .text-red-700 { color: #fca5a5 !important; }
+html body .lg-root .lg-panel .border-red-200 { border-color: rgba(252,165,165,.45) !important; }
+
+/* medidor de força (cores inline pensadas para fundo claro) */
+html body .lg-root .lg-panel span[style*="b91c1c"] { color: #fca5a5 !important; }
+html body .lg-root .lg-panel span[style*="b45309"] { color: #fcd34d !important; }
+html body .lg-root .lg-panel span[style*="15803d"] { color: #86efac !important; }
+html body .lg-root .lg-panel span[style*="047857"] { color: #6ee7b7 !important; }
+html body .lg-root .lg-panel [role="progressbar"] > div { box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
+
+/* campo "nova palavra-passe": espaço generoso entre blocos */
+.lg-field { display: block; }
+.lg-field + .lg-field { margin-top: 22px; }
+.lg-captcha { margin: 26px 0 22px; }
+.lg-captcha > div { margin: 0 !important; }
+
+/* formulários de 1 campo + botão (2FA, recuperar): espaço entre os blocos */
+.lg-stack > * + * { margin-top: 22px !important; }
+.lg-stack > button[type="submit"] { margin-top: 28px !important; }
