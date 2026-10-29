@@ -1,0 +1,2 @@
+APAGAR do projeto (cópia antiga, ninguém a importa; a usada é src/views/ImportarPautaExcelView.tsx):
+  src/components/ImportarPautaExcelView.tsx
