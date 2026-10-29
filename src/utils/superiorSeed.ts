@@ -1,0 +1,536 @@
+/**
+ * DADOS DEMONSTRATIVOS — ENSINO SUPERIOR (MESCTI)
+ * ===============================================
+ * Fornece currículos universitários realistas de referência para Angola:
+ * - Licenciatura em Engenharia Informática
+ * - Licenciatura em Direito
+ * - Licenciatura em Medicina Geral
+ *
+ * Inclui cadeiras semestrais com 30 ECTS/semestre, pré-requisitos,
+ * inscrições em épocas de exame (Normal, Recurso, Especial),
+ * estágios, TCCs com júri e bolsas INAGBE / Mérito.
+ */
+
+import {
+  BolsaEstudo,
+  DiplomaSuperior,
+  EstagioCurricular,
+  InscricaoUC,
+  MonografiaTCC,
+  UnidadeCurricular
+} from '../types/superior';
+
+export const SAMPLE_SUPERIOR_UCS: UnidadeCurricular[] = [
+  // ==========================================
+  // ENGENHARIA INFORMÁTICA — 1.º ANO
+  // ==========================================
+  {
+    id: 'uc-inf-101',
+    code: 'INF101',
+    name: 'Introdução à Programação & Algoritmos',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 0, teoricoPratica: 45, laboratorial: 15 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-102',
+    code: 'MAT101',
+    name: 'Análise Matemática I (Cálculo I)',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 45, pratica: 45, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-103',
+    code: 'MAT102',
+    name: 'Álgebra Linear & Geometria Analítica',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 45, pratica: 45, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-104',
+    code: 'FIS101',
+    name: 'Física Geral para Engenharia',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 30, teoricoPratica: 0, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-105',
+    code: 'HUM101',
+    name: 'Metodologia de Investigação Científica',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 60, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+
+  // 1.º ANO — 2.º SEMESTRE
+  {
+    id: 'uc-inf-106',
+    code: 'INF102',
+    name: 'Estruturas de Dados & Programação Orientada a Objetos',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 0, teoricoPratica: 30, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: ['uc-inf-101'], // Requer Introdução à Programação
+    prerequisiteNames: ['INF101 - Introdução à Programação'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-107',
+    code: 'MAT103',
+    name: 'Análise Matemática II (Cálculo II)',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 45, pratica: 45, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: ['uc-inf-102'], // Requer Cálculo I
+    prerequisiteNames: ['MAT101 - Análise Matemática I'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-108',
+    code: 'INF103',
+    name: 'Arquitetura de Computadores & Sistemas Digitais',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 30, teoricoPratica: 0, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-109',
+    code: 'MAT104',
+    name: 'Matemática Discreta & Lógica Computacional',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 45, pratica: 45, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-110',
+    code: 'ING101',
+    name: 'Inglês Técnico para TI',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 60, teoricoPratica: 0, laboratorial: 0 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: [],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+
+  // ==========================================
+  // ENGENHARIA INFORMÁTICA — 2.º ANO
+  // ==========================================
+  {
+    id: 'uc-inf-201',
+    code: 'INF201',
+    name: 'Bases de Dados Relacionais & SQL',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 2,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 30, teoricoPratica: 0, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: ['uc-inf-106'], // Requer POO
+    prerequisiteNames: ['INF102 - Estruturas de Dados & POO'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-202',
+    code: 'INF202',
+    name: 'Redes de Computadores & Protocolos IP',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 2,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 30, teoricoPratica: 0, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: ['uc-inf-108'],
+    prerequisiteNames: ['INF103 - Arquitetura de Computadores'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-203',
+    code: 'INF203',
+    name: 'Sistemas Operativos & Concorrência',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 2,
+    semester: 1,
+    creditsECTS: 6,
+    totalHours: 90,
+    contactHours: { teorica: 30, pratica: 30, teoricoPratica: 0, laboratorial: 30 },
+    autonomousHours: 60,
+    type: 'obrigatoria',
+    prerequisites: ['uc-inf-108'],
+    prerequisiteNames: ['INF103 - Arquitetura de Computadores'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+
+  // ==========================================
+  // FINAL DE CURSO: ESTÁGIO & TCC
+  // ==========================================
+  {
+    id: 'uc-inf-401',
+    code: 'EST401',
+    name: 'Estágio Curricular Profissionalizante',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 4,
+    semester: 1,
+    creditsECTS: 12,
+    totalHours: 360,
+    contactHours: { teorica: 0, pratica: 0, teoricoPratica: 0, laboratorial: 0, campoEstagio: 360 },
+    autonomousHours: 0,
+    type: 'estagio',
+    prerequisites: ['uc-inf-201', 'uc-inf-202'],
+    prerequisiteNames: ['INF201 - Bases de Dados', 'INF202 - Redes de Computadores'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  },
+  {
+    id: 'uc-inf-402',
+    code: 'TCC402',
+    name: 'Trabalho de Conclusão de Curso (Monografia)',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    year: 4,
+    semester: 2,
+    creditsECTS: 18,
+    totalHours: 540,
+    contactHours: { teorica: 15, pratica: 0, teoricoPratica: 45, laboratorial: 0 },
+    autonomousHours: 480,
+    type: 'monografia',
+    prerequisites: ['uc-inf-105', 'uc-inf-401'],
+    prerequisiteNames: ['HUM101 - Metodologia Científica', 'EST401 - Estágio Curricular'],
+    academicYear: '2026/2027',
+    status: 'ativo'
+  }
+];
+
+export const SAMPLE_SUPERIOR_INSCRICOES: InscricaoUC[] = [
+  // Aluno 1: Manuel Kuanza (Aprovado em Semestre 1, inscrito em Semestre 2)
+  {
+    id: 'ins-001',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    ucId: 'uc-inf-101',
+    ucCode: 'INF101',
+    ucName: 'Introdução à Programação & Algoritmos',
+    academicYear: '2026/2027',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    isCadeiraAtraso: false,
+    status: 'aprovado',
+    notaFrequencia: 15.5,
+    notaFinal: 16,
+    epocaAprovacao: 'dispensa',
+    inscribedAt: '2026-09-01'
+  },
+  {
+    id: 'ins-002',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    ucId: 'uc-inf-102',
+    ucCode: 'MAT101',
+    ucName: 'Análise Matemática I (Cálculo I)',
+    academicYear: '2026/2027',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    isCadeiraAtraso: false,
+    status: 'aprovado',
+    notaFrequencia: 11.0,
+    notaExameNormal: 13.0,
+    notaFinal: 12,
+    epocaAprovacao: 'normal',
+    inscribedAt: '2026-09-01'
+  },
+  {
+    id: 'ins-003',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    ucId: 'uc-inf-103',
+    ucCode: 'MAT102',
+    ucName: 'Álgebra Linear & Geometria Analítica',
+    academicYear: '2026/2027',
+    year: 1,
+    semester: 1,
+    creditsECTS: 6,
+    isCadeiraAtraso: false,
+    status: 'aprovado',
+    notaFrequencia: 9.0,
+    notaExameNormal: 8.0,
+    notaRecurso: 14.0,
+    notaFinal: 14,
+    epocaAprovacao: 'recurso',
+    inscribedAt: '2026-09-01'
+  },
+  // Inscrições ativas no 2.º Semestre (cumpre precedências de INF101 e MAT101!)
+  {
+    id: 'ins-004',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    ucId: 'uc-inf-106',
+    ucCode: 'INF102',
+    ucName: 'Estruturas de Dados & Programação Orientada a Objetos',
+    academicYear: '2026/2027',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    isCadeiraAtraso: false,
+    status: 'inscrito',
+    notaFrequencia: 14.0,
+    inscribedAt: '2027-02-15'
+  },
+  {
+    id: 'ins-005',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    ucId: 'uc-inf-107',
+    ucCode: 'MAT103',
+    ucName: 'Análise Matemática II (Cálculo II)',
+    academicYear: '2026/2027',
+    year: 1,
+    semester: 2,
+    creditsECTS: 6,
+    isCadeiraAtraso: false,
+    status: 'inscrito',
+    notaFrequencia: 11.5,
+    inscribedAt: '2027-02-15'
+  }
+];
+
+export const SAMPLE_MONOGRAFIAS_TCC: MonografiaTCC[] = [
+  {
+    id: 'tcc-001',
+    code: 'TCC-2026-001',
+    studentId: 'st-superior-finalista',
+    studentName: 'Beatriz Sebastião Neto',
+    studentProcNumber: 'EST-2022-045',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    academicYear: '2026/2027',
+    theme: 'Desenvolvimento de Sistema de Prontuário Médico Digital Resiliente e Descentralizado para Hospitais de Angola',
+    abstract: 'O presente trabalho propõe a conceção e implementação de uma arquitetura segura para interoperabilidade de registos clínicos.',
+    advisorName: 'Prof. Doutor Afonso Manuel',
+    advisorEmail: 'afonso.manuel@universidade.ao',
+    coAdvisorName: 'Mestre Celso Kiala',
+    lineOfResearch: 'Engenharia de Software e Saúde Digital',
+    status: 'defendido',
+    submissionDate: '2026-11-20',
+    defenseDate: '2026-12-15',
+    defenseTime: '10:00',
+    defenseRoom: 'Anfiteatro 2 — Bloco Central',
+    juryPresident: 'Prof.ª Doutora Maria de Fátima',
+    juryArguente: 'Prof. Doutor Jorge Samakaka',
+    juryVogal: 'Prof. Doutor Afonso Manuel',
+    defenseGrade: 18.0,
+    finalMention: 'Aprovado com Distinção e Louvor',
+    createdAt: '2026-03-01',
+    updatedAt: '2026-12-16'
+  }
+];
+
+export const SAMPLE_ESTAGIOS: EstagioCurricular[] = [
+  {
+    id: 'est-001',
+    code: 'EST-2026-001',
+    studentId: 'st-superior-finalista',
+    studentName: 'Beatriz Sebastião Neto',
+    studentProcNumber: 'EST-2022-045',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    academicYear: '2026/2027',
+    institutionOrCompany: 'Sonangol E.P. — Direção de Tecnologias de Informação',
+    sector: 'Divisão de Cibersegurança & Infraestruturas Cloud',
+    supervisorName: 'Eng.º Paulo de Carvalho',
+    supervisorContact: '+244 923 111 222',
+    tutorTeacherName: 'Prof. Doutor Afonso Manuel',
+    totalRequiredHours: 360,
+    completedHours: 360,
+    startDate: '2026-08-01',
+    endDate: '2026-11-15',
+    status: 'concluido',
+    reportGrade: 17.5,
+    supervisorGrade: 18.0,
+    finalGrade: 17.8,
+    notes: 'Excelente desempenho no desenvolvimento de pipelines de monitorização.'
+  }
+];
+
+export const SAMPLE_BOLSAS: BolsaEstudo[] = [
+  {
+    id: 'bol-001',
+    code: 'BOL-2026-001',
+    studentId: 'st-superior-1',
+    studentName: 'Hélio Domingos Van-Dúnem',
+    studentProcNumber: 'EST-2024-001',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    academicYear: '2026/2027',
+    type: 'INAGBE',
+    sponsorName: 'INAGBE - Instituto Nacional de Gestão de Bolsas de Estudo',
+    coverageType: 'integral_100',
+    discountPercent: 100,
+    status: 'ativa',
+    startDate: '2024-10-01',
+    minAverageRequired: 12.0,
+    maxArrearsAllowed: 1,
+    notes: 'Bolsa Nacional de Mérito Académico INAGBE renovada com sucesso.'
+  },
+  {
+    id: 'bol-002',
+    code: 'BOL-2026-002',
+    studentId: 'st-superior-2',
+    studentName: 'Edna Kuntuala Ferreira',
+    studentProcNumber: 'EST-2025-089',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    academicYear: '2026/2027',
+    type: 'merito',
+    sponsorName: 'Bolsa de Excelência Académica da Reitoria',
+    coverageType: 'parcial_50',
+    discountPercent: 50,
+    status: 'ativa',
+    startDate: '2025-10-01',
+    minAverageRequired: 14.0,
+    maxArrearsAllowed: 0,
+    notes: 'Comparticipação de 50% nas propinas mensais por mérito.'
+  }
+];
+
+export const SAMPLE_DIPLOMAS: DiplomaSuperior[] = [
+  {
+    id: 'dip-001',
+    code: 'DIP-2026-0045',
+    studentId: 'st-superior-finalista',
+    studentName: 'Beatriz Sebastião Neto',
+    studentProcNumber: 'EST-2022-045',
+    courseId: 'cur-inf',
+    courseName: 'Engenharia Informática & Telecomunicações',
+    degreeGranted: 'Licenciatura',
+    degreeTitle: 'Licenciada em Engenharia Informática & Telecomunicações',
+    academicYearConcluded: '2026/2027',
+    completionDate: '2026-12-15',
+    finalGradeCurricular: 16.2,
+    tccGrade: 18.0,
+    finalCourseGrade: 16.7,
+    finalMention: 'Muito Bom',
+    totalCreditsECTS: 240,
+    registerNumber: 'REG-2026-045',
+    registryBook: 'Livro n.º 04 de Diplomas de Licenciatura',
+    registryPage: 'Fl. 89-v',
+    issueDate: '2026-12-20',
+    dispatchNumber: 'Despacho Reitoral n.º 142/GR/2026',
+    rectorName: 'Prof. Doutor Manuel da Silva Santos',
+    academicDirectorName: 'Prof.ª Doutora Joana Bumba',
+    status: 'emitido'
+  }
+];
