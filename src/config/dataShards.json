@@ -1,0 +1,1337 @@
+{
+  "_doc": "Colecções guardadas por registo (tabela `records`, uma linha por registo). Esta é a ÚNICA fonte de verdade: o cliente (src/utils/shardSync.ts) e as permissões do servidor (scripts/gen-supabase-acl.mjs → collection_acl, migração 0005) leem este ficheiro. 'sections' são as secções do menu cujo acesso personalizado (access_control) manda quando existe; sem acesso personalizado vale a lista de perfis. 'fieldWrites' dá a um perfil escrita apenas em campos concretos do registo. 'academicYearScoped' indica colecções divididas e carregadas por ano lectivo. Aluno e encarregado acedem aos seus dados pessoais e dos educandos via user_projections/{instituição}/{uid}.",
+  "collections": {
+    "students": {
+      "sections": [
+        "alunos",
+        "matriculas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "fieldWrites": {
+        "professor": [
+          "attendanceRate",
+          "unexcusedAbsences",
+          "excusedAbsences",
+          "currentAverage",
+          "grades",
+          "trimesterGrades",
+          "trimesterGradesYear",
+          "gradeHistory",
+          "disciplineGrades"
+        ],
+        "financeiro": [
+          "financialStatus",
+          "isTuitionPaidCurrentMonth"
+        ]
+      }
+    },
+    "matriculas": {
+      "sections": [
+        "matriculas",
+        "alunos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "classes": {
+      "sections": [
+        "turmas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "teachers": {
+      "sections": [
+        "professores"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "funcionarios": {
+      "sections": [
+        "funcionarios"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "invoices": {
+      "sections": [
+        "propinas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "payrollRecords": {
+      "sections": [
+        "folha_pagamento"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "financeiro"
+      ]
+    },
+    "homologations": {
+      "sections": [
+        "pautas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "attendanceSheets": {
+      "sections": [
+        "assiduidade"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "medicalRecords": {
+      "sections": [
+        "saude_ficha_medica"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "disciplinaryIncidents": {
+      "sections": [
+        "saude_incidentes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "pickupAuthorizations": {
+      "sections": [
+        "saude_recolha"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "pickupRecords": {
+      "sections": [
+        "saude_recolha"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "guardianLinks": {
+      "sections": [
+        "vinculo_filhos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "admissions": {
+      "sections": [
+        "admissoes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "leaveRequests": {
+      "sections": [
+        "ferias_licencas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro",
+        "professor",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "teacherEvaluations": {
+      "sections": [
+        "avaliacao_desempenho_docente"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "canteenMenus": {
+      "sections": [
+        "refeitorio"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "canteenSubscriptions": {
+      "sections": [
+        "refeitorio"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "canteenServices": {
+      "sections": [
+        "refeitorio"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ]
+    },
+    "questions": {
+      "sections": [
+        "banco_questoes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "examPapers": {
+      "sections": [
+        "banco_questoes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "dataSubjectRequests": {
+      "sections": [
+        "configuracoes/protecao-dados"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "internalChatThreads": {
+      "sections": [
+        "comunicacao_notificacoes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ]
+    },
+    "departments": {
+      "sections": [
+        "departamentos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "suppliers": {
+      "sections": [
+        "fornecedores"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "financeiro"
+      ]
+    },
+    "curriculumPlans": {
+      "sections": [
+        "plano_curricular"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "subjectAssignments": {
+      "sections": [
+        "atribuicao"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "extracurricularActivities": {
+      "sections": [
+        "atividades_extracurriculares"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "assets": {
+      "sections": [
+        "inventario_ativos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ]
+    },
+    "stockItems": {
+      "sections": [
+        "controlo_estoque"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ]
+    },
+    "stockMovements": {
+      "sections": [
+        "controlo_estoque"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ]
+    },
+    "vehicles": {
+      "sections": [
+        "transporte_escolar"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ]
+    },
+    "transportRoutes": {
+      "sections": [
+        "transporte_escolar"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ]
+    },
+    "smsWhatsappNotifications": {
+      "sections": [
+        "comunicacao_notificacoes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "parentTeacherMeetings": {
+      "sections": [
+        "comunicacao_reunioes"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "books": {
+      "sections": [
+        "mural_biblioteca"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "loans": {
+      "sections": [
+        "mural_biblioteca"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "courses": {
+      "sections": [
+        "cursos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "subjects": {
+      "sections": [
+        "disciplinas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "timetable": {
+      "sections": [
+        "horarios"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "services": {
+      "sections": [
+        "propinas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ]
+    },
+    "notices": {
+      "sections": [
+        "mural_biblioteca"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "notifications": {
+      "sections": [
+        "dashboard"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "funcionario",
+        "financeiro",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ]
+    },
+    "unidadesCurriculares": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro",
+        "funcionario",
+        "aluno",
+        "encarregado"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "inscricoesUC": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "fieldWrites": {
+        "professor": [
+          "notaFrequencia",
+          "notaExameNormal",
+          "notaRecurso",
+          "notaEspecial",
+          "notaFinal",
+          "epocaAprovacao",
+          "status"
+        ]
+      }
+    },
+    "monografiasTCC": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ]
+    },
+    "estagiosCurriculares": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ]
+    },
+    "bolsasEstudo": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ]
+    },
+    "diplomasSuperior": {
+      "sections": [
+        "ensino_superior"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "academicDocuments": {
+      "sections": [
+        "documentos_academicos",
+        "estudio_documentos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "studentTransfers": {
+      "sections": [
+        "transferencias"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "classCouncils": {
+      "sections": [
+        "conselho_turma"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "recoveryRecords": {
+      "sections": [
+        "recuperacao_recurso"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "paymentPlans": {
+      "sections": [
+        "planos_descontos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "discountRules": {
+      "sections": [
+        "planos_descontos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "financeiro"
+      ]
+    },
+    "bankStatementLines": {
+      "sections": [
+        "conciliacao_bancaria"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "financeiro"
+      ]
+    },
+    "expenses": {
+      "sections": [
+        "contabilidade"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "financeiro"
+      ]
+    },
+    "assignments": {
+      "sections": [
+        "ead_trabalhos",
+        "aluno_trabalhos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "assignmentSubmissions": {
+      "sections": [
+        "ead_trabalhos",
+        "aluno_trabalhos"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ],
+      "ownerWrite": {
+        "aluno": "submitterUid"
+      }
+    },
+    "descriptiveAssessments": {
+      "sections": [
+        "avaliacao_descritiva"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ]
+    },
+    "lessonPlans": {
+      "sections": [
+        "professor_plano_aulas"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "lessonSummaries": {
+      "sections": [
+        "professor_sumarios"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "teachingMaterials": {
+      "sections": [
+        "professor_materiais"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria",
+        "professor"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "professor"
+      ]
+    },
+    "subjectEquivalences": {
+      "sections": [
+        "transferencias"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "studentDependencies": {
+      "sections": [
+        "transferencias"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "dropoutFollowUps": {
+      "sections": [
+        "evasao_escolar"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "journalEntries": {
+      "sections": [
+        "balancete_contabilistico"
+      ],
+      "read": [
+        "admin",
+        "financeiro"
+      ],
+      "write": [
+        "admin",
+        "financeiro"
+      ]
+    },
+    "nationalExams": {
+      "sections": [
+        "exames_nacionais"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "examEnrollments": {
+      "sections": [
+        "exames_nacionais"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "individualPlans": {
+      "sections": [
+        "plano_individual"
+      ],
+      "read": [
+        "admin",
+        "director"
+      ],
+      "write": [
+        "admin",
+        "director"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    },
+    "boardingRooms": {
+      "sections": [
+        "internato"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ]
+    },
+    "boardingAllocations": {
+      "sections": [
+        "internato"
+      ],
+      "read": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "write": [
+        "admin",
+        "director",
+        "secretaria"
+      ],
+      "academicYearScoped": true,
+      "indexOn": [
+        "academicYear"
+      ]
+    }
+  }
+}
