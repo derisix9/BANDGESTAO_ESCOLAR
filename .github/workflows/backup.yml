@@ -1,0 +1,52 @@
+name: Backup diário
+on:
+  schedule: [{ cron: '0 3 * * *' }]
+  workflow_dispatch:
+concurrency: backup
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # pg_dump tem de ter versão >= à do servidor Supabase (ajuste 17 se o seu projecto for outra)
+      - name: Instalar cliente PostgreSQL
+        run: |
+          sudo apt-get install -y postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y postgresql-client-17
+          echo "/usr/lib/postgresql/17/bin" >> "$GITHUB_PATH"
+      - name: Dump cifrado
+        run: bash ./scripts/backup.sh
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+      # Armazenamento EXTERNO (S3, Backblaze B2, Wasabi...). Não usamos upload-artifact: fica no GitHub e não é "fora".
+      - name: Enviar para armazenamento externo
+        run: |
+          aws s3 cp backup_*.dump.gpg "s3://${BACKUP_BUCKET}/db/" --endpoint-url "${BACKUP_S3_ENDPOINT}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKUP_S3_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKUP_S3_SECRET }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKUP_S3_REGION }}
+          BACKUP_BUCKET: ${{ secrets.BACKUP_BUCKET }}
+          BACKUP_S3_ENDPOINT: ${{ secrets.BACKUP_S3_ENDPOINT }}
+      # Ficheiros (fotos, BI, PDFs): o dump NÃO os inclui. Sincroniza o bucket school-files via API S3 do Supabase Storage.
+      - name: Storage (school-files)
+        run: |
+          aws s3 sync "s3://school-files" ./storage_copy --endpoint-url "${SUPABASE_S3_ENDPOINT}"
+          tar czf storage_$(date -u +%Y%m%d).tgz storage_copy
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$BACKUP_PASSPHRASE" --symmetric --cipher-algo AES256 -o storage_$(date -u +%Y%m%d).tgz.gpg storage_$(date -u +%Y%m%d).tgz
+          AWS_ACCESS_KEY_ID="$DEST_KEY_ID" AWS_SECRET_ACCESS_KEY="$DEST_SECRET" AWS_DEFAULT_REGION="$DEST_REGION" \
+            aws s3 cp storage_*.tgz.gpg "s3://${BACKUP_BUCKET}/storage/" --endpoint-url "${BACKUP_S3_ENDPOINT}"
+        env:
+          # Chaves S3 do Supabase: Project Settings > Storage > S3 Connection
+          AWS_ACCESS_KEY_ID: ${{ secrets.SUPABASE_S3_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_S3_SECRET }}
+          AWS_DEFAULT_REGION: ${{ secrets.SUPABASE_S3_REGION }}
+          SUPABASE_S3_ENDPOINT: ${{ secrets.SUPABASE_S3_ENDPOINT }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+          BACKUP_BUCKET: ${{ secrets.BACKUP_BUCKET }}
+          BACKUP_S3_ENDPOINT: ${{ secrets.BACKUP_S3_ENDPOINT }}
+          DEST_KEY_ID: ${{ secrets.BACKUP_S3_KEY_ID }}
+          DEST_SECRET: ${{ secrets.BACKUP_S3_SECRET }}
+          DEST_REGION: ${{ secrets.BACKUP_S3_REGION }}
