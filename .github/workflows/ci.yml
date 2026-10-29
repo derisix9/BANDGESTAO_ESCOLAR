@@ -34,6 +34,6 @@ jobs:
       - name: npm audit (falha com vulnerabilidades altas ou críticas em dependências de produção)
         run: npm audit --omit=dev --audit-level=high
       - name: gitleaks (segredos no código e no histórico)
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
