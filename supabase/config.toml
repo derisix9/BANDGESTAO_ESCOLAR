@@ -1,0 +1,60 @@
+# Configuração do Supabase local/CLI. No painel Cloud, aplique os MESMOS valores em Authentication.
+project_id = "bandmed"
+
+[auth]
+site_url = "http://127.0.0.1:3000"        # PRODUÇÃO: o endereço da app (no painel: Authentication → URL Configuration)
+additional_redirect_urls = ["http://127.0.0.1:3000/", "http://localhost:3000/"]   # PRODUÇÃO: acrescente https://a-sua-app/ (o link do e-mail só volta a endereços desta lista)
+enable_signup = true               # registo de escolas pelo signUp nativo (precisa de e-mail confirmado + captcha). Sem perfil, a conta não acede a nada (RLS); a escola só nasce em complete_registration()
+minimum_password_length = 10
+password_requirements = "lower_upper_letters_digits"
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+
+[auth.email]
+enable_confirmations = true
+double_confirm_changes = true
+
+# Registo de escolas (migração 0046): o Supabase envia o e-mail "Confirm signup". No painel: Authentication → Email Templates → Confirm signup
+# (cole supabase/templates/confirmacao.html). Em produção use SMTP próprio (Authentication → SMTP Settings): o servidor de testes tem limites muito baixos.
+[auth.email.template.confirmation]
+subject = "Confirme o seu registo no BandMed"
+content_path = "./supabase/templates/confirmacao.html"
+
+# --- Anti-força-bruta (passo 1 da auditoria) ---------------------------------------------
+# Bloqueio NO SERVIDOR: o GoTrue pergunta a esta função Postgres (migração 0042) antes de aceitar cada login.
+[auth.hook.password_verification_attempt]
+enabled = true
+uri = "pg-functions://postgres/public/hook_password_verification_attempt"
+
+# Captcha verificado pelo próprio Supabase em login, recuperação de palavra-passe e registo (Cloudflare Turnstile).
+# Sem isto, um atacante chama /auth/v1/token directamente e ignora o captcha da interface.
+[auth.captcha]
+enabled = true
+provider = "turnstile"
+secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"
+
+# Limites por IP (por 5 minutos). Valores conservadores; ajuste se várias escolas partilharem o mesmo IP (NAT).
+[auth.rate_limit]
+email_sent = 10
+sign_in_sign_ups = 30
+token_verifications = 30
+token_refresh = 150
+
+[auth.mfa.totp]
+enroll_enabled = true              # 2FA real (TOTP). Exigir para admin/director/financeiro na app (aal2)
+verify_enabled = true
+
+[functions.create-user]
+verify_jwt = true
+[functions.delete-user]
+verify_jwt = true
+[functions.school-backups]
+verify_jwt = false                 # a função valida ela própria: sessão do administrador OU segredo do agendador (pg_cron)
+[functions.payments]
+verify_jwt = false                 # a função valida ela própria: sessão (administrador / gestão / aluno-encarregado) OU segredo do agendador
+[functions.payments-webhook]
+verify_jwt = false                 # chamada pelo fornecedor de pagamentos; a autenticidade vem da assinatura HMAC (X-Signature)
+[functions.notifications]
+verify_jwt = false                 # a função valida ela própria: sessão do utilizador (admin / quem envia / o próprio aparelho) OU segredo do agendador
+[functions.meeting-file]
+verify_jwt = false                 # link público (SMS/WhatsApp): a função valida escola + reunião + código aleatório do PDF
