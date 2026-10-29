@@ -1,0 +1,197 @@
+/* =============================================================================
+   APP MÓVEL — aspeto de aplicação nativa no telemóvel/tablet (< 1024px)
+   Cores: as MESMAS do sistema (azul #0b1f3a, vinho #7a0c0c, âmbar do menu).
+   O desktop (>= 1024px) não é afetado. Ficheiros relacionados:
+   components/MobileTabBar.tsx · utils/mobileTables.ts
+   ========================================================================== */
+
+:root {
+  --bm-m-navy: #0b1f3a;
+  --bm-m-wine: #7a0c0c;
+  --bm-m-amber: #fbbf24;
+  --bm-m-surface: #ffffff;
+  --bm-m-bg: #f8f9ff;
+  --bm-m-line: #d3e4fe;
+  --bm-m-text: #0b1c30;
+  --bm-m-muted: #44474d;
+  --bm-tab-h: 3.75rem;
+}
+html[data-color-mode='dark'] {
+  --bm-m-surface: #232c3b;
+  --bm-m-bg: #1a212d;
+  --bm-m-line: #3a465b;
+  --bm-m-text: #e3e8f0;
+  --bm-m-muted: #aab4c4;
+}
+
+.bm-tabbar, .bm-menu-bg { display: none; }
+
+@media (max-width: 1023px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
+
+  /* ---- Cabeçalho e conteúdo respeitam o entalhe e a barra de baixo ---- */
+  [data-app-header] {
+    height: calc(4rem + env(safe-area-inset-top, 0px)) !important;
+    padding-top: env(safe-area-inset-top, 0px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+  [data-app-main] {
+    padding-top: calc(4.75rem + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: calc(var(--bm-tab-h) + env(safe-area-inset-bottom, 0px) + 1rem) !important;
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+  }
+  :root { --bm-nav-top: calc(4rem + env(safe-area-inset-top, 0px)); }
+
+  /* ---- Barra de separadores ---- */
+  .bm-tabbar {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 35;
+    background: var(--bm-m-surface);
+    border-top: 1px solid var(--bm-m-line);
+    padding: 0.25rem 0.25rem calc(0.25rem + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 18px rgba(11, 31, 58, 0.12);
+  }
+  .bm-tabbar button {
+    flex: 1; min-width: 0; min-height: 3.25rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    background: none; border: 0; border-radius: 0.9rem;
+    font-size: 0.65rem; font-weight: 600; color: var(--bm-m-muted);
+    transition: transform 0.12s, background-color 0.15s;
+  }
+  .bm-tabbar button span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bm-tabbar button .material-symbols-outlined { font-size: 1.55rem; }
+  .bm-tabbar button:active { transform: scale(0.92); background: rgba(11, 31, 58, 0.07); }
+  .bm-tabbar button.is-on { color: var(--bm-m-navy); }
+  .bm-tabbar button.is-on .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    background: rgba(11, 31, 58, 0.12); border-radius: 999px; padding: 0.1rem 0.9rem;
+  }
+  html[data-color-mode='dark'] .bm-tabbar button.is-on { color: var(--bm-m-amber); }
+  html[data-color-mode='dark'] .bm-tabbar button.is-on .material-symbols-outlined { background: rgba(251, 191, 36, 0.15); }
+
+  /* ---- Folha "Menu" (todas as secções) ---- */
+  .bm-menu-bg {
+    display: flex; align-items: flex-end;
+    position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.55);
+    animation: bm-fade 0.18s ease-out;
+  }
+  .bm-menu {
+    width: 100%; max-height: 92dvh; display: flex; flex-direction: column;
+    background: var(--bm-m-bg); color: var(--bm-m-text);
+    border-radius: 1.4rem 1.4rem 0 0; animation: bm-up 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .bm-menu-grip { width: 2.5rem; height: 0.28rem; border-radius: 9px; background: var(--bm-m-line); margin: 0.5rem auto 0.25rem; }
+  .bm-menu-head { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; }
+  .bm-menu-user { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+  .bm-menu-user > .material-symbols-outlined { font-size: 2.3rem; color: var(--bm-m-navy); }
+  html[data-color-mode='dark'] .bm-menu-user > .material-symbols-outlined { color: var(--bm-m-amber); }
+  .bm-menu-user strong { display: block; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bm-menu-user small { color: var(--bm-m-muted); text-transform: capitalize; }
+  .bm-menu-x { width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 0; background: var(--bm-m-surface); color: var(--bm-m-text); display: grid; place-items: center; }
+  .bm-menu-search {
+    margin: 0 1rem 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+    background: var(--bm-m-surface); border: 1.5px solid var(--bm-m-line); border-radius: 0.9rem; padding: 0 0.75rem;
+  }
+  .bm-menu-search:focus-within { border-color: var(--bm-m-navy); }
+  .bm-menu-search input { flex: 1; min-width: 0; border: 0 !important; background: transparent !important; outline: 0; box-shadow: none !important; min-height: 2.9rem; color: inherit; }
+  .bm-menu-body { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 1rem 1.25rem; }
+  .bm-menu-body h3 {
+    display: flex; align-items: center; gap: 0.4rem; margin: 1rem 0.15rem 0.5rem;
+    font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bm-m-wine);
+  }
+  html[data-color-mode='dark'] .bm-menu-body h3 { color: var(--bm-m-amber); }
+  .bm-menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; }
+  .bm-menu-grid button {
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0.4rem;
+    padding: 0.8rem 0.3rem 0.65rem; min-height: 5.2rem;
+    background: var(--bm-m-surface); border: 1px solid var(--bm-m-line); border-radius: 1rem;
+    font-size: 0.7rem; font-weight: 600; line-height: 1.15; text-align: center; color: var(--bm-m-text);
+    box-shadow: 0 1px 3px rgba(11, 31, 58, 0.08); transition: transform 0.12s;
+    overflow-wrap: anywhere;
+  }
+  .bm-menu-grid button:active { transform: scale(0.95); }
+  .bm-menu-grid button .material-symbols-outlined { font-size: 1.6rem; color: var(--bm-m-navy); }
+  html[data-color-mode='dark'] .bm-menu-grid button .material-symbols-outlined { color: var(--bm-m-amber); }
+  .bm-menu-grid button.is-on { background: var(--bm-m-navy); border-color: var(--bm-m-navy); color: #fff; }
+  .bm-menu-grid button.is-on .material-symbols-outlined { color: var(--bm-m-amber); }
+  .bm-menu-empty { text-align: center; color: var(--bm-m-muted); padding: 2rem 0; }
+  .bm-menu-logout {
+    margin-top: 1.25rem; width: 100%; min-height: 3rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    border: 1.5px solid var(--bm-m-wine); color: var(--bm-m-wine); background: transparent; border-radius: 0.9rem; font-weight: 700;
+  }
+  html[data-color-mode='dark'] .bm-menu-logout { color: #fca5a5; border-color: #fca5a5; }
+  @keyframes bm-up { from { transform: translateY(100%); } }
+  @keyframes bm-fade { from { opacity: 0; } }
+
+  /* ---- Gaveta lateral: estilo app (cantos arredondados e entalhe) ---- */
+  aside.fixed { padding-top: env(safe-area-inset-top, 0px); border-radius: 0 1.25rem 1.25rem 0; width: min(84vw, 20rem) !important; }
+
+  /* ---- Toque: alvos grandes, sem zoom do iOS ---- */
+  button, [role='button'], a, select, summary { touch-action: manipulation; }
+  [data-app-main] button:not(.bm-tabbar button):not([data-mini]) { min-height: 2.5rem; }
+  [data-app-main] input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  [data-app-main] select,
+  [data-app-main] textarea,
+  .fixed input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  .fixed select,
+  .fixed textarea { font-size: 16px !important; min-height: 2.75rem; border-radius: 0.75rem; }
+  [data-app-main] button:active { filter: brightness(0.94); }
+
+  /* Cartões do sistema com cantos e sombra de app */
+  [data-app-main] .rounded-xl, [data-app-main] .rounded-2xl { border-radius: 1.1rem; }
+
+  /* Abas/filtros em fila: deslizam com o dedo */
+  [data-app-main] [role='tablist'] { overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  [data-app-main] [role='tablist']::-webkit-scrollbar { display: none; }
+}
+
+/* ---- Janelas (modais) viram folhas que sobem de baixo, ocupando o ecrã ---- */
+@media (max-width: 767px) {
+  .fixed.inset-0.z-50.items-center { align-items: flex-end !important; padding: 0 !important; }
+  .fixed.inset-0.z-50.items-center > form,
+  .fixed.inset-0.z-50.items-center > div {
+    width: 100% !important; max-width: 100% !important; max-height: 94dvh !important;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    animation: bm-up 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .fixed.inset-0.z-50.items-center > form > div:last-child {
+    position: sticky; bottom: 0; flex-wrap: wrap;
+  }
+
+  /* ---- Tabelas → cartões ---- */
+  table[data-mt-cards] { display: block; border: 0 !important; background: transparent !important; width: 100% !important; min-width: 0 !important; }
+  table[data-mt-cards] thead, table[data-mt-cards] tfoot { display: none; }
+  table[data-mt-cards] tbody { display: flex; flex-direction: column; gap: 0.6rem; }
+  table[data-mt-cards] tbody tr {
+    display: block; background: var(--bm-m-surface) !important; color: var(--bm-m-text);
+    border: 1px solid var(--bm-m-line); border-left: 4px solid var(--bm-m-navy);
+    border-radius: 1rem; padding: 0.35rem 0.85rem; box-shadow: 0 1px 4px rgba(11, 31, 58, 0.1);
+  }
+  table[data-mt-cards] tbody td {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.5rem 0 !important; border: 0 !important; border-bottom: 1px dashed var(--bm-m-line) !important;
+    text-align: right; width: auto !important; min-width: 0 !important; white-space: normal !important; overflow-wrap: anywhere;
+    position: static !important; background: transparent !important;
+  }
+  table[data-mt-cards] tbody td:last-child { border-bottom: 0 !important; }
+  table[data-mt-cards] tbody td[data-label]:not([data-label=''])::before {
+    content: attr(data-label); flex: none; max-width: 45%; text-align: left;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--bm-m-muted);
+  }
+  table[data-mt-cards] tbody td[data-label='']:not(:first-child) { justify-content: flex-end; }
+  table[data-mt-cards] tbody td[data-span] { display: block; text-align: center; }
+  /* Containers de tabela: sem scroll lateral quando já é lista de cartões */
+  div:has(> table[data-mt-cards]) { overflow-x: visible !important; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+
+  /* Tabelas largas (Excel/pautas): scroll lateral suave */
+  [data-app-main] div:has(> table:not([data-mt-cards])) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bm-menu, .bm-menu-bg, .fixed.inset-0.z-50.items-center > * { animation: none !important; }
+}
+@media print { .bm-tabbar, .bm-menu-bg { display: none !important; } }

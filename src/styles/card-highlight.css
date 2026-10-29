@@ -1,0 +1,72 @@
+/* ==========================================================================
+ * Destaque animado de cards (ver src/utils/cardHighlight.ts).
+ * O JS define --hl-bg / --hl-fg e a classe .card-hl-on ao passar o rato.
+ * Borda colorida → fundo 100 % da cor da borda. Borda branca/preta → inversão.
+ * O card "cresce" (escala + elevação) e os vizinhos recuam um pouco.
+ * ========================================================================== */
+.kpi-card, .card-hl, [data-card-hl] {
+  transition:
+    transform .32s cubic-bezier(.34, 1.56, .64, 1),
+    background-color .22s ease, color .22s ease, border-color .22s ease,
+    box-shadow .32s ease, opacity .25s ease, filter .25s ease;
+  will-change: transform;
+}
+.kpi-card .kpi-icon, .kpi-card .kpi-chip, .kpi-card .kpi-label, .kpi-card .kpi-value, .kpi-card .kpi-sub {
+  transition: background-color .22s ease, color .22s ease, transform .32s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Card em destaque (cards de qualquer secção: cores e transform também vão inline pelo JS) */
+html:root .card-hl-on.card-hl-on {
+  background-color: var(--hl-bg) !important;
+  color: var(--hl-fg) !important;
+  transform: translateY(-6px) scale(1.06);
+  z-index: 30;
+  box-shadow: 0 18px 38px -10px rgb(0 0 0 / .45), 0 0 0 1px var(--hl-bg);
+}
+/* os outros cards da mesma grelha recuam, reforçando a sensação de que este aumentou */
+.card-hl-peer:not(.card-hl-on) {
+  transform: scale(.965);
+  opacity: .8;
+  filter: saturate(.85);
+}
+
+/* Texto dentro do card em destaque: cor de contraste */
+html:root .card-hl-on.card-hl-on :is(span, p, div, h1, h2, h3, h4, h5, small, strong, b, label, td, th, li, a) {
+  color: var(--hl-fg) !important;
+  opacity: 1;
+}
+html:root .card-hl-on.card-hl-on .kpi-foot { border-top-color: var(--hl-fg) !important; opacity: .9; }
+
+/* Ícone com fundo: troca de par de cores para continuar visível (tema claro e escuro) */
+html:root .card-hl-on.card-hl-on .kpi-icon,
+html:root .card-hl-on.card-hl-on [data-hl-icon] {
+  background-color: var(--hl-fg) !important;
+  color: var(--hl-bg) !important;
+  border-color: var(--hl-fg) !important;
+  box-shadow: 0 4px 12px -2px rgb(0 0 0 / .35);
+  transform: scale(1.12) rotate(-6deg);
+}
+html:root .card-hl-on.card-hl-on .kpi-icon .material-symbols-outlined,
+html:root .card-hl-on.card-hl-on [data-hl-icon] .material-symbols-outlined {
+  color: var(--hl-bg) !important;
+}
+
+/* Chips de cor do card: invertem; etiquetas com significado próprio (verde/vermelho) mantêm a cor, com contorno */
+html:root .card-hl-on.card-hl-on .kpi-chip {
+  background-color: var(--hl-fg) !important;
+  color: var(--hl-bg) !important;
+}
+html:root .card-hl-on.card-hl-on .kpi-tag-green,
+html:root .card-hl-on.card-hl-on .kpi-tag-red {
+  box-shadow: 0 0 0 2px var(--hl-fg);
+}
+html:root .card-hl-on.card-hl-on .kpi-tag-green { background-color: #059669 !important; color: #fff !important; }
+html:root .card-hl-on.card-hl-on .kpi-tag-red   { background-color: #dc2626 !important; color: #fff !important; }
+html:root .card-hl-on.card-hl-on .kpi-text-red,
+html:root .card-hl-on.card-hl-on .kpi-text-green { color: var(--hl-fg) !important; font-weight: 800; }
+
+@media (prefers-reduced-motion: reduce) {
+  html:root .card-hl-on.card-hl-on { transform: none; }
+  .card-hl-peer:not(.card-hl-on) { transform: none; }
+  html:root .card-hl-on.card-hl-on .kpi-icon { transform: none; }
+}

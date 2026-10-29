@@ -1,0 +1,172 @@
+/* ==========================================================================
+ * Cards de estatística com cor por função (Dashboard, Fluxo de Caixa...).
+ *
+ * Mesmo estilo dos cartões de Pagamentos: borda sólida da cor da função e
+ * fundo opaco: branco no tema claro, preto no escuro (o realce ao passar o
+ * rato continua a vir de card-highlight.css / cardHighlight.ts). Cor = significado:
+ *   blue   → alunos / total        green → entradas, cobrado, saldo positivo
+ *   red    → saídas, despesas, mora amber → atenção, pendente, assiduidade
+ *   violet → pessoal / docentes    cyan  → neutro financeiro (saldo)
+ * Uso: <div className="kpi-card kpi-green"> + .kpi-label/.kpi-value/.kpi-icon/
+ *      .kpi-foot/.kpi-chip/.kpi-sub/.kpi-unit
+ * ========================================================================== */
+/* Fundo dos cards no modo escuro — mude aqui. */
+:root { --bm-card-dark: #2b3547; }
+
+.kpi-card {
+  --k: 37 99 235;          /* cor base (rgb) */
+  --k-ink: 30 58 138;      /* texto forte no tema claro */
+  --k-soft: 71 85 105;     /* texto secundário no tema claro */
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #ffffff !important; /* claro: branco opaco (o hover é aplicado inline por cardHighlight.ts) */
+  border: 2px solid rgb(var(--k)) !important;
+  color: rgb(var(--k-ink));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+.kpi-blue   { --k: 37 99 235;  --k-ink: 30 58 138; }
+.kpi-green  { --k: 5 150 105;  --k-ink: 6 78 59; }
+.kpi-red    { --k: 220 38 38;  --k-ink: 127 29 29; }
+.kpi-amber  { --k: 217 119 6;  --k-ink: 120 53 15; }
+.kpi-violet { --k: 124 58 237; --k-ink: 76 29 149; }
+.kpi-cyan   { --k: 8 145 178;  --k-ink: 22 78 99; }
+
+.kpi-card .kpi-label { color: rgb(var(--k-ink)); opacity: 0.85; }
+.kpi-card .kpi-value { color: rgb(var(--k-ink)); }
+.kpi-card .kpi-unit  { color: rgb(var(--k)); }
+.kpi-card .kpi-sub   { color: rgb(var(--k-ink)); opacity: 0.8; }
+.kpi-card .kpi-icon {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  border-radius: 8px;
+  background-color: rgb(var(--k)) !important;
+  color: #fff !important;
+}
+.kpi-card .kpi-icon .material-symbols-outlined { color: #fff !important; }
+.kpi-card .kpi-foot { border-top: 1px solid rgb(var(--k) / 0.35) !important; }
+.kpi-card .kpi-chip {
+  background-color: rgb(var(--k)) !important;
+  color: #fff !important;
+  border-radius: 4px;
+}
+
+/* Etiquetas com significado próprio, independentes da cor do card */
+.kpi-card .kpi-tag-green { background-color: #059669 !important; color: #fff !important; }
+.kpi-card .kpi-tag-red   { background-color: #dc2626 !important; color: #fff !important; }
+.kpi-card .kpi-text-red   { color: #dc2626 !important; opacity: 1; }
+.kpi-card .kpi-text-green { color: #059669 !important; opacity: 1; }
+html[data-color-mode='dark'] .kpi-card .kpi-tag-green { background-color: #34d399 !important; color: #052e1f !important; }
+html[data-color-mode='dark'] .kpi-card .kpi-tag-red   { background-color: #f87171 !important; color: #3b0a0a !important; }
+html[data-color-mode='dark'] .kpi-card .kpi-text-red   { color: #fca5a5 !important; }
+html[data-color-mode='dark'] .kpi-card .kpi-text-green { color: #6ee7b7 !important; }
+
+/* ---- Tema escuro: fundo translúcido sobre o escuro, texto claro da cor ---- */
+html[data-color-mode='dark'] .kpi-card {
+  background-color: var(--bm-card-dark) !important; /* escuro: #2b3547 opaco */
+  --k-ink: 226 232 240;
+}
+html[data-color-mode='dark'] .kpi-blue   { --k: 96 165 250;  --k-text: 191 219 254; }
+html[data-color-mode='dark'] .kpi-green  { --k: 52 211 153;  --k-text: 167 243 208; }
+html[data-color-mode='dark'] .kpi-red    { --k: 248 113 113; --k-text: 254 202 202; }
+html[data-color-mode='dark'] .kpi-amber  { --k: 251 191 36;  --k-text: 253 230 138; }
+html[data-color-mode='dark'] .kpi-violet { --k: 167 139 250; --k-text: 221 214 254; }
+html[data-color-mode='dark'] .kpi-cyan   { --k: 34 211 238;  --k-text: 165 243 252; }
+html[data-color-mode='dark'] .kpi-card .kpi-label,
+html[data-color-mode='dark'] .kpi-card .kpi-value,
+html[data-color-mode='dark'] .kpi-card .kpi-sub { color: rgb(var(--k-text)); opacity: 1; }
+html[data-color-mode='dark'] .kpi-card .kpi-sub { opacity: 0.85; }
+/* chips/ícones com fundo da cor: texto escuro para contraste no escuro */
+html[data-color-mode='dark'] .kpi-card .kpi-chip,
+html[data-color-mode='dark'] .kpi-card .kpi-icon,
+html[data-color-mode='dark'] .kpi-card .kpi-icon .material-symbols-outlined { color: #0b1220 !important; }
+
+/* ==========================================================================
+ * Separadores de passos dos modais (Professor / Funcionário):
+ * inativo = azul com letras brancas; ativo = outro fundo (azul-escuro vivo
+ * com barra de destaque) mas SEMPRE com letras brancas — nunca preto.
+ * ========================================================================== */
+html .step-tab {
+  background-color: #2563eb !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  border-radius: 8px 8px 0 0;
+}
+html .step-tab:hover { background-color: #1d4ed8 !important; }
+html .step-tab .material-symbols-outlined,
+html .step-tab span { color: #fff !important; }
+html .step-tab[aria-selected='true'] {
+  background-color: #1e3a8a !important;       /* azul-marinho vivo, não preto */
+  border-bottom: 3px solid #fbbf24 !important; /* barra âmbar a marcar o passo atual */
+  box-shadow: inset 0 -10px 18px -12px rgb(251 191 36 / 0.45);
+}
+html[data-color-mode='dark'] .step-tab[aria-selected='true'] { background-color: #3b5bdb !important; }
+
+/* ==========================================================================
+ * Botões "Definir" dos trimestres / período letivo: legíveis nos dois temas.
+ * ========================================================================== */
+html .btn-definir {
+  background-color: #2563eb !important;
+  border: 1px solid #2563eb !important;
+  color: #fff !important;
+}
+html .btn-definir:hover { background-color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+html .btn-definir .material-symbols-outlined,
+html .btn-definir span { color: #fff !important; }
+html .btn-definir:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2px; }
+
+/* Tabela de escolas do painel «Escolher escola» no modo escuro */
+@media screen {
+  html[data-color-mode='dark'] .picker-table { background-color: #232c3b !important; border-color: #3a475e !important; }
+  html[data-color-mode='dark'] .picker-table thead tr { background-color: #1f3960 !important; }
+  html[data-color-mode='dark'] .picker-table tbody tr { background-color: #232c3b !important; border-color: #3a475e !important; }
+  html[data-color-mode='dark'] .picker-table tbody tr:nth-child(even) { background-color: #28334a !important; }
+  html[data-color-mode='dark'] .picker-table tbody tr:hover { background-color: #31405c !important; }
+  html[data-color-mode='dark'] .picker-table .text-\[\#12498A\] { color: #9ec1f5 !important; }
+}
+
+/* Painel «Escolher escola»: botões e linha de total com cores explícitas (o tema não as altera ao passar o rato) */
+.picker-hdr-btn {
+  display: inline-flex; align-items: center; gap: .25rem; padding: .5rem .75rem; border-radius: .5rem;
+  font-size: .875rem; font-weight: 700; cursor: pointer; transition: background-color .15s, color .15s;
+  background-color: #ffffff !important; color: #12498A !important; border: 1px solid #ffffff !important;
+}
+.picker-hdr-btn:hover, .picker-hdr-btn:focus-visible { background-color: #dbe7fb !important; color: #0b2f5e !important; border-color: #dbe7fb !important; }
+.picker-hdr-btn * { color: inherit !important; }
+
+.picker-enter-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem;
+  border-radius: .5rem; cursor: pointer; box-shadow: 0 1px 2px rgb(0 0 0 / .1); transition: filter .15s, transform .1s;
+  background-color: #2563EB !important; color: #ffffff !important; border: 0 !important;
+}
+.picker-enter-btn:hover { background-color: #1d4ed8 !important; color: #ffffff !important; }
+.picker-enter-btn:active { transform: scale(.95); }
+.picker-enter-btn:disabled { opacity: .4; cursor: not-allowed; }
+.picker-enter-btn * { color: #ffffff !important; }
+
+.picker-total-row td { background-color: #C9DBF7 !important; color: #0b2f5e !important; font-weight: 800; border-top: 2px solid #12498A; }
+@media screen {
+  html[data-color-mode='dark'] .picker-hdr-btn { background-color: #e3e8f0 !important; color: #1f3960 !important; border-color: #e3e8f0 !important; }
+  html[data-color-mode='dark'] .picker-hdr-btn:hover { background-color: #c7d3e8 !important; color: #14284a !important; }
+  html[data-color-mode='dark'] .picker-enter-btn { background-color: #3268d0 !important; }
+  html[data-color-mode='dark'] .picker-enter-btn:hover { background-color: #2b5bb8 !important; }
+  html[data-color-mode='dark'] .picker-total-row td { background-color: #1f3960 !important; color: #e3e8f0 !important; border-top-color: #4b6fa8; }
+}
+
+/* ==========================================================================
+ * Cards de Pagamentos (Propinas) marcados com data-solid-card: mesmo fundo
+ * opaco dos cards do Dashboard — branco (claro) / preto (escuro). O hover
+ * continua a funcionar: cardHighlight.ts escreve o fundo inline com !important,
+ * que ganha a estas regras (e excluímos .card-hl-on por segurança).
+ * ========================================================================== */
+html body [data-solid-card]:not(.card-hl-on):not(#_):not(#_) { background-color: #ffffff !important; }
+html[data-color-mode='dark'] body [data-solid-card]:not(.card-hl-on):not(#_):not(#_) { background-color: var(--bm-card-dark) !important; }
+
+/* ==========================================================================
+ * Modo claro: o menu lateral (sidebar) usa o azul mais escuro. O cabeçalho
+ * (barra superior e faixa «Painel Principal») volta ao azul normal do tema.
+ * Só altera o tema claro. Para mudar o tom, edite --bm-sidebar-blue.
+ * ========================================================================== */
+:root { --bm-sidebar-blue: #0a2a52; }
+html:not([data-color-mode='dark']) body aside[class*='bg-[#0b1f3a]']:not(#_):not(#_) {
+  background-color: var(--bm-sidebar-blue) !important;
+}

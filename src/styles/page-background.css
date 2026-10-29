@@ -1,0 +1,41 @@
+/* Imagem de fundo das páginas (ver src/theme/pageBackground.ts). Só actua com <html data-page-bg="on">. */
+@media screen {
+  :root {
+    --page-bg-opacity-light: 0.16;
+    --page-bg-opacity-dark: 0.14;
+  }
+  html[data-page-bg='on'] body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--page-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: var(--page-bg-opacity-light);
+  }
+  html[data-page-bg='on'][data-color-mode='dark'] body::before { opacity: var(--page-bg-opacity-dark); }
+  html[data-page-bg='on'][data-ui-theme] #root .app-shell {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+/* Página pública de candidaturas: o fundo opaco da página deixa ver a imagem de fundo (quando existe). */
+@media screen {
+  html[data-page-bg='on'] .pm-page { background: transparent !important; }
+}
+
+/* Cabeçalho da página pública de candidaturas: imagem public/prematricula-hero.jpg com camada escura por cima.
+   Definido aqui (com !important) para os temas claro/escuro não o sobreporem. Sem o ficheiro fica só o azul escuro. */
+html .pm-hero {
+  background-color: #0b1f3a !important;
+  background-image:
+    linear-gradient(180deg, rgba(11, 31, 58, 0.62) 0%, rgba(11, 31, 58, 0.78) 100%),
+    url('/prematricula-hero.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}

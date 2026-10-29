@@ -1,0 +1,465 @@
+@import "tailwindcss";
+/* Tema "Moderno (Laravel)" — as regras só se aplicam quando o elemento <html>
+   tem data-ui-theme="laravel"; com o Visual Padrão nada daqui produz efeito.
+   (As regras @import têm de vir no topo do ficheiro.) */
+@import "./styles/theme-laravel.css";
+@import "./styles/global-layout.css";
+/* Modo escuro (noite): só @media screen — nunca aparece na impressão. */
+@import "./styles/theme-dark.css";
+/* Imagem de fundo opcional (public/page-bg-light.* e page-bg-dark.*). */
+@import "./styles/page-background.css";
+/* Cards de estatística coloridos, separadores de passos e botões "Definir". */
+@import "./styles/status-cards.css";
+@import "./styles/card-highlight.css";
+@import "./styles/sidebar-effects.css";
+
+:root {
+  --primary-navy: #0B1F3A;
+  --primary-navy-dark: #000615;
+  --secondary-wine: #7A0C0C;
+  --secondary-crimson: #AC332B;
+  --bg-academic: #F8F9FF;
+  --surface-white: #FFFFFF;
+  --surface-low: #EFF4FF;
+  --surface-container: #E5EEFF;
+  --text-main: #0B1C30;
+  --text-muted: #44474D;
+  --border-subtle: #D3E4FE;
+
+  /* Bootstrap 5 Theme Overrides */
+  --bs-primary: #0B1F3A;
+  --bs-primary-rgb: 11, 31, 58;
+  --bs-secondary: #AC332B;
+  --bs-secondary-rgb: 172, 51, 43;
+  --bs-danger: #7A0C0C;
+  --bs-danger-rgb: 122, 12, 12;
+  --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-academic);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-headline {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Material Symbols alignment */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
+  display: inline-block;
+}
+
+.material-symbols-outlined.fill-1 {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(11, 31, 58, 0.04);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(11, 31, 58, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(11, 31, 58, 0.35);
+}
+
+/* Bootstrap Button Specific Overrides */
+.btn-primary {
+  background-color: #0B1F3A !important;
+  border-color: #0B1F3A !important;
+  color: #FFFFFF !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #05101E !important;
+  border-color: #05101E !important;
+}
+.btn-wine, .btn-danger {
+  background-color: #7A0C0C !important;
+  border-color: #7A0C0C !important;
+  color: #FFFFFF !important;
+}
+.btn-wine:hover, .btn-danger:hover {
+  background-color: #5E0909 !important;
+  border-color: #5E0909 !important;
+}
+.btn-outline-primary {
+  color: #0B1F3A !important;
+  border-color: #0B1F3A !important;
+}
+.btn-outline-primary:hover {
+  background-color: #0B1F3A !important;
+  color: #FFFFFF !important;
+}
+
+/* Table styling helpers */
+.table-responsive {
+  border-radius: 0px !important;
+}
+
+/* ========================================================================= */
+/* CANTOS RETOS / QUADRADOS INSTITUCIONAIS (SEM BORDAS ARREDONDADAS)         */
+/* Conforme diretiva: formulários, cards, tabelas, modais e componentes       */
+/* devem ter cantos estritamente quadrados.                                  */
+/* ========================================================================= */
+*,
+*::before,
+*::after {
+  --radius: 0px !important;
+}
+
+/* Forçar cantos retos em todas as classes utilitárias de rounded */
+.rounded,
+.rounded-xs,
+.rounded-sm,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-4xl,
+.rounded-t,
+.rounded-b,
+.rounded-l,
+.rounded-r,
+.rounded-tl,
+.rounded-tr,
+.rounded-bl,
+.rounded-br,
+.rounded-s,
+.rounded-e,
+.rounded-full:not(.status-indicator) {
+  border-radius: 0px !important;
+}
+
+/* Formulários, cartões, tabelas, modais, caixas e componentes quadrados */
+input,
+select,
+textarea,
+button,
+table,
+thead,
+tbody,
+tr,
+th,
+td,
+form,
+fieldset,
+dialog,
+.table-responsive,
+.card,
+.modal-content,
+[role="dialog"],
+[role="tab"],
+[role="tabpanel"],
+.badge,
+.avatar,
+img {
+  border-radius: 0px !important;
+}
+
+/* ========================================================================= */
+/* SUPORTE PROFISSIONAL A IMPRESSÃO (@media print)                           */
+/* Permite imprimir Fichas Oficiais em Folha A4, Cartão e Passes             */
+/* Compatível com Mobile (Android/iOS) e Desktop                             */
+/* Alinhado ao topo absoluto da 1.ª página sem margens desnecessárias        */
+/* ========================================================================= */
+@media print {
+  @page {
+    margin: 5mm 5mm;
+    size: A4 portrait;
+  }
+
+  /* Documentos estritamente verticais (Fatura, Ficha do Aluno, Ficha do Professor, Boletim) */
+  @page portrait-doc {
+    size: A4 portrait;
+    margin: 5mm 5mm;
+  }
+
+  .print-portrait,
+  .printable-portrait {
+    page: portrait-doc !important;
+  }
+
+  /* Documentos horizontais largos (Pautas Trimestrais, Mapas Estatísticos, Assiduidade) */
+  @page landscape-doc {
+    size: A4 landscape;
+    margin: 4mm 5mm;
+  }
+
+  .print-landscape,
+  .printable-landscape {
+    page: landscape-doc !important;
+  }
+
+  /* Preservar cores originais e fundos ao imprimir (estilo tabelas Excel personalizadas) */
+  *,
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td,
+  div,
+  span {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    page-break-inside: auto !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tfoot {
+    display: table-footer-group !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 9pt !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Reset de layout dos containers principais para que não empurrem a impressão */
+  #root,
+  main,
+  .min-h-screen,
+  .max-w-7xl {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  /* Desbloquear container modal e documento imprimível */
+  .printable-modal-overlay,
+  .printable-modal-overlay *,
+  .printable-document,
+  .printable-document *,
+  .printable-page,
+  .printable-page *,
+  .printable-report,
+  .printable-report *,
+  .printable-pauta,
+  .printable-pauta * {
+    visibility: visible !important;
+  }
+
+  /* Fixar a área de impressão de pautas no topo da página */
+  .printable-pauta {
+    position: static !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* Fixar a área de impressão no topo exato da primeira página */
+  .printable-modal-overlay {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    inset: 0 auto auto 0 !important;
+    z-index: 999999 !important;
+    display: block !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  .printable-document {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+    display: block !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .printable-document .overflow-y-auto {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Mesma correcção que já existia acima para rolagem vertical (.overflow-y-auto),
+     mas para rolagem horizontal — usada pelas tabelas de Pauta (Mini-Pauta e Pauta
+     Geral). Sem isto, a barra de rolagem horizontal ficava visível na impressão e
+     o conteúdo que estava fora da área visível (as últimas colunas, à direita)
+     era cortado em vez de ser impresso. */
+  .printable-document .overflow-x-auto,
+  .printable-pauta .overflow-x-auto {
+    overflow: visible !important;
+    max-width: none !important;
+  }
+
+  .no-print,
+  .no-print *,
+  .print\:hidden,
+  [class*="print:hidden"],
+  nav,
+  aside,
+  header {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+  }
+
+  .print-break-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .page-break-before {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  .page-break-after {
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  /* Formatação de fieldset e legendas na impressão */
+  fieldset {
+    border: 1px solid #64748b !important;
+  }
+}
+
+
+/* ========================================================================= */
+/* CALENDÁRIO ESCOLAR — documento de impressão / PDF                         */
+/* Renderizado em <body> (fora de #root); só aparece ao imprimir.            */
+/* ========================================================================= */
+.calendar-print-root {
+  display: none;
+}
+
+@media print {
+  body.calendar-printing #root {
+    display: none !important;
+  }
+
+  body.calendar-printing .calendar-print-root {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    background: #ffffff;
+    color: #0f172a;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+
+  body.calendar-printing .calendar-print-root,
+  body.calendar-printing .calendar-print-root * {
+    visibility: visible !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+ * Cabeçalho de tabela institucional (azul escuro, igual ao da secção Alunos).
+ * ------------------------------------------------------------------------------------------- */
+thead[class*="bg-[#0b1f3a]"] th { color: #ffffff; }
+thead[class*="bg-[#0b1f3a]"] th + th { border-left: 1px solid rgba(15, 23, 42, 0.4); }
+
+/* ---------------------------------------------------------------------------------------------
+ * Botões de fundo branco: mudam de cor ao passar o rato (só os que ainda não têm um efeito próprio
+ * `hover:bg-*`, para não alterar os que já foram tratados).
+ * ------------------------------------------------------------------------------------------- */
+button[class~="bg-white"]:not(:disabled):not([class*="hover:bg-"]):not([class*="hover:text-"]),
+[role="button"][class~="bg-white"]:not([aria-disabled="true"]):not([class*="hover:bg-"]):not([class*="hover:text-"]) {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+button[class~="bg-white"]:not(:disabled):not([class*="hover:bg-"]):not([class*="hover:text-"]):hover,
+[role="button"][class~="bg-white"]:not([aria-disabled="true"]):not([class*="hover:bg-"]):not([class*="hover:text-"]):hover {
+  background-color: #eaf0f8;
+  border-color: #0b1f3a;
+  color: #0b1f3a;
+}
+html[data-color-mode='dark'][data-ui-theme] button[class~="bg-white"]:not(:disabled):not([class*="hover:bg-"]):not([class*="hover:text-"]):hover,
+html[data-color-mode='dark'][data-ui-theme] [role="button"][class~="bg-white"]:not([aria-disabled="true"]):not([class*="hover:bg-"]):not([class*="hover:text-"]):hover {
+  background-color: var(--dk-bg-white-focus, #2b3547) !important;
+  border-color: #5b7db3 !important;
+  color: #ffffff !important;
+}
+
+/* ==== Carregamento (barras estilo iOS) e visto de sucesso animado ==== */
+.bm-spinner { color: #12498A; }
+html[data-color-mode='dark'] .bm-spinner { color: #9ec1f5; }
+.bm-spinner-bar { opacity: .12; animation: bm-bar-fade 1s linear infinite; }
+@keyframes bm-bar-fade { 0% { opacity: 1; } 100% { opacity: .12; } }
+
+.bm-check-pop { animation: bm-check-pop .4s cubic-bezier(.34, 1.56, .64, 1) both; transform-origin: center; }
+@keyframes bm-check-pop { 0% { transform: scale(.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.bm-check-stroke { stroke-dasharray: 1; stroke-dashoffset: 1; animation: bm-check-draw .5s .25s ease-out forwards; }
+.bm-check-echo { animation-delay: .32s; }
+@keyframes bm-check-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .bm-spinner-bar { animation-duration: 2.4s; }
+  .bm-check-pop, .bm-check-stroke { animation-duration: .01s; animation-delay: 0s; }
+}

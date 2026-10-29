@@ -1,0 +1,125 @@
+/* =========================================================================
+   AJUSTES VISUAIS GLOBAIS (carregado por último em main.tsx)
+   -------------------------------------------------------------------------
+   Azul oficial do menu lateral = #12498a (--bm-blue).
+   1. Caixas de pesquisa com ícone: o azul cobre a caixa INTEIRA (ícone incluído),
+      sem a divisão "um lado branco / outro azul".
+   2. Botões e cards-botão de fundo branco/cinza-claro: texto e ícones em azul do menu.
+   3. Seletor de idioma do menu lateral: letra azul sobre fundo branco.
+   4. Seletores pesquisáveis mais altos (ver também SearchableSelect.tsx).
+   Só no ecrã (nada muda na impressão). Para excluir uma caixa de pesquisa: data-field-wrap="off".
+   ========================================================================= */
+:root { --bm-blue: #12498a; --bm-blue-dark: #0b3563; }
+
+@media screen {
+
+  /* ---- 1. Caixa de pesquisa: toda azul, incluindo o ícone ---------------- */
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))) {
+    background-color: var(--bm-blue) !important;
+    border-color: var(--bm-blue) !important;
+    color: #ffffff !important;
+    min-height: 40px;
+    align-items: center;
+  }
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))):focus-within {
+    background-color: var(--bm-blue) !important;
+    border-color: var(--bm-blue-dark) !important;
+    box-shadow: 0 0 0 2px rgb(18 73 138 / .35);
+  }
+  /* o campo interno fica transparente: é o contentor que dá a cor */
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))) > input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type])) {
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    min-height: 38px;
+  }
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))) > input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))::placeholder {
+    color: rgb(255 255 255 / .78) !important;
+    -webkit-text-fill-color: rgb(255 255 255 / .78) !important;
+    opacity: 1 !important;
+  }
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))) .material-symbols-outlined { color: #ffffff !important; }
+  html body :is(div,label):not(#_):not(#_):not(#_):not([data-on-navy]):not([data-field-wrap='off']):not(.lg-root *):has(> input:is([type='text'],[type='search'],[type='email'],[type='tel'],[type='number'],:not([type]))):has(> .material-symbols-outlined, > div > .material-symbols-outlined, > button .material-symbols-outlined):not(:has(> :is(label,p,h1,h2,h3,h4,small,select,textarea))) button { color: #ffffff !important; background-color: transparent !important; }
+
+  /* ---- 2. Botões / cards-botão de fundo claro: texto e ícones em azul ----- */
+  html:not([data-color-mode='dark']) body :is(button,[role='button']):not(#_):not(#_):not(#_):is([class~='bg-white'],[class~='bg-slate-50'],[class~='bg-slate-100'],[class~='bg-slate-200'],[class~='bg-gray-50'],[class~='bg-gray-100'],[class~='bg-gray-200']):not([class*='text-red']):not([class*='text-rose']):not([class*='text-emerald']):not([class*='text-green']):not([class*='text-amber']):not([class*='text-orange']):not([class*='text-white']):not(:disabled):not([aria-disabled='true']):not([data-on-navy]):not([data-gr-act]):not(.card-hl-on):not(.lg-root *),
+  html:not([data-color-mode='dark']) body :is(button,[role='button']):not(#_):not(#_):not(#_):is([class~='bg-white'],[class~='bg-slate-50'],[class~='bg-slate-100'],[class~='bg-slate-200'],[class~='bg-gray-50'],[class~='bg-gray-100'],[class~='bg-gray-200']):not([class*='text-red']):not([class*='text-rose']):not([class*='text-emerald']):not([class*='text-green']):not([class*='text-amber']):not([class*='text-orange']):not([class*='text-white']):not(:disabled):not([aria-disabled='true']):not([data-on-navy]):not([data-gr-act]):not(.card-hl-on):not(.lg-root *) :is(span, div, p, strong, small, b, svg, i, .material-symbols-outlined):not([class*='text-red']):not([class*='text-rose']):not([class*='text-emerald']):not([class*='text-green']):not([class*='text-amber']):not([class*='text-white']) {
+    color: var(--bm-blue) !important;
+    -webkit-text-fill-color: var(--bm-blue) !important;
+    opacity: 1;
+  }
+  /* ao passar o rato os cards-botão ficam azuis com letra branca (ver cardHighlight.ts) */
+  html body .card-hl-on.card-hl-on:not(#_):not(#_),
+  html body .card-hl-on.card-hl-on:not(#_):not(#_) :is(span, div, p, strong, small, b, .material-symbols-outlined) {
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  /* ---- 3. Seletor de idioma (menu lateral): letra azul, fundo branco ----- */
+  html body button[data-on-navy='select']:not(#_):not(#_):not(#_) {
+    background-color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    color: var(--bm-blue) !important;
+    -webkit-text-fill-color: var(--bm-blue) !important;
+    font-weight: 700;
+  }
+  html body button[data-on-navy='select']:not(#_):not(#_):not(#_) :is(span, .material-symbols-outlined) {
+    color: var(--bm-blue) !important;
+    -webkit-text-fill-color: var(--bm-blue) !important;
+  }
+  html body [data-lang-menu]:not(#_):not(#_):not(#_) { background-color: #ffffff !important; }
+  html body [data-lang-menu]:not(#_):not(#_):not(#_) button,
+  html body [data-lang-menu]:not(#_):not(#_):not(#_) button :is(span, .material-symbols-outlined) {
+    color: var(--bm-blue) !important;
+    -webkit-text-fill-color: var(--bm-blue) !important;
+    opacity: 1 !important;
+  }
+  html body [data-lang-menu]:not(#_):not(#_):not(#_) button:hover { background-color: #e6eef8 !important; }
+
+  /* ---- 4. Seletores pesquisáveis: mais altos ------------------------------ */
+  html body [data-searchable-select='box']:not(#_):not(#_):not(#_) {
+    height: 40px;            /* mesma altura dos campos de data (h-10) */
+    min-height: 40px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  html body [data-searchable-select='box']:not(#_):not(#_):not(#_) > input {
+    min-height: 0;
+    height: 100%;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+  html body [data-searchable-select='box']:not(#_):not(#_):not(#_) > input::placeholder {
+    color: rgb(255 255 255 / .78) !important;
+    -webkit-text-fill-color: rgb(255 255 255 / .78) !important;
+    opacity: 1 !important;
+  }
+}
+
+@media screen {
+  /* ---- 5. Botões de ação nas tabelas: ícone SEMPRE branco (o fundo mantém a cor de cada ação) ---- */
+  html body :is(td, th) button:is([data-gr-act],[class~='bg-emerald-600'],[class~='bg-amber-600'],[class~='bg-red-600'],[class~='bg-blue-600'],[class~='bg-orange-600'],[class~='bg-slate-600'],[class~='bg-slate-700'],[class~='bg-[#0b1f3a]'],[class~='bg-[#12498a]']):not(#_):not(#_):not(#_):not(#_) :is(.material-symbols-outlined, svg, svg *, i) {
+    color: #ffffff !important;
+    fill: currentColor;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  /* ---- 6. Botões claros DESATIVADOS (ex.: Exportar CSV): texto azul esbatido, nunca branco sobre branco ---- */
+  html:not([data-color-mode='dark']) body :is(button, [role='button']):not(#_):not(#_):not(#_)
+    :is([class~='bg-white'], [class~='bg-slate-50'], [class~='bg-slate-100'], [class~='bg-slate-200'], [class~='bg-gray-100']):is(:disabled, [aria-disabled='true']):not(.lg-root *),
+  html:not([data-color-mode='dark']) body :is(button, [role='button']):not(#_):not(#_):not(#_)
+    :is([class~='bg-white'], [class~='bg-slate-50'], [class~='bg-slate-100'], [class~='bg-slate-200'], [class~='bg-gray-100']):is(:disabled, [aria-disabled='true']):not(.lg-root *) * {
+    color: var(--bm-blue) !important;
+    -webkit-text-fill-color: var(--bm-blue) !important;
+  }
+  html:not([data-color-mode='dark']) body button:is(:disabled):is([class~='bg-white'], [class~='bg-slate-50'], [class~='bg-slate-100'], [class~='bg-slate-200']):not(.lg-root *):not(#_):not(#_):not(#_) {
+    opacity: .6 !important;
+  }
+}

@@ -1,0 +1,28 @@
+/* Caixas de aviso globais (erro/aviso/informação/sucesso) — ver src/components/Notice.tsx */
+.bm-notices {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  width: min(94vw, 560px); max-height: calc(100vh - 24px); overflow-y: auto; overflow-x: hidden;
+  display: flex; flex-direction: column; gap: 8px; z-index: 100000; pointer-events: none;
+}
+.bm-notice {
+  pointer-events: auto; display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 12px 14px 16px; border: 1px solid; border-radius: 6px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .28); animation: bm-notice-in .22s ease-out both;
+}
+.bm-notice-icon { font-size: 22px; line-height: 1; margin-top: 1px; flex: none; }
+.bm-notice-body { flex: 1; min-width: 0; }
+.bm-notice-title { font-weight: 800; font-size: 14px; line-height: 1.3; margin-bottom: 2px; }
+.bm-notice-text { font-size: 13px; line-height: 1.45; font-weight: 500; overflow-wrap: anywhere; }
+.bm-notice-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.bm-notice-close {
+  flex: none; background: transparent !important; border: 0 !important; padding: 2px; margin: -2px 0 0 4px;
+  border-radius: 6px; cursor: pointer; opacity: .85; line-height: 1; display: inline-flex;
+}
+.bm-notice-close:hover { opacity: 1; background: rgba(255, 255, 255, .18) !important; }
+.bm-notice-close .material-symbols-outlined { font-size: 20px; color: inherit !important; }
+/* Texto interior herda a cor da caixa (as antigas faixas traziam text-red-800, etc.). */
+.bm-notice .bm-notice-text :not(button):not(button *) { color: inherit !important; }
+.bm-notice .bm-notice-text p, .bm-notice .bm-notice-text div { font-size: inherit !important; }
+@keyframes bm-notice-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .bm-notice { animation: none; } }
+@media print { .bm-notices { display: none !important; } }

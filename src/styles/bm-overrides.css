@@ -1,0 +1,32 @@
+/* =========================================================================
+   AJUSTES GLOBAIS (carregado por último)
+   1. Fonte Arial Narrow em todo o sistema (excepto ícones e documentos do Estúdio)
+   2. Cores de botões por "tom" (data-tone): success / danger / primary / grey
+   3. Dia de hoje no calendário: quadrado azul com número branco
+   ========================================================================= */
+:root { --bm-font: 'Arial Narrow', 'Liberation Sans Narrow', 'Nimbus Sans Narrow', Arial, sans-serif; }
+
+html body :not(.material-symbols-outlined):not(.material-symbols-rounded):not(.material-symbols-sharp):not(.material-icons):not(.studio-scene):not(.studio-scene *):not(.studio-paper):not(.studio-paper *):not(code):not(pre):not(#_) {
+  font-family: var(--bm-font) !important;
+}
+html body .material-symbols-outlined:not(#_) { font-family: 'Material Symbols Outlined' !important; }
+
+/* Tons de botões */
+html body button[data-tone='success']:not(#_):not(#_):not(#_) { background-color: #16a34a !important; border-color: #16a34a !important; color: #fff !important; }
+html body button[data-tone='success']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #15803d !important; }
+html body button[data-tone='danger']:not(#_):not(#_):not(#_) { background-color: #dc2626 !important; border-color: #dc2626 !important; color: #fff !important; }
+html body button[data-tone='danger']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #b91c1c !important; }
+html body button[data-tone='primary']:not(#_):not(#_):not(#_) { background-color: #2563eb !important; border-color: #2563eb !important; color: #fff !important; }
+html body button[data-tone='primary']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #1d4ed8 !important; }
+html body button[data-tone='grey']:not(#_):not(#_):not(#_) { background-color: #64748b !important; border-color: #64748b !important; color: #fff !important; }
+html body button[data-tone='grey']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #475569 !important; }
+html body button[data-tone]:not(#_):not(#_):not(#_) :is(span, svg, i, .material-symbols-outlined) { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+
+/* Hoje no calendário */
+html body [data-today='true']:not(#_):not(#_):not(#_),
+html body [data-solid-blue='true']:not(#_):not(#_):not(#_) {
+  background-color: #12498a !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-radius: 6px !important;
+}

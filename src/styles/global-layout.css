@@ -1,0 +1,746 @@
+/* ========================================================================= */
+/* COMPORTAMENTOS GLOBAIS DE LAYOUT                                          */
+/*   1. Modais redimensionáveis      → src/utils/resizableModals.ts          */
+/*   2. Cabeçalhos de tabela fixos   → src/utils/stickyTableHeaders.ts       */
+/*   3. Grelha estilo Excel          → só CSS (secção 3 deste ficheiro)      */
+/*   4. Quebra de linha no telemóvel → src/utils/mobileWrap.ts               */
+/* As funções JS só marcam os elementos (data-gr-*); o aspeto vive aqui.     */
+/* ========================================================================= */
+
+/* ------------------------------------------------ 1. Modais redimensionáveis */
+
+/* Moldura invisível colocada exatamente sobre o painel do modal. Não recebe
+   eventos; só as pegas (.gr-rz-h) recebem. */
+.gr-rz-frame {
+  position: absolute;
+  z-index: 2147483000;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.gr-rz-h {
+  position: absolute;
+  pointer-events: auto;
+  touch-action: none;
+  background: transparent;
+  transition: background-color 120ms ease;
+}
+
+/* Bordas: 8px cá fora + 2px cá dentro (não tapam as barras de scroll internas). */
+.gr-rz-h[data-dir='n'] { top: -8px;    left: 10px;  right: 10px;  height: 10px; cursor: ns-resize; }
+.gr-rz-h[data-dir='s'] { bottom: -8px; left: 10px;  right: 10px;  height: 10px; cursor: ns-resize; }
+.gr-rz-h[data-dir='w'] { left: -8px;   top: 10px;   bottom: 10px; width: 10px;  cursor: ew-resize; }
+.gr-rz-h[data-dir='e'] { right: -8px;  top: 10px;   bottom: 10px; width: 10px;  cursor: ew-resize; }
+/* Cantos: 16×16, metade fora, metade dentro. */
+.gr-rz-h[data-dir='nw'] { top: -8px;    left: -8px;  width: 16px; height: 16px; cursor: nwse-resize; }
+.gr-rz-h[data-dir='se'] { bottom: -8px; right: -8px; width: 16px; height: 16px; cursor: nwse-resize; }
+.gr-rz-h[data-dir='ne'] { top: -8px;    right: -8px; width: 16px; height: 16px; cursor: nesw-resize; }
+.gr-rz-h[data-dir='sw'] { bottom: -8px; left: -8px;  width: 16px; height: 16px; cursor: nesw-resize; }
+
+.gr-rz-h:hover,
+.gr-rz-h[data-active] {
+  background: rgba(37, 99, 235, 0.35);
+}
+
+/* Indicador visual (três riscos) no canto inferior direito. */
+.gr-rz-frame::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  opacity: 0.75;
+  background: linear-gradient(
+    135deg,
+    transparent 0 42%,
+    #64748b 42% 50%,
+    transparent 50% 62%,
+    #64748b 62% 70%,
+    transparent 70% 82%,
+    #64748b 82% 90%,
+    transparent 90%
+  );
+}
+
+/* Barrinha "mover / maximizar" por cima do painel (dentro dele se não houver espaço). */
+.gr-rz-bar {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  height: 23px;
+  pointer-events: auto;
+  touch-action: none;
+  background: #1e293b;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  opacity: 0.92;
+}
+.gr-rz-frame[data-bar-inside] .gr-rz-bar {
+  top: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+}
+.gr-rz-grip,
+.gr-rz-max {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 0 8px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  line-height: 0;
+}
+.gr-rz-grip { cursor: move; }
+.gr-rz-max { cursor: pointer; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.gr-rz-grip:hover,
+.gr-rz-max:hover { background: #2563eb; }
+.gr-rz-frame[data-moving] .gr-rz-h { pointer-events: none; }
+
+/* Durante o arrasto: sem seleção de texto e cursor uniforme. */
+html.gr-rz-dragging,
+html.gr-rz-dragging * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Em ecrãs pequenos o modal já ocupa o ecrã todo: sem pegas. */
+@media (max-width: 639px) {
+  .gr-rz-frame {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------ Quebra de linha no telemóvel (mobileWrap) */
+
+/* Filas que ultrapassam o ecrã passam a quebrar: o que não cabe desce para a
+   linha de baixo em vez de ser cortado. Marcadas por src/utils/mobileWrap.ts. */
+@media (max-width: 767px) {
+  [data-gr-wrap] {
+    flex-wrap: wrap !important;
+    row-gap: 0.5rem;
+    max-width: 100%;
+  }
+  /* Filhos deixam de ser obrigados a ficar numa só linha e podem encolher/quebrar. */
+  [data-gr-wrap] > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+  [data-gr-wrap] > :where(button, a, label, [role='button']) {
+    flex-shrink: 1;
+  }
+
+  [data-gr-wrap-grid] {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr)) !important;
+    max-width: 100%;
+  }
+  [data-gr-wrap-grid] > * {
+    min-width: 0;
+    grid-column: auto !important;
+  }
+}
+
+/* --------------------------------------- 2. Cabeçalhos de tabela congelados */
+
+/* O <thead> fica preso ao contentor de scroll (ver modos no .ts).
+   `--gr-sticky-top` é 0 exceto quando é a página a fazer scroll, caso em que
+   deixa espaço para a barra de topo fixa. z-index 15 < barra de topo (30). */
+thead[data-gr-sticky] {
+  position: sticky;
+  top: var(--gr-sticky-top, 0px);
+  z-index: 15;
+}
+
+/* Fundo de segurança quando nenhuma célula do cabeçalho tem fundo próprio.
+   Pinta-se com `background-image` (e NÃO `background-color`) de propósito: o
+   JS decide se precisa deste fundo lendo o `background-color` calculado; se o
+   escrevêssemos aí, na medição seguinte o cabeçalho pareceria já opaco, o
+   atributo seria removido e o fundo ficaria a piscar. */
+thead[data-gr-sticky][data-gr-sticky-bg] {
+  background-image: linear-gradient(var(--gr-thead-bg, #f8fafc), var(--gr-thead-bg, #f8fafc));
+}
+
+/* Linha subtil sob o cabeçalho: com `border-collapse: collapse` a borda das
+   células não acompanha o `sticky`, e assim há sempre separação das linhas. */
+:is(table[data-no-grid], [data-no-grid] table) thead[data-gr-sticky] > tr:last-child > * {
+  box-shadow: 0 1px 0 0 rgba(15, 23, 42, 0.14);
+}
+
+/* Modo "box": wrapper de tabela com scroll vertical próprio. `isolation` mantém
+   o z-index do cabeçalho contido no wrapper (não passa por cima de menus). */
+[data-gr-scroll-box] {
+  overflow-y: auto;
+  max-height: var(--gr-box-max-h, none);
+  isolation: isolate;
+}
+
+/* `overflow:clip` corta como `hidden`, mas não cria contentor de scroll,
+   pelo que não "rouba" o sticky ao scroll real. */
+[data-gr-clip] {
+  overflow: clip;
+}
+
+/* ------------------------------------------- 3. Bordas de grelha (Excel) */
+
+/* Todas as tabelas do sistema, existentes ou futuras, ganham linhas verticais
+   e horizontais entre TODAS as células, como uma folha de Excel. É só CSS: não
+   há JS nem é preciso mexer nos ecrãs.
+
+   Como funciona
+   • Modelo `separate` + `border-spacing:0`: cada célula desenha a sua borda
+     direita e inferior; a esquerda só na 1.ª coluna e a de cima só na 1.ª linha.
+     Assim nunca há linhas duplas e — ao contrário do `collapse` — as bordas
+     acompanham o cabeçalho congelado (secção 2) em vez de ficarem para trás.
+   • `:where()` = especificidade 0 (as regras específicas de um ecrã ainda podem
+     sobrepor-se), mas por serem CSS "sem camada" ganham às utilitárias do
+     Tailwind (`border-b border-slate-100`…): a grelha fica uniforme.
+   • Tabelas que já trazem `border` próprio (classe `border`): a moldura exterior
+     vem da tabela, por isso a última coluna/linha não repete a sua borda.
+
+   Personalizar
+   • Cor da grelha:            --gr-grid-color        (predefinição #cbd5e1)
+   • Cor no cabeçalho:         --gr-grid-color-head   (funciona em fundo claro/escuro)
+   • Excluir uma tabela:       `data-no-grid` na tabela ou num ancestral.
+   • Ficam de fora sempre:     documentos imprimíveis (.printable-*) e a impressão. */
+
+@media screen {
+  :where(
+    table:not(
+      [data-no-grid],
+      [data-no-grid] *,
+      .printable-document,
+      .printable-document *,
+      .printable-page,
+      .printable-page *,
+      .printable-report,
+      .printable-report *,
+      .printable-pauta,
+      .printable-pauta *
+    )
+  ) {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: var(--gr-grid-color, #cbd5e1);
+
+    /* Todas as células: borda à direita e em baixo. */
+    & > :is(thead, tbody, tfoot) > tr > :is(th, td),
+    & > tr > :is(th, td) {
+      border-style: solid;
+      border-color: var(--gr-grid-color, #cbd5e1);
+      border-width: 0 1px 1px 0;
+    }
+
+    /* Cabeçalho: tom que se vê tanto em fundo claro como escuro. */
+    & > thead > tr > :is(th, td) {
+      border-color: var(--gr-grid-color-head, rgba(100, 116, 139, 0.55));
+    }
+
+    /* Moldura exterior (tabelas sem `border` próprio): esquerda e topo. */
+    &:not([class~='border']) > :is(thead, tbody, tfoot) > tr > :first-child,
+    &:not([class~='border']) > tr > :first-child {
+      border-left-width: 1px;
+    }
+    &:not([class~='border']) > :is(thead, tbody, tfoot):first-child > tr:first-child > *,
+    &:not([class~='border']) > :is(caption, colgroup) + :is(thead, tbody, tfoot) > tr:first-child > *,
+    &:not([class~='border']) > tr:first-child > * {
+      border-top-width: 1px;
+    }
+
+    /* Tabelas com `border` próprio: a moldura já existe, não duplicar. */
+    &[class~='border'] > :is(thead, tbody, tfoot) > tr > :last-child,
+    &[class~='border'] > tr > :last-child {
+      border-right-width: 0;
+    }
+    &[class~='border'] > :is(thead, tbody, tfoot):last-child > tr:last-child > *,
+    &[class~='border'] > tr:last-child > * {
+      border-bottom-width: 0;
+    }
+  }
+}
+
+/* ------------------------------------------------------------- Impressão --- */
+/* `:where()` = especificidade 0: as regras de impressão específicas de cada
+   documento (index.css, *.printable-*) continuam a ter a última palavra. */
+@media print {
+  :where(.gr-rz-frame) {
+    display: none !important;
+  }
+
+  /* Modal com scroll interno → imprime tudo, sem cortar. */
+  [data-gr-scroll] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  [data-gr-scroll-body] {
+    overflow: visible !important;
+  }
+
+  /* Modal redimensionado → volta ao fluxo normal da página impressa. */
+  :where([data-gr-rz-frozen]) {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  :where(thead[data-gr-sticky]) {
+    position: static !important;
+  }
+
+  :where(thead[data-gr-sticky] > tr:last-child > *) {
+    box-shadow: none !important;
+  }
+
+  :where([data-gr-scroll-box]) {
+    max-height: none !important;
+    isolation: auto !important;
+  }
+}
+
+/* ------------------------- Candidaturas Online (link público): separadores */
+/* Modo claro: separador NÃO selecionado em preto e negrito. */
+html:not([data-color-mode='dark']) .pm-tab-idle {
+  color: #000 !important;
+  font-weight: 800 !important;
+}
+/* Modo escuro: mantém contraste legível. */
+html[data-color-mode='dark'] .pm-tabs {
+  background: #232c3b;
+  border-color: #3a475e;
+}
+html[data-color-mode='dark'] .pm-tab-idle {
+  color: #e3e8f0 !important;
+}
+html[data-color-mode='dark'] .pm-tab-idle:hover {
+  background: #2b3547;
+}
+
+/* ------------------------------------------- 5. Paginação das tabelas (25) */
+
+/* Barra compacta "1 - 25 de 237 registos   [‹] (2) [›]" — desenhada por src/utils/tablePagination.ts
+   (todas as tabelas com mais de 25 registos) e por <TablePagination /> (Propinas). */
+.gr-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #8da9cb;
+  border-top-width: 1px;
+  background: #fff;
+  color: #475569;
+  font-size: 10px;
+  line-height: 1.2;
+}
+.gr-pager__info strong { color: #0b1f3a; font-weight: 700; }
+.gr-pager__ctrl { display: flex; align-items: center; gap: 4px; }
+.gr-pager__page {
+  min-width: 18px;
+  height: 25px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+}
+.gr-pager__btn {
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0;
+  transition: background-color 0.15s;
+}
+.gr-pager__btn:hover:not(:disabled) { background: #f1f5f9; }
+.gr-pager__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media screen {
+  /* Linhas fora da página atual. Na impressão NÃO se escondem: sai tudo. */
+  [data-gr-pg-hidden] { display: none !important; }
+
+  html[data-color-mode='dark'] .gr-pager { background: #232c3b; border-color: #3a475e; color: #c4cedd; }
+  html[data-color-mode='dark'] .gr-pager__info strong { color: #e3e8f0; }
+  html[data-color-mode='dark'] .gr-pager__btn { background: #2b3547; border-color: #3a475e; color: #c4cedd; }
+  html[data-color-mode='dark'] .gr-pager__btn:hover:not(:disabled) { background: #364258; }
+}
+
+@media print {
+  .gr-pager { display: none !important; }
+}
+
+/* ------------------------------------------- 6. Tabelas e cartões padronizados */
+
+/* Marcadas por src/utils/tableEnhancements.ts (atributo data-gr-table). O CABEÇALHO NÃO É TOCADO:
+   só o corpo ganha linhas alternadas, e os botões de ação ganham cor própria com ícone branco.
+   Linhas/células com cor de ESTADO própria (bg-red-50, bg-amber-100, totais escuros…) mantêm essa cor. */
+@media screen {
+  html body table[data-gr-table] { border-collapse: collapse; }
+
+  html body table[data-gr-table] > tbody > tr:nth-child(odd) { --gr-row: #d9e5f5; }
+  html body table[data-gr-table] > tbody > tr:nth-child(even) { --gr-row: #b8cce4; }
+  html body table[data-gr-table] > tbody > tr { --gr-row-hover: #c9dbf1; --gr-edge: #8da9cb; }
+
+  html body table[data-gr-table] > tbody > tr:not(:is(
+      [class*=' bg-red-'], [class^='bg-red-'],
+      [class*=' bg-rose-'], [class^='bg-rose-'],
+      [class*=' bg-amber-'], [class^='bg-amber-'],
+      [class*=' bg-orange-'], [class^='bg-orange-'],
+      [class*=' bg-yellow-'], [class^='bg-yellow-'],
+      [class*=' bg-emerald-'], [class^='bg-emerald-'],
+      [class*=' bg-green-'], [class^='bg-green-'],
+      [class*=' bg-lime-'], [class^='bg-lime-'],
+      [class*=' bg-blue-'], [class^='bg-blue-'],
+      [class*=' bg-sky-'], [class^='bg-sky-'],
+      [class*=' bg-indigo-'], [class^='bg-indigo-'],
+      [class*=' bg-violet-'], [class^='bg-violet-'],
+      [class*=' bg-purple-'], [class^='bg-purple-'],
+      [class*=' bg-teal-'], [class^='bg-teal-'],
+      [class*=' bg-cyan-'], [class^='bg-cyan-'],
+      [class*=' bg-pink-'], [class^='bg-pink-'],
+      [class*=' bg-slate-7'], [class^='bg-slate-7'],
+      [class*=' bg-slate-8'], [class^='bg-slate-8'],
+      [class*=' bg-slate-9'], [class^='bg-slate-9'],
+      [class*=' bg-gray-8'], [class^='bg-gray-8'],
+      [class*=' bg-gray-9'], [class^='bg-gray-9'],
+      [class*=' bg-[#0'], [class^='bg-[#0'],
+      [class*=' bg-[#1'], [class^='bg-[#1'],
+      [class*=' bg-[#3'], [class^='bg-[#3'],
+      [class*=' bg-[#5'], [class^='bg-[#5'],
+      [class*=' bg-[#7'], [class^='bg-[#7'])) > :is(td, th):not(.gr-sel-col):not(:is(
+      [class*=' bg-red-'], [class^='bg-red-'],
+      [class*=' bg-rose-'], [class^='bg-rose-'],
+      [class*=' bg-amber-'], [class^='bg-amber-'],
+      [class*=' bg-orange-'], [class^='bg-orange-'],
+      [class*=' bg-yellow-'], [class^='bg-yellow-'],
+      [class*=' bg-emerald-'], [class^='bg-emerald-'],
+      [class*=' bg-green-'], [class^='bg-green-'],
+      [class*=' bg-lime-'], [class^='bg-lime-'],
+      [class*=' bg-blue-'], [class^='bg-blue-'],
+      [class*=' bg-sky-'], [class^='bg-sky-'],
+      [class*=' bg-indigo-'], [class^='bg-indigo-'],
+      [class*=' bg-violet-'], [class^='bg-violet-'],
+      [class*=' bg-purple-'], [class^='bg-purple-'],
+      [class*=' bg-teal-'], [class^='bg-teal-'],
+      [class*=' bg-cyan-'], [class^='bg-cyan-'],
+      [class*=' bg-pink-'], [class^='bg-pink-'],
+      [class*=' bg-slate-7'], [class^='bg-slate-7'],
+      [class*=' bg-slate-8'], [class^='bg-slate-8'],
+      [class*=' bg-slate-9'], [class^='bg-slate-9'],
+      [class*=' bg-gray-8'], [class^='bg-gray-8'],
+      [class*=' bg-gray-9'], [class^='bg-gray-9'],
+      [class*=' bg-[#0'], [class^='bg-[#0'],
+      [class*=' bg-[#1'], [class^='bg-[#1'],
+      [class*=' bg-[#3'], [class^='bg-[#3'],
+      [class*=' bg-[#5'], [class^='bg-[#5'],
+      [class*=' bg-[#7'], [class^='bg-[#7'])) {
+    background-color: var(--gr-row);
+    border: 1px solid var(--gr-edge);
+  }
+  html body table[data-gr-table] > tbody > tr:not(:is(
+      [class*=' bg-red-'], [class^='bg-red-'],
+      [class*=' bg-rose-'], [class^='bg-rose-'],
+      [class*=' bg-amber-'], [class^='bg-amber-'],
+      [class*=' bg-orange-'], [class^='bg-orange-'],
+      [class*=' bg-yellow-'], [class^='bg-yellow-'],
+      [class*=' bg-emerald-'], [class^='bg-emerald-'],
+      [class*=' bg-green-'], [class^='bg-green-'],
+      [class*=' bg-lime-'], [class^='bg-lime-'],
+      [class*=' bg-blue-'], [class^='bg-blue-'],
+      [class*=' bg-sky-'], [class^='bg-sky-'],
+      [class*=' bg-indigo-'], [class^='bg-indigo-'],
+      [class*=' bg-violet-'], [class^='bg-violet-'],
+      [class*=' bg-purple-'], [class^='bg-purple-'],
+      [class*=' bg-teal-'], [class^='bg-teal-'],
+      [class*=' bg-cyan-'], [class^='bg-cyan-'],
+      [class*=' bg-pink-'], [class^='bg-pink-'],
+      [class*=' bg-slate-7'], [class^='bg-slate-7'],
+      [class*=' bg-slate-8'], [class^='bg-slate-8'],
+      [class*=' bg-slate-9'], [class^='bg-slate-9'],
+      [class*=' bg-gray-8'], [class^='bg-gray-8'],
+      [class*=' bg-gray-9'], [class^='bg-gray-9'],
+      [class*=' bg-[#0'], [class^='bg-[#0'],
+      [class*=' bg-[#1'], [class^='bg-[#1'],
+      [class*=' bg-[#3'], [class^='bg-[#3'],
+      [class*=' bg-[#5'], [class^='bg-[#5'],
+      [class*=' bg-[#7'], [class^='bg-[#7'])):hover > :is(td, th):not(:is(
+      [class*=' bg-red-'], [class^='bg-red-'],
+      [class*=' bg-rose-'], [class^='bg-rose-'],
+      [class*=' bg-amber-'], [class^='bg-amber-'],
+      [class*=' bg-orange-'], [class^='bg-orange-'],
+      [class*=' bg-yellow-'], [class^='bg-yellow-'],
+      [class*=' bg-emerald-'], [class^='bg-emerald-'],
+      [class*=' bg-green-'], [class^='bg-green-'],
+      [class*=' bg-lime-'], [class^='bg-lime-'],
+      [class*=' bg-blue-'], [class^='bg-blue-'],
+      [class*=' bg-sky-'], [class^='bg-sky-'],
+      [class*=' bg-indigo-'], [class^='bg-indigo-'],
+      [class*=' bg-violet-'], [class^='bg-violet-'],
+      [class*=' bg-purple-'], [class^='bg-purple-'],
+      [class*=' bg-teal-'], [class^='bg-teal-'],
+      [class*=' bg-cyan-'], [class^='bg-cyan-'],
+      [class*=' bg-pink-'], [class^='bg-pink-'],
+      [class*=' bg-slate-7'], [class^='bg-slate-7'],
+      [class*=' bg-slate-8'], [class^='bg-slate-8'],
+      [class*=' bg-slate-9'], [class^='bg-slate-9'],
+      [class*=' bg-gray-8'], [class^='bg-gray-8'],
+      [class*=' bg-gray-9'], [class^='bg-gray-9'],
+      [class*=' bg-[#0'], [class^='bg-[#0'],
+      [class*=' bg-[#1'], [class^='bg-[#1'],
+      [class*=' bg-[#3'], [class^='bg-[#3'],
+      [class*=' bg-[#5'], [class^='bg-[#5'],
+      [class*=' bg-[#7'], [class^='bg-[#7'])) {
+    background-color: var(--gr-row-hover);
+  }
+  /* Linha selecionada (caixa marcada). */
+  html body table[data-gr-table] > tbody > tr[data-gr-selected][data-gr-selected][data-gr-selected] > :is(td, th):not(.gr-sel-col) { background-color: #a9c4e8; }
+
+  html[data-color-mode='dark'] body table[data-gr-table] > tbody > tr:nth-child(odd) { --gr-row: #1c2636; }
+  html[data-color-mode='dark'] body table[data-gr-table] > tbody > tr:nth-child(even) { --gr-row: #26344a; }
+  html[data-color-mode='dark'] body table[data-gr-table] > tbody > tr { --gr-row-hover: #31425e; --gr-edge: #3a475e; }
+  html[data-color-mode='dark'] body table[data-gr-table] > tbody > tr[data-gr-selected][data-gr-selected][data-gr-selected] > :is(td, th):not(.gr-sel-col) { background-color: #3a5380; }
+
+  /* ---- Coluna de seleção ---- */
+  html body table[data-gr-table] .gr-sel-col,
+  html body table[data-gr-table] .gr-sel-cell { width: 36px; min-width: 36px; max-width: 36px; padding-left: 8px; padding-right: 8px; text-align: center; vertical-align: middle; }
+  html body table[data-gr-table] > tbody > tr > .gr-sel-cell { border: 1px solid var(--gr-edge); }
+  .gr-sel-input { width: 14px; height: 14px; margin: 0; cursor: pointer; accent-color: #2563eb; vertical-align: middle; }
+  .gr-sel-input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ---- Botões de ação: fundo próprio + ícone branco ---- */
+  html body [data-gr-act] {
+    background-color: var(--gr-act, #475569) !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  /* Espaço entre botões vizinhos (antes ficavam colados). */
+  html body [data-gr-act] + [data-gr-act] { margin-left: 6px; }
+  html body [data-gr-act] * { color: #fff !important; }
+  html body [data-gr-act]:hover:not(:disabled) { filter: brightness(0.9); }
+  html body [data-gr-act]:disabled,
+  html body [data-gr-act][aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+  [data-gr-act='view'] { --gr-act: #2563eb; }
+  [data-gr-act='edit'] { --gr-act: #d97706; }
+  [data-gr-act='delete'], [data-gr-act='danger'] { --gr-act: #dc2626; }
+  [data-gr-act='success'] { --gr-act: #16a34a; }
+  [data-gr-act='other'] { --gr-act: #475569; }
+
+  /* ---- Cartões alternados (container com data-gr-cards): 1.º claro, 2.º escuro, e assim sucessivamente ---- */
+  html body [data-gr-cards] > :nth-child(odd) { background-color: #d9e5f5 !important; border: 1px solid #8da9cb !important; }
+  html body [data-gr-cards] > :nth-child(even) { background-color: #b8cce4 !important; border: 1px solid #8da9cb !important; }
+  html[data-color-mode='dark'] body [data-gr-cards] > :nth-child(odd) { background-color: #1c2636 !important; border-color: #3a475e !important; }
+  html[data-color-mode='dark'] body [data-gr-cards] > :nth-child(even) { background-color: #26344a !important; border-color: #3a475e !important; }
+
+  /* ---- Botões de escolha (data-gr-choice): grupo de opções onde uma fica ativa.
+          Inativo = tom claro das tabelas; ativo = cor cheia + texto branco.
+          Cor do ativo: --gr-choice (predefinição azul-marinho). Marcar o ativo com
+          aria-pressed="true" (botões) ou aria-checked="true" (role=radio). ---- */
+  html body [data-gr-choice] {
+    background-color: #d9e5f5 !important;
+    color: #0b1f3a !important;
+    border: 1px solid #8da9cb !important;
+    border-radius: 6px !important;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.15s, background-color 0.15s;
+  }
+  html body [data-gr-choice]:hover:not(:disabled):not([aria-pressed='true']):not([aria-checked='true']) { background-color: #b8cce4 !important; }
+  html body [data-gr-choice][aria-pressed='true'],
+  html body [data-gr-choice][aria-checked='true'] {
+    background-color: var(--gr-choice, #0b1f3a) !important;
+    border-color: var(--gr-choice, #0b1f3a) !important;
+    color: #fff !important;
+  }
+  html body [data-gr-choice]:disabled { opacity: 0.6; cursor: not-allowed; }
+  [data-gr-choice='nao_observado'] { --gr-choice: #475569; }
+  [data-gr-choice='iniciado'] { --gr-choice: #d97706; }
+  [data-gr-choice='em_desenvolvimento'] { --gr-choice: #2563eb; }
+  [data-gr-choice='consolidado'] { --gr-choice: #16a34a; }
+  [data-gr-choice='superado'] { --gr-choice: #7c3aed; }
+  html[data-color-mode='dark'] body [data-gr-choice] { background-color: #26344a !important; color: #c4cedd !important; border-color: #3a475e !important; }
+  html[data-color-mode='dark'] body [data-gr-choice]:hover:not(:disabled):not([aria-pressed='true']):not([aria-checked='true']) { background-color: #31425e !important; }
+  html[data-color-mode='dark'] body [data-gr-choice][aria-pressed='true'],
+  html[data-color-mode='dark'] body [data-gr-choice][aria-checked='true'] { background-color: var(--gr-choice, #2563eb) !important; border-color: var(--gr-choice, #2563eb) !important; color: #fff !important; }
+
+  /* ---- Botões de escolha COM cor própria (níveis I/D/C/S, estado de assiduidade…):
+          todos coloridos; o escolhido fica em cor cheia com anel, os outros mais suaves. ---- */
+  [data-gr-choice='presente'] { --gr-choice: #16a34a; }
+  [data-gr-choice='fj'] { --gr-choice: #2563eb; }
+  [data-gr-choice='fi'] { --gr-choice: #dc2626; }
+  [data-gr-choice='atraso'] { --gr-choice: #ea580c; }
+  html body [data-gr-choice]:not([data-gr-choice='tab']),
+  html[data-color-mode='dark'] body [data-gr-choice]:not([data-gr-choice='tab']) {
+    background-color: var(--gr-choice) !important;
+    border-color: var(--gr-choice) !important;
+    color: #fff !important;
+    opacity: 0.55;
+  }
+  html body [data-gr-choice]:not([data-gr-choice='tab']):hover:not(:disabled),
+  html[data-color-mode='dark'] body [data-gr-choice]:not([data-gr-choice='tab']):hover:not(:disabled) { opacity: 0.85; background-color: var(--gr-choice) !important; }
+  html body [data-gr-choice][aria-pressed='true']:not([data-gr-choice='tab']),
+  html body [data-gr-choice][aria-checked='true']:not([data-gr-choice='tab']),
+  html[data-color-mode='dark'] body [data-gr-choice][aria-pressed='true']:not([data-gr-choice='tab']),
+  html[data-color-mode='dark'] body [data-gr-choice][aria-checked='true']:not([data-gr-choice='tab']) {
+    opacity: 1;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--gr-choice);
+  }
+
+  /* ---- 3 cartões (ex.: 3 trimestres): três tons, para o 1.º e o 3.º não ficarem iguais ---- */
+  html body [data-gr-cards='tri'] > :nth-child(3n+1) { background-color: #d9e5f5 !important; }
+  html body [data-gr-cards='tri'] > :nth-child(3n+2) { background-color: #b8cce4 !important; }
+  html body [data-gr-cards='tri'] > :nth-child(3n+3) { background-color: #9fb9d9 !important; }
+  html[data-color-mode='dark'] body [data-gr-cards='tri'] > :nth-child(3n+1) { background-color: #1c2636 !important; }
+  html[data-color-mode='dark'] body [data-gr-cards='tri'] > :nth-child(3n+2) { background-color: #26344a !important; }
+  html[data-color-mode='dark'] body [data-gr-cards='tri'] > :nth-child(3n+3) { background-color: #31425e !important; }
+
+  /* ---- Botões com texto dentro de formulários / modais / diálogos (marcados por
+          src/utils/dialogButtons.ts): mesmo formato dos botões de ação, cantos pouco
+          arredondados. Só "Cancelar" fica sem fundo; os restantes têm fundo e letra branca. ---- */
+  html body [data-gr-btn] {
+    background-color: var(--gr-btn, #2563eb) !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  html body [data-gr-btn] * { color: #fff !important; }
+  html body [data-gr-btn]:hover:not(:disabled) { filter: brightness(0.9); }
+  html body [data-gr-btn]:disabled { opacity: 0.5; cursor: not-allowed; }
+  html body [data-gr-btn='danger'] { --gr-btn: #dc2626; }
+  html body [data-gr-btn='cancel'] {
+    background-color: transparent !important;
+    color: #334155 !important;
+    border: 1px solid #94a3b8 !important;
+  }
+  html body [data-gr-btn='cancel'] * { color: inherit !important; }
+  html body [data-gr-btn='cancel']:hover:not(:disabled) { background-color: rgba(100, 116, 139, 0.12) !important; filter: none; }
+  html[data-color-mode='dark'] body [data-gr-btn='cancel'] { color: #c4cedd !important; border-color: #4b5a73 !important; }
+
+  /* ---- Letra BRANCA em todos os botões com fundo colorido (exceto Cancelar e botões claros).
+          Botões de tom escuro/saturado do Tailwind ou azul-marinho da marca nunca ficam com letra preta. ---- */
+  html body button:is(
+      [class*='bg-[#0'], [class*='bg-[#1'], [class*='bg-[#2'], [class*='bg-[#3'], [class*='bg-[#5'], [class*='bg-[#7'],
+      [class*='bg-blue-5'], [class*='bg-blue-6'], [class*='bg-blue-7'], [class*='bg-blue-8'], [class*='bg-blue-9'],
+      [class*='bg-indigo-5'], [class*='bg-indigo-6'], [class*='bg-indigo-7'], [class*='bg-indigo-8'],
+      [class*='bg-emerald-5'], [class*='bg-emerald-6'], [class*='bg-emerald-7'], [class*='bg-emerald-8'], [class*='bg-emerald-9'],
+      [class*='bg-green-5'], [class*='bg-green-6'], [class*='bg-green-7'], [class*='bg-green-8'],
+      [class*='bg-red-5'], [class*='bg-red-6'], [class*='bg-red-7'], [class*='bg-red-8'], [class*='bg-red-9'],
+      [class*='bg-rose-5'], [class*='bg-rose-6'], [class*='bg-rose-7'], [class*='bg-rose-8'],
+      [class*='bg-amber-5'], [class*='bg-amber-6'], [class*='bg-amber-7'], [class*='bg-amber-8'],
+      [class*='bg-orange-5'], [class*='bg-orange-6'], [class*='bg-orange-7'],
+      [class*='bg-violet-5'], [class*='bg-violet-6'], [class*='bg-violet-7'], [class*='bg-purple-6'], [class*='bg-purple-7'],
+      [class*='bg-slate-6'], [class*='bg-slate-7'], [class*='bg-slate-8'], [class*='bg-slate-9'],
+      [class*='bg-sky-6'], [class*='bg-sky-7'], [class*='bg-teal-6'], [class*='bg-teal-7'], [class*='bg-cyan-6'], [class*='bg-cyan-7']
+    ):not([data-gr-btn='cancel']):not([data-gr-choice='tab']),
+  html body button:is(
+      [class*='bg-[#0'], [class*='bg-[#1'], [class*='bg-[#2'], [class*='bg-[#3'], [class*='bg-[#5'], [class*='bg-[#7'],
+      [class*='bg-blue-6'], [class*='bg-blue-7'], [class*='bg-emerald-6'], [class*='bg-emerald-7'], [class*='bg-red-6'], [class*='bg-red-7'],
+      [class*='bg-amber-6'], [class*='bg-amber-7'], [class*='bg-slate-7'], [class*='bg-slate-8'], [class*='bg-slate-9']
+    ):not([data-gr-btn='cancel']):not([data-gr-choice='tab']) * { color: #fff !important; }
+  html body button:is([class*='bg-'], [class*='bg-[#']):not([data-gr-btn='cancel']):not([class*='bg-white']):not([class*='bg-transparent']):not([class*='bg-slate-50']):not([class*='bg-slate-100']):not([class*='bg-slate-200']):not([class*='bg-gray-']):not([class*='-50']):not([class*='-100']):not([class*='-200']):not([data-gr-choice='tab']):not(.gr-pager__btn) { color: #fff !important; }
+
+  /* ---- Dias do calendário (xadrez de 2 cores; dias fora do mês ficam neutros) ---- */
+  html body [data-gr-alt='0'] { background-color: #d9e5f5 !important; }
+  html body [data-gr-alt='1'] { background-color: #b8cce4 !important; }
+  html body [data-gr-alt]:hover:not(:disabled) { background-color: #a9c4e8 !important; }
+  html body [data-gr-alt] { border-color: #8da9cb !important; }
+  html[data-color-mode='dark'] body [data-gr-alt='0'] { background-color: #1c2636 !important; }
+  html[data-color-mode='dark'] body [data-gr-alt='1'] { background-color: #26344a !important; }
+  html[data-color-mode='dark'] body [data-gr-alt]:hover:not(:disabled) { background-color: #31425e !important; }
+  html[data-color-mode='dark'] body [data-gr-alt] { border-color: #3a475e !important; }
+
+  /* ---- Barra "N selecionados · Eliminar selecionados" ---- */
+  .gr-bulkbar {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px 8px 16px;
+    background: #17365d;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .gr-bulkbar[hidden] { display: none; }
+  .gr-bulkbar button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 0;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+  }
+  .gr-bulkbar__clear { background: rgba(255, 255, 255, 0.15); }
+  .gr-bulkbar__clear:hover:not(:disabled) { background: rgba(255, 255, 255, 0.25); }
+  .gr-bulkbar__pay { background: #16a34a; padding: 9px 18px !important; font-size: 14px !important; font-weight: 800 !important; }
+  .gr-bulkbar__pay:hover:not(:disabled) { background: #15803d; }
+  .gr-bulkbar__pay[hidden] { display: none !important; }
+  .gr-bulkbar__enroll { background: #2563eb; padding: 9px 18px !important; font-size: 14px !important; font-weight: 800 !important; }
+  .gr-bulkbar__enroll:hover:not(:disabled) { background: #1d4ed8; }
+  .gr-bulkbar__enroll[hidden] { display: none !important; }
+  .gr-bulkbar__del { background: #dc2626; }
+  .gr-bulkbar__del:hover:not(:disabled) { background: #b91c1c; }
+  .gr-bulkbar button:disabled { opacity: 0.6; cursor: wait; }
+}
+
+@media print {
+  .gr-bulkbar, .gr-sel-col, .gr-sel-cell { display: none !important; }
+}
+
+/* Nº de matrícula/processo no cabeçalho do portal do aluno: sempre branco, em qualquer tema. */
+html body [data-proc-badge][data-proc-badge][data-proc-badge],
+html body [data-proc-badge][data-proc-badge][data-proc-badge] * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+html body [data-proc-badge][data-proc-badge][data-proc-badge] {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+}

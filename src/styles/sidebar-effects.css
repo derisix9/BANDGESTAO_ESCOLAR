@@ -1,0 +1,119 @@
+/* ==========================================================================
+ * Menu lateral: hover das subsecções (igual ao destaque dos cards), animação de
+ * expandir (cima → baixo) e ponto das subsecções. Ver utils/sidebarPrefs.ts.
+ * ========================================================================== */
+
+/* Hover (sempre activo): a subsecção cresce, ganha o azul do menu e os vizinhos recuam, como nos cards. */
+aside [data-sb-item] {
+  transition:
+    transform .32s cubic-bezier(.34, 1.56, .64, 1),
+    background-color .22s ease, color .22s ease,
+    box-shadow .32s ease, opacity .25s ease, filter .25s ease;
+  will-change: transform;
+  position: relative;
+}
+@media (hover: hover) {
+  html body aside [data-sb-item]:not([data-sb-active]):hover {
+    background-color: #12498a !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) scale(1.04);
+    z-index: 5;
+    box-shadow: 0 10px 22px -8px rgb(0 0 0 / .55), 0 0 0 1px #12498a;
+  }
+  html body aside [data-sb-item]:not([data-sb-active]):hover :is(span, .material-symbols-outlined) { color: #ffffff !important; }
+  /* os outros itens do mesmo grupo recuam um pouco */
+  aside [data-sb-list]:hover > [data-sb-item]:not(:hover):not([data-sb-active]) {
+    transform: scale(.975);
+    opacity: .8;
+    filter: saturate(.85);
+  }
+}
+
+/* Animação de expandir (cima → baixo) e de fechar (baixo → cima), com a mesma curva do "Registar".
+   O contentor colapsa em altura (grid 0fr↔1fr), por isso as secções seguintes sobem/descem suavemente. */
+aside [data-sb-wrap] { display: grid; grid-template-rows: 1fr; }
+aside [data-sb-wrap] > [data-sb-list] { min-height: 0; }
+@keyframes bm-sb-drop {
+  from { grid-template-rows: 0fr; opacity: 0; transform: translateY(-10px); }
+  to   { grid-template-rows: 1fr; opacity: 1; transform: none; }
+}
+@keyframes bm-sb-close {
+  from { grid-template-rows: 1fr; opacity: 1; transform: none; }
+  to   { grid-template-rows: 0fr; opacity: 0; transform: translateY(-10px); }
+}
+aside [data-sb-wrap][data-sb-drop]  { animation: bm-sb-drop  .5s cubic-bezier(.77, 0, .18, 1) both; }
+aside [data-sb-wrap][data-sb-close] { animation: bm-sb-close .5s cubic-bezier(.77, 0, .18, 1) both; }
+/* Só durante a animação o conteúdo é cortado (fora dela o hover pode crescer sem ser cortado). */
+aside [data-sb-wrap][data-sb-drop] > [data-sb-list],
+aside [data-sb-wrap][data-sb-close] > [data-sb-list] { overflow: hidden; }
+
+/* Ponto das subsecções (modo "sem ícones nas subsecções" e menu não expansível). */
+aside .bm-sb-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 6.5px;          /* ocupa a mesma largura do ícone de 20px */
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .75;
+  flex-shrink: 0;
+}
+aside [data-sb-item]:hover .bm-sb-dot,
+aside [data-sb-active] .bm-sb-dot { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  aside [data-sb-wrap][data-sb-drop], aside [data-sb-wrap][data-sb-close] { animation: none; }
+}
+
+/* ==========================================================================
+ * Navegação no cabeçalho (Personalizar sistema → Navegação das secções = Cabeçalho):
+ * o MESMO efeito de hover do menu lateral — a secção sob o rato cresce e ganha o azul do menu,
+ * e as restantes recuam. Aplica-se à barra das secções e à lista das subsecções.
+ * ========================================================================== */
+/* A própria barra NÃO leva position:relative — é `fixed` (Tailwind) e tem de ficar presa ao cabeçalho ao rolar. */
+[data-hnav-bar] [data-hnav-item], [data-hnav-panel] [data-hnav-item] { position: relative; }
+[data-hnav-bar] { position: fixed; }
+[data-hnav-bar] { overflow-y: hidden; }
+[data-hnav-bar] [data-hnav-item],
+[data-hnav-panel] [data-hnav-item] {
+  transition:
+    transform .32s cubic-bezier(.34, 1.56, .64, 1),
+    background-color .22s ease, color .22s ease,
+    box-shadow .32s ease, opacity .25s ease, filter .25s ease;
+  will-change: transform;
+}
+@media (hover: hover) {
+  /* Barra das secções */
+  html body [data-hnav-bar] [data-hnav-item]:hover {
+    background-color: #12498a !important;
+    color: #ffffff !important;
+    transform: scale(1.06);
+    z-index: 5;
+    box-shadow: 0 10px 22px -8px rgb(0 0 0 / .55), 0 0 0 1px #12498a;
+  }
+  html body [data-hnav-bar] [data-hnav-item]:hover :is(span, .material-symbols-outlined) { color: #ffffff !important; }
+  [data-hnav-bar]:hover > [data-hnav-item]:not(:hover) {
+    transform: scale(.95);
+    opacity: .8;
+    filter: saturate(.85);
+  }
+
+  /* Lista das subsecções (painel que abre ao passar o rato) */
+  html body [data-hnav-panel] [data-hnav-item]:not([data-hnav-active]):hover {
+    background-color: #12498a !important;
+    color: #ffffff !important;
+    transform: scale(1.03);
+    z-index: 5;
+    box-shadow: 0 8px 18px -8px rgb(0 0 0 / .5), 0 0 0 1px #12498a;
+  }
+  html body [data-hnav-panel] [data-hnav-item]:hover :is(span, .material-symbols-outlined) { color: #ffffff !important; }
+  [data-hnav-panel]:hover > [data-hnav-item]:not(:hover):not([data-hnav-active]) {
+    transform: scale(.975);
+    opacity: .8;
+    filter: saturate(.85);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hnav-bar] [data-hnav-item], [data-hnav-panel] [data-hnav-item] { transition: none; }
+  html body [data-hnav-bar] [data-hnav-item]:hover, html body [data-hnav-panel] [data-hnav-item]:hover { transform: none; }
+}

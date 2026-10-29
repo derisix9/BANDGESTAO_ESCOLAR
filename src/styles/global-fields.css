@@ -1,0 +1,87 @@
+/* =========================================================================
+   CAMPOS DE TEXTO — REGRA GLOBAL ÚNICA
+   -------------------------------------------------------------------------
+   Todas as caixas onde se escreve texto no sistema (páginas, painéis,
+   formulários, janelas de diálogo, pesquisa, login, modo claro e escuro):
+     • fundo ............ azul-acinzentado  #9fbad8  (rgb 159,186,216)
+     • texto escrito .... preto             #000000
+     • marcador (placeholder) .. branco-acinzentado bem visível
+   Vale para <input> de texto/e-mail/senha/número/data/pesquisa..., <textarea>,
+   <select> e áreas editáveis (contenteditable). Só no ecrã: ao imprimir, os
+   documentos saem sem esta cor.
+
+   Para mudar a cor no futuro basta alterar as 3 variáveis abaixo.
+   A especificidade é propositadamente alta (:not(#_) = um seletor de ID) e
+   usa !important para vencer os temas claro/escuro/Laravel/login e estilos
+   inline — por isso é global e não precisa de ser repetida nos componentes.
+   ========================================================================= */
+:root {
+  --bm-field-bg: #12498a;
+  --bm-field-text: #ffffff;
+  --bm-field-placeholder: #6b6b6b;
+}
+
+@media screen {
+  html body :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']):not([type='image']):not([type='hidden']),
+    textarea,
+    select,
+    [contenteditable='true']:not([data-doc-field]),
+    [contenteditable='']:not([data-doc-field])
+  ):not([data-bare-field]):not(#_):not(#_) {
+    background-color: var(--bm-field-bg) !important;
+    color: var(--bm-field-text) !important;
+    -webkit-text-fill-color: var(--bm-field-text) !important;
+    caret-color: var(--bm-field-text) !important;
+    color-scheme: light !important;
+  }
+
+  /* Excepção: pesquisa e ano letivo do cabeçalho — fundo 100 % transparente,
+     fora da regra global (marcados com data-bare-field no Navbar). */
+  html body :is(input, select)[data-bare-field]:not(#_):not(#_):not(#_),
+  html body :is(input, select)[data-bare-field]:not(#_):not(#_):not(#_):is(:hover, :focus, :disabled, :-webkit-autofill) {
+    background-color: transparent !important;
+    background-image: none;
+    box-shadow: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    transition: background-color 9999s ease-out 0s;
+  }
+  html body select[data-bare-field]:not(#_):not(#_):not(#_) { color: #dbeafe !important; outline: none; }
+  html body input[data-bare-field]:not(#_):not(#_):not(#_) { color: #ffffff !important; outline: none; }
+
+
+
+  /* Opções do menu aberto de um <select>: legíveis (preto sobre o mesmo azul). */
+  html body select:not(#_):not(#_) option,
+  html body select:not(#_):not(#_) optgroup {
+    background-color: var(--bm-field-bg) !important;
+    color: var(--bm-field-text) !important;
+  }
+
+  /* Preenchimento automático do navegador não pode mudar as cores. */
+  html body :is(input, textarea, select):not([data-bare-field]):not(#_):not(#_):-webkit-autofill,
+  html body :is(input, textarea, select):not([data-bare-field]):not(#_):not(#_):-webkit-autofill:hover,
+  html body :is(input, textarea, select):not([data-bare-field]):not(#_):not(#_):-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--bm-field-bg) inset !important;
+    box-shadow: 0 0 0 1000px var(--bm-field-bg) inset !important;
+    -webkit-text-fill-color: var(--bm-field-text) !important;
+    caret-color: var(--bm-field-text) !important;
+    transition: background-color 9999s ease-out 0s;
+  }
+
+  /* Campos desativados / só de leitura: mesma cor, só com o cursor a indicar. */
+  html body :is(input, textarea, select):not([data-bare-field]):not(#_):not(#_):disabled,
+  html body :is(input, textarea):not([data-bare-field]):not(#_):not(#_)[readonly] {
+    background-color: var(--bm-field-bg) !important;
+    color: var(--bm-field-text) !important;
+    -webkit-text-fill-color: var(--bm-field-text) !important;
+    opacity: 0.85;
+  }
+  html body :is(input, textarea, select):not(#_):not(#_):disabled { cursor: not-allowed; }
+
+  /* Foco bem visível sobre o azul. */
+  html body :is(input, textarea, select):not([data-bare-field]):not(#_):not(#_):focus {
+    outline: 2px solid #0b1f3a;
+    outline-offset: 0;
+  }
+}

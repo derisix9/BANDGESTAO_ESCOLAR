@@ -1,0 +1,773 @@
+/* =============================================================================
+   TEMA "MODERNO (LARAVEL)" — herança visual do Laravel 12
+   =============================================================================
+
+   Todas as regras deste ficheiro estão presas ao atributo
+   [data-ui-theme="laravel"] no elemento <html>. Com o tema "Visual Padrão"
+   selecionado, nada aqui se aplica e a aplicação fica exatamente como estava.
+
+   COMO É QUE ISTO APANHA TAMBÉM OS ECRÃS FUTUROS
+   ----------------------------------------------
+   Em vez de reescrever cada componente, as regras atuam sobre:
+     1. os ELEMENTOS base (button, input, select, textarea, table, dialog);
+     2. as CLASSES UTILITÁRIAS que a aplicação já usa por toda a parte
+        (bg-[#0b1f3a], rounded-none, shadow-xs, border-slate-200, ...).
+   Qualquer componente novo escrito no mesmo estilo herda o aspeto Laravel sem
+   trabalho adicional.
+
+   NOTA SOBRE OS SELETORES
+   -----------------------
+   Para apanhar a classe "bg-[#0b1f3a]" mas NÃO a variante "hover:bg-[#0b1f3a]"
+   usa-se o par [class^="..."] (é a primeira classe) e [class*=" ..."] (vem
+   precedida de um espaço). As variantes de hover são tratadas à parte, com
+   [class*="hover:..."]:hover.
+   ========================================================================== */
+
+[data-ui-theme='laravel'] {
+  /* Paleta do Laravel 12 */
+  --lv-bg: #fdfdfc;
+  --lv-surface: #ffffff;
+  --lv-surface-muted: #f8f8f7;
+  --lv-border: #e3e3e0;
+  --lv-border-strong: #d6d6d2;
+  /* Fundo escuro estrutural (cabeçalho, barra lateral, distintivos, painéis de
+   * destaque): antes um azul-marinho quase preto — o Administrador achou-o
+   * "sempre preto" e pediu a mesma cor do botão, por isso é agora o próprio
+   * azul de referência (--lv-button-blue), nunca preto. */
+  --lv-ink: #12498A;
+  --lv-ink-soft: #1d4ed8;
+  --lv-muted: #706f6c;
+  --lv-accent: #f53003;
+  --lv-accent-hover: #d42a02;
+  --lv-accent-soft: #fff4f1;
+  /* Azul de referência (mockup fornecido): cor de TODOS os botões e de todo o
+   * fundo estrutural escuro no tema Laravel, exceto os botões de eliminar. */
+  --lv-button-blue: #2563EB;
+  --lv-button-blue-hover: #1d4ed8;
+  --lv-danger: #dc2626;
+  --lv-danger-hover: #1c1c1a;
+  /* Cor de texto de LEITURA (o que se escreve nos campos, texto normal sobre
+   * fundo claro): sempre um cinzento-escuro neutro, independente do azul
+   * estrutural acima — nunca "herda" a cor do botão, para o texto digitado
+   * continuar sempre preto/legível mesmo quando o fundo estrutural é azul. */
+  --lv-text-strong: #1c1c1a;
+  --lv-radius-sm: 0.375rem;
+  --lv-radius: 0.5rem;
+  --lv-radius-lg: 0.75rem;
+  --lv-shadow: 0 1px 2px rgba(27, 27, 24, 0.05);
+  --lv-shadow-md: 0 4px 12px rgba(27, 27, 24, 0.06);
+  --lv-shadow-lg: 0 12px 32px rgba(27, 27, 24, 0.1);
+
+  /* Bootstrap (usado em alguns pontos da aplicação) acompanha o tema */
+  --bs-primary: #12498A;
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-secondary: #12498A;
+  --bs-secondary-rgb: 37, 99, 235;
+  --bs-border-color: #e3e3e0;
+  --bs-body-bg: #fdfdfc;
+  --bs-body-color: #1b1b18;
+  --bs-border-radius: 0.5rem;
+}
+
+/* ---------------------------------------------------------------- Base ---- */
+
+[data-ui-theme='laravel'] body,
+body[data-ui-theme='laravel'] {
+  background-color: var(--lv-bg);
+  color: var(--lv-text-strong);
+  font-family: 'Instrument Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.006em;
+}
+
+[data-ui-theme='laravel'] h1,
+[data-ui-theme='laravel'] h2,
+[data-ui-theme='laravel'] h3,
+[data-ui-theme='laravel'] h4,
+[data-ui-theme='laravel'] h5,
+[data-ui-theme='laravel'] h6,
+[data-ui-theme='laravel'] .font-headline {
+  font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+[data-ui-theme='laravel'] ::-webkit-scrollbar-track {
+  background: rgba(27, 27, 24, 0.03);
+}
+[data-ui-theme='laravel'] ::-webkit-scrollbar-thumb {
+  background: rgba(27, 27, 24, 0.16);
+  border-radius: 999px;
+}
+
+/* ------------------------------------------------------------- Cantos ---- */
+/* O Laravel 12 não usa cantos retos: tudo ganha um raio suave e coerente.    */
+
+[data-ui-theme='laravel'] [class^='rounded-none'],
+[data-ui-theme='laravel'] [class*=' rounded-none'] {
+  border-radius: var(--lv-radius) !important;
+}
+[data-ui-theme='laravel'] [class^='rounded-2xl'],
+[data-ui-theme='laravel'] [class*=' rounded-2xl'] {
+  border-radius: var(--lv-radius-lg) !important;
+}
+[data-ui-theme='laravel'] [class^='rounded-xl'],
+[data-ui-theme='laravel'] [class*=' rounded-xl'] {
+  border-radius: var(--lv-radius) !important;
+}
+[data-ui-theme='laravel'] [class^='rounded-lg'],
+[data-ui-theme='laravel'] [class*=' rounded-lg'],
+[data-ui-theme='laravel'] [class^='rounded-md'],
+[data-ui-theme='laravel'] [class*=' rounded-md'] {
+  border-radius: var(--lv-radius-sm) !important;
+}
+/* rounded-full mantém-se redondo (avatares, "pills", indicadores). */
+
+/* ------------------------------------------------------------- Sombras --- */
+
+[data-ui-theme='laravel'] [class^='shadow-xs'],
+[data-ui-theme='laravel'] [class*=' shadow-xs'],
+[data-ui-theme='laravel'] [class^='shadow-sm'],
+[data-ui-theme='laravel'] [class*=' shadow-sm'] {
+  box-shadow: var(--lv-shadow) !important;
+}
+[data-ui-theme='laravel'] [class^='shadow-md'],
+[data-ui-theme='laravel'] [class*=' shadow-md'],
+[data-ui-theme='laravel'] [class^='shadow-lg'],
+[data-ui-theme='laravel'] [class*=' shadow-lg'] {
+  box-shadow: var(--lv-shadow-md) !important;
+}
+[data-ui-theme='laravel'] [class^='shadow-xl'],
+[data-ui-theme='laravel'] [class*=' shadow-xl'],
+[data-ui-theme='laravel'] [class^='shadow-2xl'],
+[data-ui-theme='laravel'] [class*=' shadow-2xl'] {
+  box-shadow: var(--lv-shadow-lg) !important;
+}
+
+/* -------------------------------------------------- Cores institucionais -- */
+/* Azul-marinho -> tinta escura do Laravel; vinho/carmim -> laranja da marca.  */
+
+[data-ui-theme='laravel'] [class^='bg-[#0b1f3a]'],
+[data-ui-theme='laravel'] [class*=' bg-[#0b1f3a]'],
+[data-ui-theme='laravel'] [class^='bg-[#12335e]'],
+[data-ui-theme='laravel'] [class*=' bg-[#12335e]'],
+[data-ui-theme='laravel'] [class^='bg-[#0d2647]'],
+[data-ui-theme='laravel'] [class*=' bg-[#0d2647]'],
+[data-ui-theme='laravel'] [class^='bg-[#0f2849]'],
+[data-ui-theme='laravel'] [class*=' bg-[#0f2849]'],
+[data-ui-theme='laravel'] [class^='bg-[#183f73]'],
+[data-ui-theme='laravel'] [class*=' bg-[#183f73]'],
+[data-ui-theme='laravel'] [class^='bg-[#183c6b]'],
+[data-ui-theme='laravel'] [class*=' bg-[#183c6b]'],
+[data-ui-theme='laravel'] [class^='bg-[#000615]'],
+[data-ui-theme='laravel'] [class*=' bg-[#000615]'] {
+  background-color: var(--lv-ink) !important;
+  color: #ffffff;
+}
+
+[data-ui-theme='laravel'] [class^='bg-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class*=' bg-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class^='bg-[#ac332b]'],
+[data-ui-theme='laravel'] [class*=' bg-[#ac332b]'],
+[data-ui-theme='laravel'] [class^='bg-[#b91c1c]'],
+[data-ui-theme='laravel'] [class*=' bg-[#b91c1c]'],
+[data-ui-theme='laravel'] [class^='bg-[#5c0d0d]'],
+[data-ui-theme='laravel'] [class*=' bg-[#5c0d0d]'] {
+  background-color: var(--lv-accent) !important;
+  color: #ffffff;
+}
+
+[data-ui-theme='laravel'] [class*='hover:bg-[#7a0c0c]']:hover,
+[data-ui-theme='laravel'] [class*='hover:bg-[#5e0909]']:hover,
+[data-ui-theme='laravel'] [class*='hover:bg-[#8f1010]']:hover {
+  background-color: var(--lv-accent-hover) !important;
+  color: #ffffff !important;
+}
+[data-ui-theme='laravel'] [class*='hover:bg-[#122c50]']:hover,
+[data-ui-theme='laravel'] [class*='hover:bg-[#15345d]']:hover,
+[data-ui-theme='laravel'] [class*='hover:bg-[#16355f]']:hover,
+[data-ui-theme='laravel'] [class*='hover:bg-[#0b1f3a]']:hover {
+  background-color: var(--lv-ink-soft) !important;
+  color: #ffffff !important;
+}
+
+[data-ui-theme='laravel'] [class^='text-[#0b1f3a]'],
+[data-ui-theme='laravel'] [class*=' text-[#0b1f3a]'] {
+  color: var(--lv-ink) !important;
+}
+[data-ui-theme='laravel'] [class^='text-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class*=' text-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class^='text-[#ac332b]'],
+[data-ui-theme='laravel'] [class*=' text-[#ac332b]'] {
+  color: var(--lv-accent) !important;
+}
+[data-ui-theme='laravel'] [class*='hover:text-[#0b1f3a]']:hover {
+  color: var(--lv-ink-soft) !important;
+}
+[data-ui-theme='laravel'] [class*='hover:text-[#7a0c0c]']:hover,
+[data-ui-theme='laravel'] [class*='hover:text-[#ac332b]']:hover {
+  color: var(--lv-accent-hover) !important;
+}
+
+[data-ui-theme='laravel'] [class^='border-[#0b1f3a]'],
+[data-ui-theme='laravel'] [class*=' border-[#0b1f3a]'] {
+  border-color: var(--lv-ink) !important;
+}
+[data-ui-theme='laravel'] [class^='border-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class*=' border-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class^='border-[#ac332b]'],
+[data-ui-theme='laravel'] [class*=' border-[#ac332b]'] {
+  border-color: var(--lv-accent) !important;
+}
+[data-ui-theme='laravel'] [class*='hover:border-[#0b1f3a]']:hover {
+  border-color: var(--lv-ink) !important;
+}
+
+/* Anéis de foco: o Laravel usa um anel discreto da cor da tinta. */
+[data-ui-theme='laravel'] [class*='ring-[#0b1f3a]'],
+[data-ui-theme='laravel'] [class*='ring-[#7a0c0c]'],
+[data-ui-theme='laravel'] [class*='ring-[#ac332b]'] {
+  --tw-ring-color: rgba(27, 27, 24, 0.35) !important;
+}
+
+/* ------------------------------------------------------------- Botões ---- */
+/* No tema Laravel TODOS os botões usam o azul de referência do mockup, exceto
+ * os de eliminar (identificados pela classe bg-[#b91c1c], usada em toda a
+ * aplicação exclusivamente nos botões de confirmação de eliminação), que
+ * ficam a vermelho. As regras abaixo têm de ser mais específicas do que as
+ * de "Cores institucionais" acima (que pintam o mesmo azul-marinho em
+ * superfícies como o cabeçalho e a barra lateral) — por isso incluem sempre
+ * o seletor de tipo "button". */
+
+[data-ui-theme='laravel'] button[class^='bg-[#0b1f3a]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#0b1f3a]'],
+[data-ui-theme='laravel'] button[class^='bg-[#7a0c0c]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#7a0c0c]'],
+[data-ui-theme='laravel'] button[class^='bg-[#ac332b]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#ac332b]'],
+[data-ui-theme='laravel'] button[class^='bg-[#12335e]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#12335e]'],
+[data-ui-theme='laravel'] button[class^='bg-[#0d2647]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#0d2647]'],
+[data-ui-theme='laravel'] button[class^='bg-[#0f2849]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#0f2849]'],
+[data-ui-theme='laravel'] button[class^='bg-[#183f73]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#183f73]'],
+[data-ui-theme='laravel'] button[class^='bg-[#183c6b]'],
+[data-ui-theme='laravel'] button[class*=' bg-[#183c6b]'] {
+  background-color: var(--lv-button-blue) !important;
+  border-color: var(--lv-button-blue) !important;
+  color: #ffffff !important;
+}
+[data-ui-theme='laravel'] button[class*='hover:bg-[#7a0c0c]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#5e0909]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#8f1010]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#122c50]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#15345d]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#16355f]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-[#0b1f3a]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:bg-red-800']:hover {
+  background-color: var(--lv-button-blue-hover) !important;
+  border-color: var(--lv-button-blue-hover) !important;
+  color: #ffffff !important;
+}
+
+/* Botões que só têm cor de texto (sem fundo), como os ícones de "editar" nas
+ * tabelas — ficam igualmente azuis. */
+[data-ui-theme='laravel'] button[class^='text-[#0b1f3a]'],
+[data-ui-theme='laravel'] button[class*=' text-[#0b1f3a]'] {
+  color: var(--lv-button-blue) !important;
+}
+[data-ui-theme='laravel'] button[class*='hover:text-[#0b1f3a]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:text-[#7a0c0c]']:hover,
+[data-ui-theme='laravel'] button[class*='hover:text-[#ac332b]']:hover {
+  color: var(--lv-button-blue-hover) !important;
+}
+
+/* EXCEÇÃO — botões de Eliminar: sempre vermelhos, nunca azuis. Esta classe
+ * exata (bg-[#b91c1c] + hover:bg-[#7a0c0c]) é usada, sem variação, em todos os
+ * botões "Eliminar" de confirmação da aplicação. O seletor combinado da
+ * variante :hover tem mais um atributo do que as regras azuis acima, pelo que
+ * ganha sempre a esta, independentemente da ordem. */
+[data-ui-theme='laravel'] button[class*='bg-[#b91c1c]'] {
+  background-color: var(--lv-danger) !important;
+  border-color: var(--lv-danger) !important;
+  color: #ffffff !important;
+}
+[data-ui-theme='laravel'] button[class*='bg-[#b91c1c]'][class*='hover:bg-[#7a0c0c]']:hover {
+  background-color: var(--lv-danger-hover) !important;
+  border-color: var(--lv-danger-hover) !important;
+  color: #ffffff !important;
+}
+
+/* ------------------------------------------------ Ícones de ação em linha - */
+/* Botões-ícone (ver, editar, imprimir...) em tabelas e cartões: mantêm-se
+ * discretos, mas ganham o azul de referência quando o seu estado normal ou de
+ * hover já apontava para a cor institucional — os botões neutros (fechar "x",
+ * paginação) continuam cinzentos, sem qualquer alteração. */
+[data-ui-theme='laravel'] button[class*='hover:text-blue-700']:hover {
+  color: var(--lv-button-blue-hover) !important;
+}
+
+/* --------------------------------------------------------- Superfícies --- */
+
+[data-ui-theme='laravel'] [class^='border-slate-200'],
+[data-ui-theme='laravel'] [class*=' border-slate-200'],
+[data-ui-theme='laravel'] [class^='border-slate-300'],
+[data-ui-theme='laravel'] [class*=' border-slate-300'],
+[data-ui-theme='laravel'] [class^='border-slate-100'],
+[data-ui-theme='laravel'] [class*=' border-slate-100'] {
+  border-color: var(--lv-border) !important;
+}
+[data-ui-theme='laravel'] [class^='divide-slate-100'],
+[data-ui-theme='laravel'] [class*=' divide-slate-100'],
+[data-ui-theme='laravel'] [class^='divide-slate-200'],
+[data-ui-theme='laravel'] [class*=' divide-slate-200'] {
+  --tw-divide-opacity: 1;
+  border-color: var(--lv-border) !important;
+}
+[data-ui-theme='laravel'] [class^='divide-slate-100'] > * + *,
+[data-ui-theme='laravel'] [class*=' divide-slate-100'] > * + *,
+[data-ui-theme='laravel'] [class^='divide-slate-200'] > * + *,
+[data-ui-theme='laravel'] [class*=' divide-slate-200'] > * + * {
+  border-color: var(--lv-border) !important;
+}
+
+[data-ui-theme='laravel'] [class^='bg-slate-50'],
+[data-ui-theme='laravel'] [class*=' bg-slate-50'],
+[data-ui-theme='laravel'] [class^='bg-[#f8fafc]'],
+[data-ui-theme='laravel'] [class*=' bg-[#f8fafc]'],
+[data-ui-theme='laravel'] [class^='bg-[#eff4ff]'],
+[data-ui-theme='laravel'] [class*=' bg-[#eff4ff]'] {
+  background-color: var(--lv-surface-muted) !important;
+}
+[data-ui-theme='laravel'] [class^='bg-slate-100'],
+[data-ui-theme='laravel'] [class*=' bg-slate-100'] {
+  background-color: #f1f1ef !important;
+}
+
+/* Cartões e painéis: borda fina em vez de sombra pesada. */
+[data-ui-theme='laravel'] [class*='bg-white'][class*='border'] {
+  background-color: var(--lv-surface) !important;
+  border-color: var(--lv-border) !important;
+}
+
+/* ------------------------------------------------------------- Botões ---- */
+
+[data-ui-theme='laravel'] button,
+[data-ui-theme='laravel'] [role='button'],
+[data-ui-theme='laravel'] .btn {
+  font-weight: 500;
+  letter-spacing: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+[data-ui-theme='laravel'] button:focus-visible,
+[data-ui-theme='laravel'] a:focus-visible,
+[data-ui-theme='laravel'] [role='button']:focus-visible {
+  outline: 2px solid rgba(27, 27, 24, 0.5);
+  outline-offset: 2px;
+}
+[data-ui-theme='laravel'] button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+/* Todos os botões usam o azul de referência — só os de eliminar ficam a
+ * vermelho (ver .btn-danger). */
+[data-ui-theme='laravel'] .btn-primary,
+[data-ui-theme='laravel'] .btn-wine {
+  background-color: var(--lv-button-blue) !important;
+  border-color: var(--lv-button-blue) !important;
+}
+[data-ui-theme='laravel'] .btn-primary:hover,
+[data-ui-theme='laravel'] .btn-primary:focus,
+[data-ui-theme='laravel'] .btn-wine:hover,
+[data-ui-theme='laravel'] .btn-wine:focus {
+  background-color: var(--lv-button-blue-hover) !important;
+  border-color: var(--lv-button-blue-hover) !important;
+}
+[data-ui-theme='laravel'] .btn-danger {
+  background-color: var(--lv-danger) !important;
+  border-color: var(--lv-danger) !important;
+}
+[data-ui-theme='laravel'] .btn-danger:hover {
+  background-color: var(--lv-danger-hover) !important;
+  border-color: var(--lv-danger-hover) !important;
+}
+
+/* ------------------------------------------------- Campos & formulários -- */
+
+[data-ui-theme='laravel'] input:not([type='checkbox']):not([type='radio']):not([type='range']),
+[data-ui-theme='laravel'] select,
+[data-ui-theme='laravel'] textarea {
+  background-color: var(--lv-surface) !important;
+  border-color: var(--lv-border) !important;
+  border-width: 1px;
+  border-radius: var(--lv-radius-sm) !important;
+  color: var(--lv-text-strong) !important;
+  box-shadow: 0 1px 1px rgba(27, 27, 24, 0.03);
+}
+[data-ui-theme='laravel'] input:not([type='checkbox']):not([type='radio']):focus,
+[data-ui-theme='laravel'] select:focus,
+[data-ui-theme='laravel'] textarea:focus {
+  border-color: var(--lv-ink) !important;
+  box-shadow: 0 0 0 3px rgba(27, 27, 24, 0.08) !important;
+  outline: none;
+}
+[data-ui-theme='laravel'] input:not([class*='placeholder:'])::placeholder,
+[data-ui-theme='laravel'] textarea:not([class*='placeholder:'])::placeholder {
+  color: #6b7280;
+}
+[data-ui-theme='laravel'] input[type='checkbox'],
+[data-ui-theme='laravel'] input[type='radio'] {
+  accent-color: var(--lv-ink);
+}
+[data-ui-theme='laravel'] label {
+  color: var(--lv-text-strong);
+  letter-spacing: 0;
+}
+[data-ui-theme='laravel'] fieldset {
+  border-color: var(--lv-border);
+  border-radius: var(--lv-radius);
+}
+
+/* ------------------------------------------------------------- Tabelas --- */
+
+[data-ui-theme='laravel'] table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+/* O cabeçalho MANTÉM o fundo que o componente definiu (azul institucional,
+ * cinzento claro, etc.). Antes forçava-se fundo transparente + texto cinzento,
+ * o que deixava letras cinzentas por cima do azul escuro — ilegíveis. A cor do
+ * texto passa a ser decidida pelo bloco "Legibilidade do texto" mais abaixo. */
+[data-ui-theme='laravel'] thead tr {
+  border-bottom: 1px solid var(--lv-border);
+}
+[data-ui-theme='laravel'] thead th {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+[data-ui-theme='laravel'] tbody tr {
+  border-color: var(--lv-border);
+}
+[data-ui-theme='laravel'] tbody tr:hover {
+  background-color: var(--lv-surface-muted);
+}
+
+/* ------------------------------------------- Modais & caixas de diálogo -- */
+
+[data-ui-theme='laravel'] dialog,
+[data-ui-theme='laravel'] [class*='fixed'][class*='inset-0'] > [class*='bg-white'] {
+  border-radius: var(--lv-radius-lg) !important;
+  border: 1px solid var(--lv-border) !important;
+  box-shadow: var(--lv-shadow-lg) !important;
+}
+/* Fundo escurecido mais leve, como nos modais do Laravel. */
+[data-ui-theme='laravel'] [class*='bg-black/60'] {
+  background-color: rgba(27, 27, 24, 0.35) !important;
+}
+
+/* ------------------------------------------- Distintivos / etiquetas ----- */
+
+[data-ui-theme='laravel'] [class*='rounded-full'][class*='text-[1'],
+[data-ui-theme='laravel'] [class*='rounded-full'][class*='px-2'] {
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------- Gráficos -- */
+/* Eixos, grelha e tooltip dos gráficos (Recharts) acompanham a paleta.       */
+
+[data-ui-theme='laravel'] .recharts-cartesian-grid line {
+  stroke: var(--lv-border) !important;
+}
+[data-ui-theme='laravel'] .recharts-cartesian-axis-line,
+[data-ui-theme='laravel'] .recharts-cartesian-axis-tick-line {
+  stroke: var(--lv-border-strong) !important;
+}
+[data-ui-theme='laravel'] .recharts-text {
+  fill: var(--lv-muted) !important;
+  font-family: 'Instrument Sans', 'Inter', sans-serif;
+}
+[data-ui-theme='laravel'] .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: var(--lv-surface) !important;
+  border: 1px solid var(--lv-border) !important;
+  border-radius: var(--lv-radius) !important;
+  box-shadow: var(--lv-shadow-md) !important;
+  color: var(--lv-ink) !important;
+}
+
+/* --------------------------------------------- Barra lateral & cabeçalho - */
+
+[data-ui-theme='laravel'] aside[class*='bg-[#0b1f3a]'] {
+  background-color: var(--lv-ink) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-ui-theme='laravel'] aside[class*='bg-[#0b1f3a]'] [class*='bg-white'][class*='text-[#0b1f3a]'] {
+  background-color: #ffffff !important;
+  color: var(--lv-ink) !important;
+}
+
+/* ============================================================================
+   LEGIBILIDADE DO TEXTO — contraste garantido em todos os ecrãs
+   ============================================================================
+
+   Regra única e simples, válida também para ecrãs que ainda não existem:
+
+     • Fundo ESCURO (azul institucional #12498A, azul-marinho original, vinho,
+       vermelho, cinzentos 700-900) ................ texto BRANCO.
+     • Fundo CLARO (branco, cinzentos 50-300) ...... texto PRETO (#1c1c1a) para
+       o conteúdo principal e #12498A para os rótulos/legendas secundárias.
+
+   Nunca fica texto cinzento-claro sobre azul, nem cinzento-claro sobre branco.
+
+   As três listas abaixo (--fundos escuros--, --fundos claros--, --texto
+   cinzento--) são reutilizadas com :is() para não repetir seletores. Os
+   cinzentos apanhados são só os NEUTROS (slate/gray/zinc/neutral/stone): as
+   cores com significado (âmbar, vermelho, verde, rosa...) ficam intactas,
+   porque são elas que marcam estados como "REPROVADO" ou "EM ATRASO".
+   ========================================================================== */
+
+/* -- 1. Fundo claro: cinzentos claros passam a azul institucional (#12498A) - */
+/*       Rótulos como "MÉDIA DA TURMA", "TOTAL DE TURMAS", "Proc.: #2026-..."  */
+
+[data-ui-theme='laravel']
+  :is(
+    [class^='text-slate-200'], [class*=' text-slate-200'],
+    [class^='text-slate-300'], [class*=' text-slate-300'],
+    [class^='text-slate-400'], [class*=' text-slate-400'],
+    [class^='text-slate-500'], [class*=' text-slate-500'],
+    [class^='text-gray-400'],  [class*=' text-gray-400'],
+    [class^='text-gray-500'],  [class*=' text-gray-500']
+  ) {
+  color: var(--lv-ink) !important;
+}
+
+/* -- 2. Fundo claro: cinzentos médios/escuros passam a preto ---------------- */
+
+[data-ui-theme='laravel']
+  :is(
+    [class^='text-slate-600'], [class*=' text-slate-600'],
+    [class^='text-slate-700'], [class*=' text-slate-700'],
+    [class^='text-slate-800'], [class*=' text-slate-800'],
+    [class^='text-slate-900'], [class*=' text-slate-900'],
+    [class^='text-gray-600'],  [class*=' text-gray-600'],
+    [class^='text-gray-700'],  [class*=' text-gray-700'],
+    [class^='text-gray-800'],  [class*=' text-gray-800'],
+    [class^='text-gray-900'],  [class*=' text-gray-900']
+  ) {
+  color: var(--lv-text-strong) !important;
+}
+
+/* Texto branco que tenha ficado sobre fundo branco/cinzento claro (invisível):
+ * passa ao azul institucional. */
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-white'], [class*=' bg-white'],
+    [class^='bg-slate-50'], [class*=' bg-slate-50'],
+    [class^='bg-slate-100'], [class*=' bg-slate-100'],
+    [class^='bg-slate-200'], [class*=' bg-slate-200'],
+    [class^='bg-[#f8fafc]'], [class*=' bg-[#f8fafc]'],
+    [class^='bg-[#eff4ff]'], [class*=' bg-[#eff4ff]']
+  )[class*='text-white'] {
+  color: var(--lv-ink) !important;
+}
+
+/* Marcador de texto escrito nos campos e nos "placeholders": legível, nunca
+ * cinzento-claro. */
+[data-ui-theme='laravel'] input:not([class*='placeholder:'])::placeholder,
+[data-ui-theme='laravel'] textarea:not([class*='placeholder:'])::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+/* Campos de texto/selectores desenhados para viver DENTRO da barra azul
+ * (bg-transparent ou text-white): mantêm-se transparentes e a branco, em vez
+ * de ganharem a caixa branca com texto escuro dos formulários normais. */
+[data-ui-theme='laravel'] :is(input, select, textarea)[class*='text-white'],
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  )
+  :is(input, select, textarea)[class*='bg-transparent'] {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* -- 3. Fundo ESCURO: tudo o que lá dentro não tem cor própria fica branco -- */
+/*       (o :not(...) protege os estados a cor: âmbar, vermelho, verde, ...)   */
+
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#4'], [class*=' bg-[#4'],
+    [class^='bg-[#5'], [class*=' bg-[#5'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-[#8'], [class*=' bg-[#8'],
+    [class^='bg-[#a'], [class*=' bg-[#a'],
+    [class^='bg-[#b9'], [class*=' bg-[#b9'],
+    [class^='bg-slate-700'], [class*=' bg-slate-700'],
+    [class^='bg-slate-800'], [class*=' bg-slate-800'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  ):not(
+    :is(
+      [class*='text-amber'], [class*='text-yellow'], [class*='text-orange'],
+      [class*='text-red'], [class*='text-rose'], [class*='text-pink'],
+      [class*='text-emerald'], [class*='text-green'], [class*='text-lime'],
+      [class*='text-teal'], [class*='text-cyan'], [class*='text-sky'],
+      [class*='text-blue'], [class*='text-indigo'], [class*='text-violet'],
+      [class*='text-purple'], [class*='text-fuchsia']
+    )
+  ) {
+  color: #ffffff;
+}
+
+/* Cinzentos NEUTROS sobre fundo escuro (o caso do cabeçalho das tabelas:
+ * text-slate-200/300/400 por cima do azul) — sempre brancos, quer a classe
+ * esteja no próprio elemento, quer venha de um antepassado escuro. */
+
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#4'], [class*=' bg-[#4'],
+    [class^='bg-[#5'], [class*=' bg-[#5'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-[#8'], [class*=' bg-[#8'],
+    [class^='bg-[#a'], [class*=' bg-[#a'],
+    [class^='bg-[#b9'], [class*=' bg-[#b9'],
+    [class^='bg-slate-700'], [class*=' bg-slate-700'],
+    [class^='bg-slate-800'], [class*=' bg-slate-800'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  ):is(
+    [class*='text-slate-'], [class*='text-gray-'], [class*='text-zinc-'],
+    [class*='text-neutral-'], [class*='text-stone-']
+  ),
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#4'], [class*=' bg-[#4'],
+    [class^='bg-[#5'], [class*=' bg-[#5'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-[#8'], [class*=' bg-[#8'],
+    [class^='bg-[#a'], [class*=' bg-[#a'],
+    [class^='bg-[#b9'], [class*=' bg-[#b9'],
+    [class^='bg-slate-700'], [class*=' bg-slate-700'],
+    [class^='bg-slate-800'], [class*=' bg-slate-800'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  )
+  :is(
+    [class*='text-slate-'], [class*='text-gray-'], [class*='text-zinc-'],
+    [class*='text-neutral-'], [class*='text-stone-']
+  ) {
+  color: #ffffff !important;
+}
+
+/* Exceção: fundo escuro com TRANSPARÊNCIA (ex.: bg-[#0b1f3a]/10) é, na
+ * prática, um fundo claro — o texto volta a ser azul institucional. */
+[data-ui-theme='laravel'] [class*='bg-[#0b1f3a]/'],
+[data-ui-theme='laravel'] [class*='bg-[#7a0c0c]/'],
+[data-ui-theme='laravel'] [class*='bg-[#12335e]/'],
+[data-ui-theme='laravel'] [class*='bg-[#ac332b]/'] {
+  color: var(--lv-ink) !important;
+}
+
+/* -- 4. Cabeçalho de tabela: rede de segurança ----------------------------- */
+/*       Qualquer <thead> com fundo escuro escreve a branco, mesmo que o fundo
+ *       venha do <tr>/<th> e não do <thead>. */
+
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#0'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#1'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#5'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#7'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#8'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#a'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-[#b9'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-7'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-8'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-9'] {
+  color: #ffffff;
+}
+[data-ui-theme='laravel'] thead tr[class*='bg-[#'] th:not([class*='text-amber']):not([class*='text-rose']):not([class*='text-emerald']):not([class*='text-sky']) {
+  color: #ffffff !important;
+}
+/* Cabeçalho de tabela CLARO (bg-slate-50/100): texto azul institucional. */
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-50'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-100'],
+[data-ui-theme='laravel'] thead :is(tr, th)[class*='bg-slate-200'] {
+  color: var(--lv-ink);
+}
+
+/* -- 5. "Ilhas" claras dentro de zonas escuras ----------------------------- */
+/*       Cartões brancos dentro do cabeçalho/barra lateral azul, corpo branco
+ *       de um modal com cabeçalho azul: aí o texto volta a ser escuro.        */
+
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  )
+  :is(
+    [class^='bg-white'], [class*=' bg-white'],
+    [class^='bg-slate-50'], [class*=' bg-slate-50'],
+    [class^='bg-slate-100'], [class*=' bg-slate-100'],
+    [class^='bg-slate-200'], [class*=' bg-slate-200'],
+    [class^='bg-[#f8fafc]'], [class*=' bg-[#f8fafc]'],
+    [class^='bg-[#eff4ff]'], [class*=' bg-[#eff4ff]']
+  ) {
+  color: var(--lv-text-strong);
+}
+[data-ui-theme='laravel']
+  :is(
+    [class^='bg-[#0'], [class*=' bg-[#0'],
+    [class^='bg-[#1'], [class*=' bg-[#1'],
+    [class^='bg-[#7'], [class*=' bg-[#7'],
+    [class^='bg-slate-900'], [class*=' bg-slate-900']
+  )
+  :is(
+    [class^='bg-white'], [class*=' bg-white'],
+    [class^='bg-slate-50'], [class*=' bg-slate-50'],
+    [class^='bg-slate-100'], [class*=' bg-slate-100'],
+    [class^='bg-slate-200'], [class*=' bg-slate-200'],
+    [class^='bg-[#f8fafc]'], [class*=' bg-[#f8fafc]'],
+    [class^='bg-[#eff4ff]'], [class*=' bg-[#eff4ff]']
+  )
+  :is([class*='text-slate-'], [class*='text-gray-']) {
+  color: var(--lv-text-strong) !important;
+}
+
+/* O corpo (tbody) de uma tabela é sempre claro, mesmo quando o cabeçalho é
+ * azul: garante-se aqui que nunca herda o branco. */
+[data-ui-theme='laravel'] tbody :is(td, th) {
+  color: inherit;
+}
+
+/* -- 6. Gráficos: rótulos dos eixos deixam de ser cinzento-claro ----------- */
+
+[data-ui-theme='laravel'] .recharts-text {
+  fill: var(--lv-ink) !important;
+}
+
+/* --------------------------------------------------------- Impressão ----- */
+
+@media print {
+  [data-ui-theme='laravel'] * {
+    box-shadow: none !important;
+  }
+  /* As correções de contraste do ecrã não devem alterar o que já estava
+   * definido para o papel (pautas, folhas de chamada, recibos). */
+  [data-ui-theme='laravel'] [class*='print:text-black'] {
+    color: #000000 !important;
+  }
+  [data-ui-theme='laravel'] [class*='print:text-white'] {
+    color: #ffffff !important;
+  }
+}
