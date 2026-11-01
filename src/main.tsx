@@ -8,7 +8,6 @@ import './styles/global-fields.css'; // campos de texto: fundo #9fbad8, texto pr
 import './styles/global-polish.css'; // azul do menu em pesquisas/botões/idioma, selects mais altos (vem depois dos outros)
 import './styles/notices.css'; // caixas de aviso globais (Notice.tsx)
 import './styles/bm-overrides.css'; // fonte Arial Narrow, tons de botões (data-tone), hoje no calendário
-import './styles/mobile-app.css'; // app móvel: barra inferior, menu em folha, tabelas em cartões, modais em folha (só < 1024px)
 import { initActionMenu } from './utils/actionMenu';
 import { initUiTheme } from './theme/uiTheme';
 import { initColorMode } from './theme/colorMode';
@@ -19,7 +18,7 @@ import { enableTablePagination } from './utils/tablePagination';
 import { enableTableEnhancements } from './utils/tableEnhancements';
 import { enableDialogButtons } from './utils/dialogButtons';
 import { enableMobileWrap } from './utils/mobileWrap';
-import { enableMobileTables } from './utils/mobileTables';
+import { enableMobileTableCards } from './utils/mobileTableCards';
 import { installCardHighlight } from './utils/cardHighlight';
 import { startAutoTranslate } from './i18n/autoTranslate';
 import { protectIconsFromBrowserTranslate } from './utils/noTranslateIcons';
@@ -67,8 +66,8 @@ enableTableEnhancements(); // linhas alternadas, botões de ação coloridos, se
 initActionMenu(); // Personalizar sistema → botões de ações em modo Menu (⋮) ou Listagem (ver src/utils/actionMenu.ts)
 protectIconsFromBrowserTranslate(); // ícones nunca são traduzidos pelo tradutor do navegador (ver src/utils/noTranslateIcons.ts)
 startAutoTranslate(); // idioma Inglês: traduz a interface inteira (ver src/i18n/autoTranslate.ts)
-enableMobileTables(); // telemóvel: tabelas com poucas colunas viram cartões (ver src/utils/mobileTables.ts)
 enableMobileWrap(); // telemóvel: filas de botões/cards que não cabem passam a quebrar linha
+enableMobileTableCards(); // telemóvel: todas as tabelas passam a cards (ver src/utils/mobileTableCards.ts)
 
 // PWA: instalável e com o ecrã da app disponível sem internet (public/sw.js). Só em produção,
 // para o modo de desenvolvimento nunca servir ficheiros antigos da cache.
