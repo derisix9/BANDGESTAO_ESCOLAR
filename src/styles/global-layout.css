@@ -744,3 +744,135 @@ html body [data-proc-badge][data-proc-badge][data-proc-badge] {
   background-color: rgba(255, 255, 255, 0.22) !important;
   border: 1px solid rgba(255, 255, 255, 0.45) !important;
 }
+
+/* ------------------------------------------------ Tabelas em cards (telemóvel) */
+
+/* Ver src/utils/mobileTableCards.ts. Só no ecrã e só em ≤767px: a impressão e o
+   computador mantêm as tabelas normais. Cada <tr> vira um card; cada célula mostra
+   "Cabeçalho: valor" (o rótulo vem de data-label). A 1.ª coluna é o título e a
+   coluna de ações fica em rodapé. */
+@media screen and (max-width: 767px) {
+  table[data-gr-mcards],
+  table[data-gr-mcards] > tbody,
+  table[data-gr-mcards] > tfoot {
+    display: block;
+    width: 100% !important;
+    min-width: 0 !important;
+    border: 0 !important;
+  }
+  table[data-gr-mcards] > thead {
+    /* Cabeçalho escondido de forma acessível (os rótulos passam para cada célula). */
+    position: absolute !important;
+    width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  table[data-gr-mcards] > tbody > tr:not([data-gr-mrow='span']) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0 0 0.75rem;
+    padding: 0.25rem 0;
+    background: #fff;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.875rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+  }
+  table[data-gr-mcards] > tbody > tr[data-gr-mrow='span'] {
+    display: block;
+    margin: 0 0 0.75rem;
+    border: 1px dashed #cbd5e1 !important;
+    border-radius: 0.875rem;
+  }
+  table[data-gr-mcards] > tbody > tr[data-gr-mrow='span'] > td {
+    display: block;
+    width: 100%;
+    border: 0 !important;
+    text-align: center;
+  }
+
+  /* Células: rótulo à esquerda, valor à direita. */
+  table[data-gr-mcards] > tbody > tr:not([data-gr-mrow='span']) > td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100% !important;
+    min-width: 0;
+    padding: 0.5rem 0.875rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25) !important;
+    background: transparent !important;
+    text-align: right !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+  table[data-gr-mcards] > tbody > tr > td[data-label]:not([data-label=''])::before {
+    content: attr(data-label);
+    flex: 0 0 38%;
+    max-width: 42%;
+    text-align: left;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mempty] { display: none !important; }
+
+  /* Título do card (1.ª coluna): destaque, sem rótulo. */
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='title'] {
+    display: block !important;
+    text-align: left !important;
+    padding-top: 0.75rem !important;
+    font-size: 0.8125rem;
+    background: rgba(11, 31, 58, 0.06) !important;
+  }
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='title']::before { display: none; }
+
+  /* Ações: rodapé do card, botões lado a lado. */
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='actions'] {
+    justify-content: flex-end !important;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 0 !important;
+    padding-bottom: 0.625rem !important;
+  }
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='actions']::before { display: none; }
+  table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='actions'] > * { flex-shrink: 0; }
+
+  /* Caixa de seleção em lote: canto do card. */
+  table[data-gr-mcards] > tbody > tr > td[data-gr-sel] {
+    justify-content: flex-start !important;
+    padding-bottom: 0.25rem !important;
+  }
+  table[data-gr-mcards] > thead > tr > th[data-gr-sel] { display: none; }
+
+  /* O contentor deixa de precisar de scroll horizontal. */
+  :has(> table[data-gr-mcards]) { overflow-x: visible !important; }
+
+  html[data-color-mode='dark'] table[data-gr-mcards] > tbody > tr:not([data-gr-mrow='span']) {
+    background: #1c2636;
+    border-color: #3a475e !important;
+  }
+  html[data-color-mode='dark'] table[data-gr-mcards] > tbody > tr > td[data-gr-mrole='title'] {
+    background: rgba(148, 163, 184, 0.12) !important;
+  }
+  html[data-color-mode='dark'] table[data-gr-mcards] > tbody > tr > td[data-label]::before { color: #94a3b8; }
+}
+
+/* ------------------------------------ Sem barra de navegação inferior (telemóvel) */
+
+/* O menu já está no cabeçalho do painel: qualquer barra fixa em baixo
+   (Início · Alunos · Propinas · Presenças · Menu) fica escondida. */
+@media screen and (max-width: 767px) {
+  [data-gr-bottom-nav],
+  nav.bottom-nav,
+  nav[aria-label*='inferior' i],
+  nav[aria-label*='bottom' i],
+  .mobile-bottom-nav,
+  .bm-bottom-nav {
+    display: none !important;
+  }
+  /* Sem a barra, desaparece também a folga que lhe era reservada. */
+  body, #root { padding-bottom: 0 !important; }
+}
