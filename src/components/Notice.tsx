@@ -136,16 +136,26 @@ interface NoticeProps {
   icon?: string;
   /** Chave que reabre a caixa depois de fechada (por omissão, o próprio texto quando é uma string). */
   resetKey?: string;
+  /**
+   * Lembra o "fechar" ao longo de montagens/desmontagens do componente (ex.: avisos que desaparecem e
+   * voltam enquanto o utilizador navega). Fica fechada até a `resetKey` mudar ou até `resetNoticeDismissal`.
+   */
+  persistKey?: string;
 }
+
+const closedPersist = new Map<string, string>();
+/** Volta a permitir que o aviso com esta `persistKey` apareça (ex.: o problema foi resolvido). */
+export const resetNoticeDismissal = (persistKey: string) => { closedPersist.delete(persistKey); };
 
 /**
  * Aviso declarativo: substitui as faixas inline. Enquanto estiver montado mostra a caixa no topo;
  * ao fechar não volta a aparecer até o texto mudar. Sem conteúdo (null/''/false) não mostra nada.
  */
-export const Notice: React.FC<NoticeProps> = ({ tone = 'info', children, actions, title, icon, resetKey }) => {
+export const Notice: React.FC<NoticeProps> = ({ tone = 'info', children, actions, title, icon, resetKey, persistKey }) => {
   const id = useId();
   const key = resetKey ?? textOf(children);
-  const [closedKey, setClosedKey] = useState<string | null>(null);
+  const [closedKey, setClosedKeyState] = useState<string | null>(() => (persistKey ? closedPersist.get(persistKey) ?? null : null));
+  const setClosedKey = (k: string) => { if (persistKey) closedPersist.set(persistKey, k); setClosedKeyState(k); };
   const closed = closedKey !== null && closedKey === key;
   const empty = !title && textOf(children).trim() === '' && !React.isValidElement(children);
 

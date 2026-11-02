@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { dbService } from '../services/db';
-import { Notice, NoticeButton } from './Notice';
+import { Notice, NoticeButton, resetNoticeDismissal } from './Notice';
 import { Spinner } from './Spinner';
 import { SyncConflictsModal, useSyncConflicts } from './SyncConflictsModal';
 
@@ -51,7 +51,9 @@ const SyncStatusInner: React.FC = () => {
   }, [refresh]);
 
   useEffect(() => {
-    const needsAttention = online && (summary.pending || status === 'error');
+    // A bandeira "pendente" pode ficar ligada sem haver nada realmente por enviar (ex.: alterações automáticas ao abrir
+    // uma secção, ou sem sessão na nuvem). Só incomoda quando há registos diferentes do servidor ou um erro real.
+    const needsAttention = online && ((summary.pending && summary.records > 0) || status === 'error');
     if (!needsAttention) { setStuck(false); return; }
     const t = window.setTimeout(() => setStuck(true), STUCK_AFTER_MS);
     return () => window.clearTimeout(t);
@@ -66,6 +68,7 @@ const SyncStatusInner: React.FC = () => {
       const seen = shownRef.current;
       shownRef.current = false;
       if (!seen) return;   // o envio foi rápido e silencioso: não há nada a confirmar
+      resetNoticeDismissal('sync-pill');   // problema resolvido: um futuro aviso volta a poder aparecer
       setJustSynced(true);
       const t = window.setTimeout(() => setJustSynced(false), 4000);
       return () => window.clearTimeout(t);
@@ -135,7 +138,7 @@ const SyncStatusInner: React.FC = () => {
 
   if (!online) {
     return (
-      <Notice tone="warn" icon="cloud_off" resetKey="offline">
+      <Notice tone="warn" icon="cloud_off" resetKey="offline" persistKey="sync-pill">
         Sem internet. O trabalho fica guardado neste aparelho{summary.pending ? ` · ${pendingText}` : ''} e segue quando a rede voltar.
       </Notice>
     );
@@ -147,6 +150,7 @@ const SyncStatusInner: React.FC = () => {
       tone={failed ? 'error' : 'info'}
       icon={failed ? undefined : 'sync'}
       resetKey={failed ? 'sync-error' : 'sync-pending'}
+      persistKey="sync-pill"
       actions={<NoticeButton onClick={syncNow}>Sincronizar agora</NoticeButton>}
     >
       {failed ? 'Erro ao sincronizar' : pendingText}
