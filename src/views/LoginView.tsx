@@ -512,7 +512,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess }) => {
                 style={{ filter: 'drop-shadow(0 4px 14px rgba(0,0,0,.35))' }}
               />
               <div className="flex flex-col leading-none">
-                <span className="font-headline font-extrabold text-[44px] sm:text-5xl tracking-tight text-white" style={{ textShadow: '0 2px 14px rgba(0,0,0,.35)' }}>BANDMED</span>
+                <span className="font-headline font-extrabold text-[44px] sm:text-5xl tracking-tight text-white" style={{ textShadow: '0 2px 14px rgba(0,0,0,.35)' }}>BAND<span style={{ color: '#7dd3fc' }}>MED</span></span>
                 <span className="mt-2 text-[11px] sm:text-xs uppercase tracking-[0.3em] font-medium" style={{ color: '#ffffff', fontWeight: 600, textShadow: '0 1px 3px rgba(2,20,60,.75), 0 0 14px rgba(2,20,60,.6)' }}>
                   Sistema de Gestão Escolar
                 </span>
