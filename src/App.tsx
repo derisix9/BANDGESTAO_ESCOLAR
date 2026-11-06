@@ -114,6 +114,29 @@ const getDefaultViewForRole = (role: UserRole): string => {
 // Admin Master: mapa secção → subsistema (uma vez, no arranque).
 registerPlatformLockMap(NAV_GROUPS);
 
+/**
+ * Alinha a escola ativa guardada neste navegador com a que o servidor tem como ativa.
+ * Devolve true se iniciou um recarregamento (quem chama deve parar). Só tenta uma vez por escola e por separador,
+ * para nunca entrar em ciclo de recarregamentos.
+ */
+function realignToServerSchool(serverInstitutionId: string): boolean {
+  try {
+    const local = localStorage.getItem('escola_active_institution_id');
+    if (!local || local === serverInstitutionId) {
+      sessionStorage.removeItem('bm:inst-realign');
+      return false;
+    }
+    if (sessionStorage.getItem('bm:inst-realign') === serverInstitutionId) return false;   // já tentado
+    sessionStorage.setItem('bm:inst-realign', serverInstitutionId);
+    localStorage.setItem('escola_active_institution_id', serverInstitutionId);
+    localStorage.removeItem('bandmed_session_user');   // perfil em cache da escola anterior
+    window.location.reload();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** Tempo (ms) do indicador de carregamento entre secções, quando a animação de páginas está desligada. */
 const PAGE_LOADING_MS = 350;
 
@@ -295,6 +318,12 @@ export default function App() {
           } catch { /* sem cópia local */ }
         }
       }
+      // Escola ativa desalinhada: o servidor guarda UMA escola ativa por conta (`active_institution_id`), partilhada pela web e
+      // pela app móvel. Se a escola foi trocada na app móvel, a cópia local deste navegador (escola ativa + sessão em cache)
+      // fica para trás e a web mostra dados/permissões da escola errada. Realinha uma vez e arranca limpo (não entra em ciclo).
+      if (authProfile && !usedCachedProfile && authProfile.institutionId) {
+        if (realignToServerSchool(authProfile.institutionId)) return;
+      }
       // Palavra-passe temporária ou expirada (decidido no servidor, migração 0045): não abre a app; o LoginView pede a nova.
       if (authProfile && !usedCachedProfile) {
         const gate = await getPasswordGate();
@@ -404,7 +433,13 @@ export default function App() {
   const hasMultipleSchools = (schools?.length ?? 0) > 1;
   const handleSelectSchool = async (school: MySchool): Promise<string | void> => {
     if (!currentUser) return;
-    if (school.isCurrent) { markSchoolChosen(currentUser.id); setSchoolPickerOpen(false); return; }
+    if (school.isCurrent) {
+      markSchoolChosen(currentUser.id);
+      // «Escola atual» é a do servidor; se este navegador ainda aponta para outra (trocada na app móvel), alinha e recarrega.
+      if (realignToServerSchool(school.id)) return;
+      setSchoolPickerOpen(false);
+      return;
+    }
     try {
       await switchSchool(school.id);
       markSchoolChosen(currentUser.id);
@@ -723,6 +758,7 @@ export default function App() {
         </Notice>
       )}
       {/* Sidebar Navigation */}
+      <ErrorBoundary silent fallbackTitle="Menu lateral">
       <Sidebar
         currentView={currentView}
         onNavigate={setCurrentView}
@@ -731,7 +767,8 @@ export default function App() {
         db={db}
         isMobileOpen={isMobileNavOpen}
         onCloseMobile={() => setIsMobileNavOpen(false)}
-        isDesktopOpen={sidebarVisible}
+        isDesktopOpen={isDesktopSidebarOpen}
+        hideDesktop={headerNav}
         onToggleDesktop={(open) => {
           const next = typeof open === 'boolean' ? open : !isDesktopSidebarOpen;
           setIsDesktopSidebarOpen(next);
@@ -743,8 +780,10 @@ export default function App() {
         }}
         onLogout={handleLogoutClick}
       />
+      </ErrorBoundary>
 
       {/* Top Navbar */}
+      <ErrorBoundary silent fallbackTitle="Cabeçalho">
       <Navbar
         currentUser={currentUser}
         currentAcademicYear={db.settings?.currentAcademicYear || getFallbackAcademicYear()}
@@ -768,8 +807,10 @@ export default function App() {
         }}
         db={db}
       />
+      </ErrorBoundary>
 
       {headerNav && (
+        <ErrorBoundary silent fallbackTitle="Barra de navegação">
         <HeaderNav
           currentView={currentView}
           onNavigate={setCurrentView}
@@ -777,9 +818,11 @@ export default function App() {
           currentUser={sessionUser}
           db={db}
         />
+        </ErrorBoundary>
       )}
 
       {/* App móvel: barra de separadores + menu com todas as secções (só < 1024px) */}
+      <ErrorBoundary silent fallbackTitle="Barra móvel">
       <MobileTabBar
         currentView={currentView}
         onNavigate={setCurrentView}
@@ -788,9 +831,10 @@ export default function App() {
         db={db}
         onLogout={handleLogoutClick}
       />
+      </ErrorBoundary>
 
       {/* Main Content Area */}
-      <main data-app-main className={`${sidebarVisible ? 'lg:ml-64' : 'lg:ml-0'} ${headerNav ? 'lg:pt-[7.75rem]' : ''} pt-20 px-4 lg:px-8 flex-1 transition-all duration-300 min-w-0`}>
+      <main data-app-main className={`${headerNav ? 'lg:ml-0' : isDesktopSidebarOpen ? 'lg:ml-64' : 'lg:ml-[4.5rem]'} ${headerNav ? 'lg:pt-[7.75rem]' : ''} pt-20 px-4 lg:px-8 flex-1 transition-all duration-300 min-w-0`}>
         {/* Com o menu lateral minimizado o conteúdo ocupa toda a largura; com ele aberto mantém o limite de leitura. */}
         <div className={`${sidebarVisible ? 'max-w-7xl mx-auto' : 'w-full max-w-none'} transition-[max-width] duration-300`}>
           {/* Avisos das políticas de segurança em vigor */}
