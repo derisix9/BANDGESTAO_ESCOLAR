@@ -9,7 +9,6 @@ import './styles/global-fields.css'; // campos de texto: fundo #9fbad8, texto pr
 import './styles/global-polish.css'; // azul do menu em pesquisas/botões/idioma, selects mais altos (vem depois dos outros)
 import './styles/notices.css'; // caixas de aviso globais (Notice.tsx)
 import './styles/bm-overrides.css'; // fonte Arial Narrow, tons de botões (data-tone), hoje no calendário
-import './styles/mobile-app.css'; // barra de separadores e menu da versão móvel (< 1024px); sem este ficheiro o MobileTabBar ficava sem estilo
 import './styles/square-ui.css'; // cantos quadrados (botões, formulários, diálogos, tabelas, campos, seletores, abas); vem por último
 import { initActionMenu } from './utils/actionMenu';
 import { initUiTheme } from './theme/uiTheme';

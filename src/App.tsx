@@ -8,7 +8,6 @@ import { HeaderNav } from './components/HeaderNav';
 import { useNavMode } from './utils/navModePrefs';
 import { useSidebarPrefs } from './utils/sidebarPrefs';
 import { Navbar } from './components/Navbar';
-import { MobileTabBar } from './components/MobileTabBar';
 import { SqlExportModal } from './components/SqlExportModal';
 import { ReportCardModal } from './components/ReportCardModal';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -788,7 +787,7 @@ export default function App() {
         fallback={(err) => (
           <header data-app-header className={`fixed top-0 left-0 right-0 h-16 bg-[#0b1f3a] text-white z-30 flex items-center gap-3 px-4 lg:px-8 ${headerNav ? 'lg:left-0' : isDesktopSidebarOpen ? 'lg:left-64' : 'lg:left-[4.5rem]'}`}>
             <button type="button" onClick={handleToggleSidebar} className={`p-2 rounded-lg flex items-center justify-center text-blue-200 hover:text-white hover:bg-white/10 ${headerNav ? 'lg:hidden' : ''}`} aria-label="Menu lateral" title="Menu lateral">
-              <span className="material-symbols-outlined text-[24px]">menu</span>
+              <span className={`material-symbols-outlined text-[24px] ${isDesktopSidebarOpen || headerNav ? '' : 'lg:rotate-90'}`}>menu</span>
             </button>
             <span className="text-xs text-amber-300 truncate flex-1" title={err?.message}>Cabeçalho indisponível: {err?.message || 'erro inesperado'}</span>
             <button type="button" onClick={handleLogoutClick} className="p-2 flex items-center justify-center text-blue-200 hover:text-white" aria-label="Terminar sessão" title="Terminar sessão">
@@ -833,18 +832,6 @@ export default function App() {
         />
         </ErrorBoundary>
       )}
-
-      {/* App móvel: barra de separadores + menu com todas as secções (só < 1024px) */}
-      <ErrorBoundary silent fallbackTitle="Barra móvel">
-      <MobileTabBar
-        currentView={currentView}
-        onNavigate={setCurrentView}
-        currentUserRole={currentUser.role}
-        currentUser={sessionUser}
-        db={db}
-        onLogout={handleLogoutClick}
-      />
-      </ErrorBoundary>
 
       {/* Main Content Area */}
       <main data-app-main className={`${headerNav ? 'lg:ml-0' : isDesktopSidebarOpen ? 'lg:ml-64' : 'lg:ml-[4.5rem]'} ${headerNav ? 'lg:pt-[7.75rem]' : ''} pt-20 px-4 lg:px-8 flex-1 transition-all duration-300 min-w-0`}>
