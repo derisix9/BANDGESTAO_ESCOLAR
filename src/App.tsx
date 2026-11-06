@@ -783,7 +783,20 @@ export default function App() {
       </ErrorBoundary>
 
       {/* Top Navbar */}
-      <ErrorBoundary silent fallbackTitle="Cabeçalho">
+      <ErrorBoundary
+        fallbackTitle="Cabeçalho"
+        fallback={(err) => (
+          <header data-app-header className={`fixed top-0 left-0 right-0 h-16 bg-[#0b1f3a] text-white z-30 flex items-center gap-3 px-4 lg:px-8 ${headerNav ? 'lg:left-0' : isDesktopSidebarOpen ? 'lg:left-64' : 'lg:left-[4.5rem]'}`}>
+            <button type="button" onClick={handleToggleSidebar} className={`p-2 rounded-lg flex items-center justify-center text-blue-200 hover:text-white hover:bg-white/10 ${headerNav ? 'lg:hidden' : ''}`} aria-label="Menu lateral" title="Menu lateral">
+              <span className="material-symbols-outlined text-[24px]">menu</span>
+            </button>
+            <span className="text-xs text-amber-300 truncate flex-1" title={err?.message}>Cabeçalho indisponível: {err?.message || 'erro inesperado'}</span>
+            <button type="button" onClick={handleLogoutClick} className="p-2 flex items-center justify-center text-blue-200 hover:text-white" aria-label="Terminar sessão" title="Terminar sessão">
+              <span className="material-symbols-outlined text-[22px]">logout</span>
+            </button>
+          </header>
+        )}
+      >
       <Navbar
         currentUser={currentUser}
         currentAcademicYear={db.settings?.currentAcademicYear || getFallbackAcademicYear()}
