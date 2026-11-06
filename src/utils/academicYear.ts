@@ -38,12 +38,12 @@ export function buildAcademicYearList(
   const includeInstitution = options.includeInstitutionYears !== false;
   const set = new Set<string>();
   const add = (y?: string | null) => {
-    if (y && /^\d{4}\/\d{4}$/.test(y.trim())) set.add(y.trim());
+    if (typeof y === 'string' && /^\d{4}\/\d{4}$/.test(y.trim())) set.add(y.trim());
   };
   add(settings?.currentAcademicYear);
   if (includeInstitution) {
-    (settings?.availableAcademicYears || []).forEach(add);
-    (settings?.academicYearHistory || []).forEach((h) => add(h.academicYear));
+    (Array.isArray(settings?.availableAcademicYears) ? settings!.availableAcademicYears! : []).forEach(add);
+    (Array.isArray(settings?.academicYearHistory) ? settings!.academicYearHistory! : []).forEach((h) => add(h?.academicYear));
   }
   extra.forEach(add);
   return Array.from(set).sort(compareAcademicYearsDesc);

@@ -4,7 +4,7 @@
  * Em ecrãs < 768px, tabelas com poucas colunas passam a ser mostradas como uma
  * lista de cartões (cada linha = um cartão, "Coluna: valor"). O JS só marca o
  * DOM (data-mt-cards + data-label em cada célula); o aspeto vive em
- * styles/mobile-app.css. Não altera dados nem handlers: são as mesmas linhas.
+ * styles/global-layout.css. Não altera dados nem handlers: são as mesmas linhas.
  *
  * Ficam de fora (continuam com scroll horizontal): tabelas com mais de MAX_COLS
  * colunas (grelhas estilo Excel, pautas, mapas), e tudo dentro de [data-no-cards].
