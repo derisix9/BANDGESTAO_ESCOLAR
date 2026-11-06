@@ -360,22 +360,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
               <div className="flex flex-col min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base tracking-tight text-white font-headline">BANDMED</span>
+                  <span className="font-extrabold text-base tracking-tight text-white font-headline">BAND<span className="text-sky-300">MED</span></span>
                 </div>
                 <span className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">Gestão Escolar</span>
               </div>
             </div>
-            <button
-              onClick={() => {
-                if (onToggleDesktop) onToggleDesktop(false);
-                onCloseMobile();
-              }}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/15 bg-white/5 cursor-pointer flex items-center justify-center transition-colors"
-              title="Fechar menu lateral"
-              aria-label="Fechar menu lateral"
-            >
-              <span className="material-symbols-outlined text-[20px]">close</span>
-            </button>
           </div>
 
           {/* Navigation Items — organizados por categoria, cada uma expansível */}

@@ -122,7 +122,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [currentUser.role, currentUser.id, db.students, db.classes]);
 
   const notifications = useMemo(
-    () => dbService.getNotifications(currentUser.role, currentUser.id),
+    () => {
+      // Dados vindos de outro aparelho (ex.: app móvel) nunca devem deitar abaixo o cabeçalho.
+      try { return dbService.getNotifications(currentUser.role, currentUser.id) || []; } catch (e) { console.warn('Notificações ilegíveis:', e); return []; }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [db.notifications, db.invoices, db.events, db.students, currentUser.role, currentUser.id]
   );
@@ -274,7 +277,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           aria-label={isDesktopSidebarOpen ? 'Minimizar menu lateral' : 'Expandir menu lateral'}
           title={isDesktopSidebarOpen ? 'Minimizar menu lateral' : 'Expandir menu lateral'}
         >
-          <span className="material-symbols-outlined text-[24px]">
+          {/* Menu aberto: três barras horizontais. Menu minimizado: as mesmas barras invertidas (verticais). */}
+          <span className={`material-symbols-outlined text-[24px] transition-transform duration-300 ${isDesktopSidebarOpen || headerNav ? '' : 'lg:rotate-90'}`}>
             menu
           </span>
         </button>
@@ -494,7 +498,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="bg-transparent text-slate-300 font-bold text-xs border-0 focus:outline-none cursor-pointer pr-1 py-0.5"
               title="Alternar Ano Letivo Institucional"
             >
-              {availableAcademicYears.map((yr) => (
+              {(availableAcademicYears || []).map((yr) => (
                 <option key={yr} value={yr} className="bg-[#0b1f3a] text-white font-semibold">
                   {yr}
                 </option>
