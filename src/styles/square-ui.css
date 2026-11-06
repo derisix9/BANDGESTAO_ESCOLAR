@@ -1,0 +1,98 @@
+/* =============================================================================
+   CANTOS QUADRADOS
+   Quadrados (border-radius: 0): botões, formulários, caixas de diálogo/modais, tabelas, caixas de texto,
+   seletores (selects e listas de opções) e abas.
+   NÃO mexe em: botões de ação (ícones das linhas das tabelas — data-gr-act — e <IconButton> — data-action-btn),
+   nada dentro do menu lateral (<aside>), nem em elementos circulares (avatares, "pílulas", interruptores: rounded-full).
+   Vem DEPOIS de todos os outros ficheiros (ver main.tsx) e usa !important para vencer o tema Laravel e o tema escuro.
+   Para voltar atrás basta remover o import em main.tsx.
+   ========================================================================== */
+
+@media screen {
+  /* ---- Botões (menos os de ação, os do menu lateral e os circulares) ---- */
+  html[data-ui-theme] #root button:not([data-gr-act]):not([data-action-btn]):not([class*='rounded-full']):not(aside *):not(.bm-more),
+  html[data-ui-theme] #root [role='button']:not([data-gr-act]):not([data-action-btn]):not([class*='rounded-full']):not(aside *),
+  html[data-ui-theme] #root input[type='button'],
+  html[data-ui-theme] #root input[type='submit'],
+  html[data-ui-theme] #root input[type='reset'],
+  html[data-ui-theme] #root a[class*='rounded']:not([class*='rounded-full']):not(aside *) {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Caixas de texto, áreas de texto e seletores ---- */
+  html[data-ui-theme] #root input:not([type='checkbox']):not([type='radio']):not([type='range']):not([class*='rounded-full']),
+  html[data-ui-theme] #root textarea,
+  html[data-ui-theme] #root select,
+  html[data-ui-theme] #root [role='combobox'],
+  html[data-ui-theme] #root [role='listbox'],
+  html[data-ui-theme] #root [role='option'],
+  html[data-ui-theme] #root [role='menu']:not(aside *),
+  html[data-ui-theme] #root [role='menuitem']:not(aside *),
+  html[data-ui-theme] #root [role='searchbox'],
+  html[data-ui-theme] #root label:has(> input:not([type='checkbox']):not([type='radio'])):not([class*='rounded-full']),
+  html[data-ui-theme] #root [class*='rounded']:has(> input[type='search']):not([class*='rounded-full']):not(aside *),
+  html[data-ui-theme] #root [class*='rounded']:has(> input[type='text']):not([class*='rounded-full']):not(aside *),
+  html[data-ui-theme] #root [data-searchable-select] *,
+  html[data-ui-theme] #root fieldset {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Formulários (e os painéis arredondados que existem dentro deles) ---- */
+  html[data-ui-theme] #root form,
+  html[data-ui-theme] #root form [class*='rounded']:not([class*='rounded-full']):not([data-gr-act]):not([data-action-btn]):not(aside *) {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Caixas de diálogo e modais (janela, cabeçalho, corpo, rodapé) ---- */
+  html[data-ui-theme] #root dialog,
+  html[data-ui-theme] #root [role='dialog'],
+  html[data-ui-theme] #root [role='alertdialog'],
+  html[data-ui-theme] #root [aria-modal='true'],
+  html[data-ui-theme] #root [class*='fixed'][class*='inset-0'] > [class*='rounded']:not([class*='rounded-full']),
+  html[data-ui-theme] #root [class*='fixed'][class*='inset-0'] > * > [class*='rounded']:not([class*='rounded-full']):not([data-gr-act]):not([data-action-btn]),
+  html[data-ui-theme] #root [role='dialog'] [class*='rounded']:not([class*='rounded-full']):not([data-gr-act]):not([data-action-btn]),
+  html[data-ui-theme] #root [aria-modal='true'] [class*='rounded']:not([class*='rounded-full']):not([data-gr-act]):not([data-action-btn]),
+  html[data-ui-theme] #root [data-modal] ,
+  html[data-ui-theme] #root [data-modal] [class*='rounded']:not([class*='rounded-full']):not([data-gr-act]):not([data-action-btn]),
+  html[data-ui-theme] #root .printable-document[class*='shadow-2xl'] {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Tabelas (e o contentor arredondado que as envolve) ---- */
+  html[data-ui-theme] #root table,
+  html[data-ui-theme] #root thead,
+  html[data-ui-theme] #root tbody,
+  html[data-ui-theme] #root tfoot,
+  html[data-ui-theme] #root tr,
+  html[data-ui-theme] #root th,
+  html[data-ui-theme] #root td,
+  html[data-ui-theme] #root :is(div, section):has(> table):not([class*='rounded-full']):not(aside *),
+  html[data-ui-theme] #root :is(div, section):has(> div > table):not([class*='rounded-full']):not(aside *),
+  html[data-ui-theme] #root :is(div, section):has(> [data-gr-scroll-box] > table):not(aside *),
+  html[data-ui-theme] #root [data-gr-scroll-box],
+  html[data-ui-theme] #root [data-gr-scroll] {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Abas ---- */
+  html[data-ui-theme] #root [role='tablist'],
+  html[data-ui-theme] #root [role='tab'],
+  html[data-ui-theme] #root [role='tabpanel'],
+  html[data-ui-theme] #root [role='tablist'] [class*='rounded']:not([class*='rounded-full']),
+  html[data-ui-theme] #root [data-tabs],
+  html[data-ui-theme] #root [data-tabs] [class*='rounded']:not([class*='rounded-full']) {
+    border-radius: 0 !important;
+  }
+
+  /* ---- Versão móvel (mobile-app.css arredondava estes elementos): também quadrados ---- */
+  @media (max-width: 1023px) {
+    html[data-ui-theme] #root [data-app-main] input:not([type='checkbox']):not([type='radio']):not([type='range']),
+    html[data-ui-theme] #root [data-app-main] select,
+    html[data-ui-theme] #root [data-app-main] textarea,
+    html[data-ui-theme] #root [data-app-main] button:not([data-gr-act]):not([data-action-btn]):not([class*='rounded-full']),
+    html[data-ui-theme] #root [data-app-main] .rounded-xl:not([data-gr-act]):not([data-action-btn]):not([class*='rounded-full']),
+    html[data-ui-theme] #root [data-app-main] .rounded-2xl:not([class*='rounded-full']) {
+      border-radius: 0 !important;
+    }
+  }
+}
