@@ -336,30 +336,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <>
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               <div className="h-16 flex items-center justify-center bg-black/20 border-b border-slate-700/50 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => onToggleDesktop?.(true)}
-                  className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm overflow-hidden cursor-pointer"
-                  title="Expandir menu lateral"
-                  aria-label="Expandir menu lateral"
-                >
+                <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm overflow-hidden">
                   <img src="/school_emblem.png" alt="BandMed" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
-                </button>
+                </div>
               </div>
               <nav className="py-3 flex-1" aria-label="Menu lateral minimizado">
                 {NAV_GROUPS.map((group, i) => renderRailGroup(group, i))}
               </nav>
-            </div>
-            <div data-on-navy="footer" className="py-3 bg-black/30 border-t border-slate-700/40 flex flex-col items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => onToggleDesktop?.(true)}
-                className="w-11 h-11 flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 cursor-pointer"
-                title="Expandir menu lateral"
-                aria-label="Expandir menu lateral"
-              >
-                <span className="material-symbols-outlined text-[22px]" aria-hidden="true">keyboard_double_arrow_right</span>
-              </button>
             </div>
           </>
         ) : (<>

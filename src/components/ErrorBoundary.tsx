@@ -7,6 +7,8 @@ interface Props {
   onReset?: () => void;
   /** Peças do «chrome» da app (menu, cabeçalho, barra móvel): se falharem, desaparecem em vez de deitar abaixo a app toda. */
   silent?: boolean;
+  /** Alternativa mínima a mostrar quando falha (em vez de nada). Recebe o erro. */
+  fallback?: (error: Error | null) => ReactNode;
   /** Último recurso (raiz da app): ecrã inteiro com opção de limpar a cópia local e recarregar. */
   fullScreen?: boolean;
 }
@@ -52,6 +54,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   };
 
   public render() {
+    if (this.state.hasError && this.props.fallback) return this.props.fallback(this.state.error);
     if (this.state.hasError && this.props.silent) return null;
     if (this.state.hasError && this.props.fullScreen) {
       return (
