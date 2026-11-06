@@ -270,9 +270,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               onOpenMobileMenu();
             }
           }}
-          className="p-2 rounded-lg cursor-pointer flex items-center justify-center shrink-0 transition-all text-blue-200 hover:text-white hover:bg-white/10 lg:hidden"
-          aria-label="Abrir menu lateral"
-          title="Abrir menu lateral"
+          className={`p-2 rounded-lg cursor-pointer flex items-center justify-center shrink-0 transition-all text-blue-200 hover:text-white hover:bg-white/10 ${headerNav ? 'lg:hidden' : ''}`}
+          aria-label={isDesktopSidebarOpen ? 'Minimizar menu lateral' : 'Expandir menu lateral'}
+          title={isDesktopSidebarOpen ? 'Minimizar menu lateral' : 'Expandir menu lateral'}
         >
           <span className="material-symbols-outlined text-[24px]">
             menu
