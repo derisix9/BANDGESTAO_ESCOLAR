@@ -5,6 +5,20 @@ interface Props {
   children: ReactNode;
   fallbackTitle?: string;
   onReset?: () => void;
+  /** Peças do «chrome» da app (menu, cabeçalho, barra móvel): se falharem, desaparecem em vez de deitar abaixo a app toda. */
+  silent?: boolean;
+  /** Último recurso (raiz da app): ecrã inteiro com opção de limpar a cópia local e recarregar. */
+  fullScreen?: boolean;
+}
+
+/** Apaga só a cópia LOCAL deste navegador (escola ativa, perfil em cache, preferências). A sessão e os dados do servidor ficam. */
+export function clearLocalAppCache(): void {
+  try {
+    const keys: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k) keys.push(k); }
+    keys.filter((k) => /^(escola_|bandmed)/i.test(k) && !/^escola_pending_/.test(k)).forEach((k) => localStorage.removeItem(k));
+  } catch { /* ignore */ }
+  try { sessionStorage.clear(); } catch { /* ignore */ }
 }
 
 interface State {
@@ -38,6 +52,24 @@ export class ErrorBoundary extends React.Component<Props, State> {
   };
 
   public render() {
+    if (this.state.hasError && this.props.silent) return null;
+    if (this.state.hasError && this.props.fullScreen) {
+      return (
+        <div data-acl-ignore className="min-h-screen flex items-center justify-center p-6 bg-[#f8f9ff]">
+          <div className="max-w-md w-full bg-white border border-red-200 p-8 text-center shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900 mb-2">Não foi possível mostrar a aplicação</h2>
+            <p className="text-sm text-slate-500 mb-5">
+              {this.state.error?.message || 'Falha inesperada.'} Isto pode acontecer quando a escola ou a sessão foi alterada noutro
+              aparelho (por exemplo, na app móvel). Limpar a cópia local deste navegador resolve; os dados no servidor não são apagados.
+            </p>
+            <div className="flex gap-3 justify-center flex-wrap">
+              <button type="button" onClick={() => window.location.reload()} className="px-4 py-2.5 bg-slate-100 text-slate-700 text-xs font-bold">Recarregar</button>
+              <button type="button" onClick={() => { clearLocalAppCache(); window.location.reload(); }} className="px-4 py-2.5 bg-[#0b1f3a] text-white text-xs font-bold">Limpar cópia local e recarregar</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
     if (this.state.hasError) {
       return (
         <div data-acl-ignore className="p-8 my-6 bg-white rounded-2xl border border-red-200 shadow-sm flex flex-col items-center text-center max-w-2xl mx-auto">

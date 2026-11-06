@@ -53,6 +53,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       disabled={disabled}
       title={disabled && disabledTitle ? disabledTitle : label}
       aria-label={label}
+      data-action-btn=""
       className={`inline-flex items-center justify-center shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${cls}`}
     >
       <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{icon}</span>

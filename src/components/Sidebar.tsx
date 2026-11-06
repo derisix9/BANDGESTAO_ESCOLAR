@@ -17,11 +17,29 @@ interface SidebarProps {
   currentUser?: User | null;
   isMobileOpen: boolean;
   onCloseMobile: () => void;
+  /** Menu lateral expandido no ecrã grande. Fechado => barra fina só com ícones (a menos que `hideDesktop`). */
   isDesktopOpen?: boolean;
+  /** Modo «cabeçalho»: no ecrã grande não há menu lateral nenhum (nem a barra de ícones). */
+  hideDesktop?: boolean;
   onToggleDesktop?: (open?: boolean) => void;
   onLogout?: () => void;
   /** Dados da escola: usados para esconder itens que dependem do nível de ensino (Superior, Descritiva). */
   db?: SchoolDatabase | null;
+}
+
+/** true em ecrã grande (>= 1024px, o mesmo ponto de quebra `lg` do Tailwind). */
+function useIsDesktop(): boolean {
+  const query = '(min-width: 1024px)';
+  const [matches, setMatches] = React.useState<boolean>(() => typeof window !== 'undefined' && !!window.matchMedia?.(query).matches);
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia(query);
+    const onChange = () => setMatches(mq.matches);
+    onChange();
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
+  return matches;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -32,12 +50,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isMobileOpen,
   onCloseMobile,
   isDesktopOpen = true,
+  hideDesktop = false,
   onToggleDesktop,
   onLogout,
   db
 }) => {
   // Idioma do menu (pt/en/fr): troca em tempo real a partir do seletor no fim do menu.
   const lang = useLang();
+
+  // Menu minimizado (ecrã grande): barra fina só com ícones, como no outro sistema.
+  const isDesktop = useIsDesktop();
+  const rail = isDesktop && !isDesktopOpen && !hideDesktop;
 
   // Personalizar sistema → menu lateral (ver utils/sidebarPrefs.ts).
   const prefs = useSidebarPrefs();
@@ -135,6 +158,49 @@ export const Sidebar: React.FC<SidebarProps> = ({
     document.addEventListener('keydown', onKey);
     return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
   }, [langMenuOpen]);
+
+  // Itens que este utilizador pode ver num grupo (usado pelo menu completo e pela barra de ícones).
+  const visibleItemsOf = (group: NavGroup) =>
+    group.items.filter((item) =>
+      item.view && item.implemented
+        ? canViewSection(accessUser, item.view) && !isMenuViewHidden(item.view, db, sessionUser as User | undefined)
+        : isAllowed(group.roles) && (!item.roles || isAllowed(item.roles))
+    );
+
+  // Menu minimizado: só ícones (o nome aparece ao passar o rato / tocar), um grupo a seguir ao outro.
+  const renderRailGroup = (group: NavGroup, index: number) => {
+    const items = visibleItemsOf(group).filter((item) => item.view && item.implemented);
+    if (items.length === 0) return null;
+    return (
+      <div key={group.key} data-sb-list="" className={`flex flex-col items-center gap-1 ${index > 0 ? 'mt-2 pt-2 border-t border-white/10' : ''}`}>
+        {items.map((item) => {
+          const viewId = item.view as string;
+          const active = currentView === viewId;
+          return (
+            <button
+              key={viewId}
+              type="button"
+              onClick={() => {
+                if (viewId !== currentView) playPageAnimation();
+                onNavigate(viewId);
+                onCloseMobile();
+              }}
+              data-sb-item=""
+              {...(active ? { 'data-sb-active': '' } : {})}
+              title={tr(item.label, lang)}
+              aria-label={tr(item.label, lang)}
+              aria-current={active ? 'page' : undefined}
+              className={`w-11 h-11 flex items-center justify-center rounded-xl cursor-pointer transition-all ${
+                active ? 'bg-white text-[#0b1f3a] shadow-md' : 'text-slate-300 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <span className={`material-symbols-outlined text-[22px] ${active ? 'text-[#0b1f3a]' : ''}`} aria-hidden="true">{item.icon}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
+  };
 
   const renderGroup = (group: NavGroup) => {
     const visibleItems = group.items.filter((item) =>
@@ -259,12 +325,44 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Aside - Supports desktop & fullscreen toggle with smooth transition */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 w-64 bg-[#0b1f3a] text-white z-50 flex flex-col justify-between shadow-2xl transition-transform duration-300 ${
+        data-rail={rail ? 'true' : undefined}
+        className={`fixed top-0 bottom-0 left-0 ${rail ? 'w-[4.5rem]' : 'w-64'} bg-[#0b1f3a] text-white z-50 flex flex-col justify-between shadow-2xl transition-[width,transform] duration-300 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         } ${
-          isDesktopOpen ? 'lg:translate-x-0' : 'lg:-translate-x-full'
+          (isDesktopOpen || rail) && !hideDesktop ? 'lg:translate-x-0' : 'lg:-translate-x-full'
         }`}
       >
+        {rail ? (
+          <>
+            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              <div className="h-16 flex items-center justify-center bg-black/20 border-b border-slate-700/50 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => onToggleDesktop?.(true)}
+                  className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm overflow-hidden cursor-pointer"
+                  title="Expandir menu lateral"
+                  aria-label="Expandir menu lateral"
+                >
+                  <img src="/school_emblem.png" alt="BandMed" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                </button>
+              </div>
+              <nav className="py-3 flex-1" aria-label="Menu lateral minimizado">
+                {NAV_GROUPS.map((group, i) => renderRailGroup(group, i))}
+              </nav>
+            </div>
+            <div data-on-navy="footer" className="py-3 bg-black/30 border-t border-slate-700/40 flex flex-col items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => onToggleDesktop?.(true)}
+                className="w-11 h-11 flex items-center justify-center rounded-xl text-slate-300 hover:text-white hover:bg-white/10 cursor-pointer"
+                title="Expandir menu lateral"
+                aria-label="Expandir menu lateral"
+              >
+                <span className="material-symbols-outlined text-[22px]" aria-hidden="true">keyboard_double_arrow_right</span>
+              </button>
+            </div>
+          </>
+        ) : (<>
         <div className="flex flex-col flex-1 overflow-y-auto">
           {/* Brand Header */}
           <div className="h-16 px-4 flex items-center justify-between bg-black/20 border-b border-slate-700/50">
@@ -356,6 +454,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span data-on-navy="chip" className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-white">v3.4.2 Enterprise</span>
           </div>
         </div>
+        </>)}
       </aside>
     </>
   );

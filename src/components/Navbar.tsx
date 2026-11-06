@@ -256,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
     <header data-app-header className={`fixed top-0 left-0 right-0 h-16 bg-[#0b1f3a] text-white z-30 flex items-center justify-between px-4 lg:px-8 transition-all duration-300 ${
-      isDesktopSidebarOpen && !headerNav ? 'lg:left-64' : 'lg:left-0'
+      headerNav ? 'lg:left-0' : isDesktopSidebarOpen ? 'lg:left-64' : 'lg:left-[4.5rem]'
     } ${headerNav ? '' : 'shadow-md'}`}>
       {/* Left: Hamburger & Search bar (No border, no background fill) */}
       <div className="flex items-center gap-3 flex-1 max-w-xl">
@@ -270,9 +270,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onOpenMobileMenu();
             }
           }}
-          className={`p-2 rounded-lg cursor-pointer flex items-center justify-center shrink-0 transition-all text-blue-200 hover:text-white hover:bg-white/10 ${
-            isDesktopSidebarOpen || headerNav ? 'lg:hidden' : 'flex'
-          }`}
+          className="p-2 rounded-lg cursor-pointer flex items-center justify-center shrink-0 transition-all text-blue-200 hover:text-white hover:bg-white/10 lg:hidden"
           aria-label="Abrir menu lateral"
           title="Abrir menu lateral"
         >
