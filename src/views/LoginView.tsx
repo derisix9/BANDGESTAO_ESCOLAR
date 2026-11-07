@@ -526,36 +526,6 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess }) => {
                 ? <>Gestão Escolar, <span style={{ color: '#38bdf8' }}>Rigor e Transparência.</span></>
                 : <>Registe a Sua <span style={{ color: '#38bdf8' }}>Instituição de Ensino.</span></>}
             </h1>
-
-            <div className="lg-features mt-8 space-y-4 max-w-xl">
-              <div className="lg-feature">
-                <div className="lg-feature-icon" style={{ color: '#fbbf24' }}>
-                  <span className="material-symbols-outlined text-[20px]">sync</span>
-                </div>
-                <div className="flex flex-col text-xs">
-                  <span className="font-bold text-white text-[13px]">Sincronização em Tempo Real</span>
-                  <span style={{ color: '#d6e4ff' }}>Atualização contínua e instantânea entre secretaria, tesouraria, área pedagógica, coordenação e área ácademica.</span>
-                </div>
-              </div>
-              <div className="lg-feature">
-                <div className="lg-feature-icon" style={{ color: '#93c5fd' }}>
-                  <span className="material-symbols-outlined text-[20px]">shield</span>
-                </div>
-                <div className="flex flex-col text-xs">
-                  <span className="font-bold text-white text-[13px]">Autenticação Cifrada</span>
-                  <span style={{ color: '#d6e4ff' }}>Acesso seguro com encriptação e trilha de auditoria para cada perfil.</span>
-                </div>
-              </div>
-              <div className="lg-feature">
-                <div className="lg-feature-icon" style={{ color: '#6ee7b7' }}>
-                  <span className="material-symbols-outlined text-[20px]">apartment</span>
-                </div>
-                <div className="flex flex-col text-xs">
-                  <span className="font-bold text-white text-[13px]">Instituição & Isolamento de Dados</span>
-                  <span style={{ color: '#d6e4ff' }}>Cada instituição possui a sua própria base de dados</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
