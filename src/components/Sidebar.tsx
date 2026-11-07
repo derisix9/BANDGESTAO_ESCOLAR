@@ -362,7 +362,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="flex items-center gap-1.5">
                   <span className="font-extrabold text-base tracking-tight text-white font-headline">BAND<span className="text-sky-300">MED</span></span>
                 </div>
-                <span className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">Gestão Escolar</span>
               </div>
             </div>
           </div>
