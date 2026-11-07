@@ -100,7 +100,38 @@ export const InternalChatWidget: React.FC<InternalChatWidgetProps> = ({ db, curr
   const initRef = useRef<string | null>(null);
 
   const users = db.users || [];
-  const allThreads = db.internalChatThreads || [];
+  // Conversas gravadas por outros clientes (ex.: app móvel) podem vir sem alguns campos: normaliza-as aqui para que
+  // uma conversa incompleta nunca deite abaixo o cabeçalho (era «Cannot read properties of undefined (reading 'filter')»).
+  const rawThreads = db.internalChatThreads;
+  const allThreads = useMemo<InternalChatThread[]>(() => {
+    if (!Array.isArray(rawThreads)) return [];
+    const out: InternalChatThread[] = [];
+    for (const t of rawThreads as any[]) {
+      if (!t || typeof t !== 'object') continue;
+      const participantIds: string[] = Array.isArray(t.participantIds) ? t.participantIds.map(String) : [];
+      let participants: any[] = Array.isArray(t.participants) ? t.participants.filter((p: any) => p && p.id != null) : [];
+      if (participants.length === 0 && participantIds.length > 0) {
+        participants = participantIds.map((id) => ({
+          id,
+          name: t.participantNames?.[id] || 'Utilizador',
+          role: t.participantRoles?.[id] || '',
+          roleTitle: t.participantRoles?.[id] || '',
+        }));
+      }
+      if (participants.length === 0) continue;
+      const messages = (Array.isArray(t.messages) ? t.messages : [])
+        .filter((m: any) => m && typeof m === 'object')
+        .map((m: any) => ({ ...m, readBy: Array.isArray(m.readBy) ? m.readBy : [] }));
+      out.push({
+        ...t,
+        participantIds: participantIds.length ? participantIds : participants.map((p: any) => String(p.id)),
+        participants,
+        messages,
+        lastMessageAt: t.lastMessageAt || messages[messages.length - 1]?.timestamp || t.createdAt || new Date(0).toISOString(),
+      } as InternalChatThread);
+    }
+    return out;
+  }, [rawThreads]);
 
   // Só as conversas em que o utilizador participa — privacidade total.
   const myThreads = useMemo<InternalChatThread[]>(
