@@ -1001,7 +1001,6 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1: Total de Turmas */}
         <div className="bm-stat-card bm-stat-tile bm-stat-blue p-3 flex flex-col justify-between" data-card-hl data-stat-icon="meeting_room">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#0b1f3a]" />
           <div className="flex items-start justify-between">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Total de Turmas
@@ -1026,7 +1025,6 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
 
         {/* KPI 2: Cursos & Disciplinas */}
         <div className="bm-stat-card bm-stat-tile bm-stat-violet p-3 flex flex-col justify-between" data-card-hl data-stat-icon="auto_stories">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#4d5f7d]" />
           <div className="flex items-start justify-between">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Total de Disciplinas
@@ -1050,7 +1048,6 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
 
         {/* KPI 3: Ocupação Média de Salas */}
         <div className="bm-stat-card bm-stat-tile bm-stat-amber p-3 flex flex-col justify-between" data-card-hl data-stat-icon="groups">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#ac332b]" />
           <div className="flex items-start justify-between">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Ocupação Média de Salas
@@ -1079,7 +1076,6 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
 
         {/* KPI 4: Diretores de Turma */}
         <div className="bm-stat-card bm-stat-tile bm-stat-cyan p-3 flex flex-col justify-between" data-card-hl data-stat-icon="assignment_ind">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#001a52]" />
           <div className="flex items-start justify-between">
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Diretores de Turmas

@@ -135,14 +135,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           <div className="flex items-center gap-3 self-start md:self-auto">
-            <div
-              className="px-3.5 py-2 rounded-xl text-left border"
-              style={{ backgroundColor: 'rgba(255,255,255,0.14)', borderColor: 'rgba(255,255,255,0.22)' }}
-            >
-              <span className="text-[10px] uppercase font-bold text-[#bfdbfe] block">Total    de Turmas</span>
-              <span className="font-headline text-base font-extrabold text-white">
-              {totalClasses}
-              </span>
+            <div data-card-hl data-stat-icon="meeting_room" className="bm-stat-card bm-stat-mini bm-stat-blue bm-dashboard-class-total text-left">
+              <span className="bm-stat-label block text-[10px] uppercase font-bold">Total de Turmas</span>
+              <span className="bm-stat-value block font-headline text-base font-extrabold">{totalClasses}</span>
             </div>
           </div>
         </div>
