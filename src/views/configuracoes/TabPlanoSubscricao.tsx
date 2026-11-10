@@ -285,13 +285,13 @@ export const TabPlanoSubscricao: React.FC<Props> = ({ currentUserRole }) => {
         </div>
         {sub.breakdown && sub.breakdown.length > 1 && (
           <div className="mt-4 border border-slate-200 overflow-x-auto">
-            <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-sm font-bold text-[#0b1f3a] flex items-center gap-2">
+            <div className="px-4 py-2.5 bg-[#0b1f3a] border-b border-slate-700 text-sm font-bold text-white flex items-center gap-2">
               <span className="material-symbols-outlined text-[18px]">hub</span>
               Plano único: escola mãe + filiais somam-se
             </div>
             <table className="w-full text-sm">
-              <thead>
-                <tr className="text-[10px] uppercase tracking-wider text-slate-500 text-left">
+              <thead className="bg-[#0b1f3a] text-white">
+                <tr className="text-[11px] uppercase tracking-wider text-white text-left">
                   <th className="px-4 py-2 font-bold">Escola</th>
                   <th className="px-4 py-2 font-bold">Alunos</th>
                   <th className="px-4 py-2 font-bold">Utilizadores</th>
