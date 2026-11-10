@@ -17,6 +17,45 @@ const TRANSITION =
 // ---------------------------------------------------------------------------
 const NOT_CARD_TAGS = new Set(['HTML', 'BODY', 'MAIN', 'FORM', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TD', 'TH', 'LI', 'UL', 'OL', 'SELECT', 'INPUT', 'TEXTAREA', 'OPTION', 'LABEL', 'SVG']);
 
+const ICON_BY_TEXT: Array<[RegExp, string]> = [
+  [/alun|estudant|matr[ií]cul|educand/, 'school'],
+  [/professor|docente|funcion[aá]rio|colaborador|utilizador/, 'badge'],
+  [/pagamento|cobran[cç]a|receita|propina|fatura|financeir|saldo|lucro/, 'payments'],
+  [/despesa|sa[ií]da|d[eé]bito/, 'receipt_long'],
+  [/assiduidade|presen[cç]a|falta|frequ[eê]ncia/, 'fact_check'],
+  [/turma|sala|hor[aá]rio|disciplina|curso|classe/, 'groups'],
+  [/exame|pauta|nota|avalia[cç][aã]o|aproveitamento/, 'leaderboard'],
+  [/trabalho|entrega|tarefa|atividade|actividade/, 'assignment'],
+  [/internamento|paciente|consulta|m[eé]dico|sa[uú]de/, 'medical_services'],
+  [/stock|invent[aá]rio|armaz[eé]m|produto/, 'inventory_2'],
+  [/document|ficheiro|relat[oó]rio|exporta/, 'description'],
+  [/plano|subscri[cç][aã]o|consumo|armazenamento/, 'workspace_premium'],
+  [/admiss[aã]o|candidat|inscri[cç][aã]o/, 'person_add'],
+  [/reuni[aã]o|comunica[cç][aã]o|mensagem|notifica/, 'campaign'],
+  [/transporte|viatura|rota/, 'directions_bus'],
+  [/refeit[oó]rio|refei[cç][aã]o|alimenta/, 'restaurant'],
+  [/f[eé]rias|licen[cç]a/, 'beach_access'],
+  [/fornecedor|compra|aquisi[cç][aã]o/, 'local_shipping'],
+];
+
+/** Garante uma marca-d'água coerente mesmo nos cartões antigos sem metadados. */
+function ensureStatIcon(el: HTMLElement): void {
+  if (el.dataset.statIcon) return;
+  const glyph = el.querySelector<HTMLElement>('.material-symbols-outlined, .material-icons, [data-stat-icon]');
+  const glyphText = (glyph?.dataset.statIcon || glyph?.textContent || '').trim().replace(/\s+/g, '_');
+  if (glyphText && /^[a-z0-9_]{2,40}$/i.test(glyphText)) {
+    el.dataset.statIcon = glyphText;
+    return;
+  }
+  const label = (el.querySelector<HTMLElement>('.kpi-label, .bm-stat-label, h1, h2, h3, h4, strong, b')?.textContent || el.textContent || '').trim().toLowerCase();
+  el.dataset.statIcon = ICON_BY_TEXT.find(([pattern]) => pattern.test(label))?.[1] || 'analytics';
+}
+
+function decorateStatCards(root: ParentNode): void {
+  if (root instanceof HTMLElement && root.matches('.kpi-card, .bm-stat-card')) ensureStatIcon(root);
+  root.querySelectorAll<HTMLElement>('.kpi-card, .bm-stat-card').forEach(ensureStatIcon);
+}
+
 function classSimilarity(a: Element, b: Element): number {
   const A = new Set(Array.from(a.classList)); const B = new Set(Array.from(b.classList));
   if (A.size === 0 || B.size === 0) return 0;
@@ -104,6 +143,15 @@ export function installCardHighlight(selector: string = DEFAULT_SELECTOR): () =>
   installed = true;
   let active: HTMLElement | null = null;
 
+  // Inclui os cards que já existem e os que são montados dinamicamente pelas secções.
+  decorateStatCards(document);
+  const observer = new MutationObserver((records) => {
+    records.forEach((record) => record.addedNodes.forEach((node) => {
+      if (node instanceof HTMLElement) decorateStatCards(node);
+    }));
+  });
+  if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+
   const over = (e: Event) => {
     const card = findCard(e.target, selector);
     if (!card) return;
@@ -132,6 +180,7 @@ export function installCardHighlight(selector: string = DEFAULT_SELECTOR): () =>
     document.removeEventListener('focusin', over);
     document.removeEventListener('focusout', out);
     window.removeEventListener('blur', out);
+    observer.disconnect();
     installed = false;
   };
 }
