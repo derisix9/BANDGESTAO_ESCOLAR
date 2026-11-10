@@ -10,6 +10,9 @@ html body :is(button, [role="button"], [role="tab"], [role="menuitem"], input[ty
   letter-spacing: .025em;
   border-radius: 0 !important;
 }
+/* Cartões de navegação mantêm a capitalização editorial do título e da descrição;
+   os botões de acção reais continuam sempre em maiúsculas. */
+html body .bm-stat-card[role="button"] { text-transform: none !important; }
 html body :is(button, [role="button"], [role="tab"], [role="menuitem"], input[type="button"], input[type="submit"], input[type="reset"], a[class*="btn"], a[class*="rounded"], a.dashboard-chart-action) :is(.material-symbols-outlined, svg, i) {
   text-transform: none !important;
 }
@@ -71,11 +74,11 @@ html body .bm-stat-card.bm-stat-card .bm-stat-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgb(255 255 255 / .28) !important;
+  border: 1px solid rgb(255 255 255 / .42) !important;
   border-radius: 8px !important;
-  background: rgb(255 255 255 / .16) !important;
+  background: rgb(7 25 52 / .34) !important;
   color: #fff !important;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 2px 8px rgb(0 0 0 / .16);
 }
 html body .bm-stat-card.bm-stat-card .bm-stat-icon .material-symbols-outlined { color: #fff !important; }
 html body .bm-stat-card.bm-stat-card .bm-stat-content { min-width: 0; }
@@ -89,6 +92,15 @@ html body .bm-stat-card.bm-stat-card .bm-stat-label {
   color: rgb(255 255 255 / .88) !important;
   font-weight: 700;
   letter-spacing: .035em;
+}
+html body .bm-stat-card.bm-stat-card :is(h1, h2, h3, h4, h5, h6, dt, dd) {
+  color: #fff !important;
+}
+html body .bm-stat-card.bm-stat-card .bm-stat-microbadge {
+  border: 1px solid rgb(255 255 255 / .30) !important;
+  border-radius: 0 !important;
+  background: rgb(255 255 255 / .16) !important;
+  color: #fff !important;
 }
 html body .bm-stat-card.bm-stat-tile {
   display: block;
@@ -118,7 +130,7 @@ html body .bm-stat-card.bm-stat-button {
 html body .bm-stat-card.bm-stat-button[aria-pressed="true"] {
   box-shadow: inset 0 0 0 2px rgb(255 255 255 / .85), 0 9px 18px -14px rgb(0 0 0 / .8);
 }
-html body .bm-stat-card.bm-stat-button :is(span, div, p, strong, small, b) { color: #fff !important; }
+html body .bm-stat-card.bm-stat-button :is(span, div, p, strong, small, b, dt, dd, h1, h2, h3, h4, h5, h6) { color: #fff !important; }
 html body .bm-stat-card.bm-stat-button .material-symbols-outlined { text-transform: none !important; }
 
 /* O cartão de indicador pode conter um select: fica legível sem roubar o foco visual. */
@@ -205,6 +217,20 @@ html body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card
 html body .dashboard-chart-subsystem.dashboard-chart-subsystem > * { position: relative; z-index: 1; }
 html[data-color-mode="dark"] body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card) { background: linear-gradient(135deg, #263449, #202b3b); border-color: #3b4a62; }
 html[data-color-mode="dark"] body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card)::after { color: rgb(191 219 254 / .11); }
+
+ .bm-trimester-card { min-height: 246px; }
+.bm-trimester-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(255 255 255 / .32);
+  background: rgb(255 255 255 / .16);
+  color: #fff !important;
+}
+.bm-trimester-status {
+  border: 1px solid rgb(255 255 255 / .30);
+  background: rgb(255 255 255 / .14);
+  color: #fff !important;
+}
 
 @media (max-width: 640px) {
   html body .bm-stat-card.bm-stat-card { min-height: 82px; padding: 11px; gap: 9px; }
