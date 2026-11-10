@@ -417,10 +417,53 @@ html body .bm-subsystem-grade {
   background: rgb(255 255 255 / .15);
   color: #fff !important;
 }
-html body .bm-subsystem-toggle { border: 1px solid rgb(255 255 255 / .45); border-radius: 999px; background: rgb(15 23 42 / .24); }
-html body .bm-subsystem-toggle.is-on { background: rgb(255 255 255 / .32); }
-html body .bm-subsystem-toggle > div { background: #fff; }
+/* Interruptor de sub-sistemas no mesmo padrão de Personalizar Sistema:
+   trilho cápsula, texto de estado e botão circular móvel. */
+html body .bm-subsystem-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 94px;
+  min-width: 94px;
+  height: 30px;
+  padding: 3px;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #dc2626 !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .25), 0 0 0 2px rgb(229 231 235 / .9);
+  box-sizing: border-box;
+}
+html body .bm-subsystem-toggle.is-on { flex-direction: row; background: #16a34a !important; }
+html body .bm-subsystem-toggle.is-off { flex-direction: row-reverse; background: #dc2626 !important; }
+html body .bm-subsystem-toggle-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #fff !important;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-align: center;
+  white-space: nowrap;
+}
+html body .bm-subsystem-toggle-knob {
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 30%, #fff, #d4d4d8) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / .4);
+}
 html body .bm-subsystem-card:hover { transform: translateY(-2px); box-shadow: 0 16px 28px -18px rgb(7 25 52 / .9), inset 0 1px 0 rgb(255 255 255 / .22); }
+
+/* Faixa principal do Dashboard: igual ao azul dos botões principais e do painel do Administrador. */
+html body .bm-dashboard-header {
+  background: linear-gradient(132deg, #2563eb, #1647b1) !important;
+  border-color: #1d4ed8 !important;
+}
 
 /* Compacto de Turmas no topo do Dashboard. */
 html body .bm-dashboard-class-total {
