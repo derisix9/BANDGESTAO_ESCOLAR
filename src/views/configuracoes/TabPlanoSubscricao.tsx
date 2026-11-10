@@ -66,10 +66,10 @@ const UsageMeter: React.FC<{
   const pct = unlimited ? 0 : limit! > 0 ? Math.min(100, Math.round((used / limit!) * 100)) : 100;
   const bar = blocked ? 'bg-red-600' : pct >= 85 ? 'bg-amber-500' : 'bg-emerald-600';
   return (
-    <div data-card-hl className={`border p-4 bg-white ${blocked ? 'border-red-300' : 'border-slate-200'}`}>
+    <div data-card-hl data-stat-icon={icon} className={`bm-stat-card bm-stat-tile bm-stat-${blocked ? 'red' : pct >= 85 ? 'amber' : 'blue'} p-4`}>
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-[#0b1f3a] font-bold text-sm">
-          <span className="material-symbols-outlined text-[20px]">{icon}</span>{label}
+        <div className="flex items-center gap-2 font-bold text-sm">
+          <span className="bm-stat-icon"><span className="material-symbols-outlined text-[20px]">{icon}</span></span>{label}
         </div>
         <span className="text-xs font-semibold text-slate-500">{unlimited ? 'Ilimitado' : `${pct}%`}</span>
       </div>
@@ -224,9 +224,9 @@ export const TabPlanoSubscricao: React.FC<Props> = ({ currentUserRole }) => {
             ) : (
               <div className="flex lg:justify-end gap-2 mt-1" aria-live="off">
                 {([['d', 'dias'], ['h', 'horas'], ['m', 'min'], ['s', 'seg']] as const).map(([k, l]) => (
-                  <div key={k} data-card-hl className={`min-w-[64px] text-center border px-2 py-2 ${remaining! < 3 * 86400000 ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}>
-                    <div className="text-2xl font-extrabold text-[#0b1f3a] tabular-nums">{k === 'd' ? parts[k] : pad(parts[k])}</div>
-                    <div className="text-[10px] font-bold uppercase text-slate-500">{l}</div>
+                  <div key={k} data-card-hl data-stat-icon="timer" className={`bm-stat-card bm-stat-tile bm-stat-mini bm-stat-${remaining! < 3 * 86400000 ? 'amber' : 'blue'} min-w-[64px] text-center px-2 py-2`}>
+                    <div className="bm-stat-value text-2xl font-extrabold tabular-nums">{k === 'd' ? parts[k] : pad(parts[k])}</div>
+                    <div className="bm-stat-label text-[10px] font-bold uppercase">{l}</div>
                   </div>
                 ))}
               </div>
@@ -247,10 +247,10 @@ export const TabPlanoSubscricao: React.FC<Props> = ({ currentUserRole }) => {
         )}
 
         <dl className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-          <div data-card-hl className="bg-slate-50 border border-slate-200 p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Conta criada</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.createdAt)}</dd></div>
-          <div data-card-hl className="bg-slate-50 border border-slate-200 p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Plano ativado</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.activatedAt)}</dd></div>
-          <div data-card-hl className="bg-slate-50 border border-slate-200 p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Fim do teste</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.trialEndsAt)}</dd></div>
-          <div data-card-hl className="bg-slate-50 border border-slate-200 p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Pago até</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.paidUntil)}</dd></div>
+          <div data-card-hl data-stat-icon="event_note" className="bm-stat-card bm-stat-tile bm-stat-cyan p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Conta criada</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.createdAt)}</dd></div>
+          <div data-card-hl data-stat-icon="event_available" className="bm-stat-card bm-stat-tile bm-stat-cyan p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Plano ativado</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.activatedAt)}</dd></div>
+          <div data-card-hl data-stat-icon="hourglass_top" className="bm-stat-card bm-stat-tile bm-stat-cyan p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Fim do teste</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.trialEndsAt)}</dd></div>
+          <div data-card-hl data-stat-icon="payments" className="bm-stat-card bm-stat-tile bm-stat-cyan p-3"><dt className="text-[11px] font-bold uppercase text-slate-500">Pago até</dt><dd className="font-semibold text-[#0b1f3a]">{fmtDate(sub.paidUntil)}</dd></div>
         </dl>
 
         {sub.phase === 'tolerancia' && (
