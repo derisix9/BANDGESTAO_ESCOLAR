@@ -31,19 +31,35 @@ export const PageHeader: React.FC<{ kicker: string; title: string; subtitle?: st
   </div>
 );
 
-export const Kpis: React.FC<{ items: Array<{ label: string; value: React.ReactNode; icon: string; tone?: string }> }> = ({ items }) => (
+const KPI_COLOR_ORDER = ['blue', 'green', 'cyan', 'violet'] as const;
+
+function getKpiColor(tone: string | undefined, index: number): typeof KPI_COLOR_ORDER[number] | 'red' | 'amber' {
+  const value = (tone || '').toLowerCase();
+  if (value.includes('danger') || value.includes('red')) return 'red';
+  if (value.includes('warn') || value.includes('amber') || value.includes('yellow')) return 'amber';
+  if (value.includes('success') || value.includes('emerald') || value.includes('green')) return 'green';
+  if (value.includes('info') || value.includes('blue')) return 'blue';
+  return KPI_COLOR_ORDER[index % KPI_COLOR_ORDER.length];
+}
+
+export const Kpis: React.FC<{ items: Array<{ label: string; value: React.ReactNode; icon?: string; tone?: string }> }> = ({ items }) => (
   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-    {items.map((k) => (
-      <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-3">
-        <div className={`w-10 h-10 flex items-center justify-center rounded-lg shrink-0 ${k.tone || 'bg-slate-100 text-[#0b1f3a]'}`}>
-          <span className="material-symbols-outlined text-[22px]">{k.icon}</span>
+    {items.map((k, index) => {
+      const color = getKpiColor(k.tone, index);
+      return (
+        <div key={k.label} data-card-hl className={`bm-stat-card bm-stat-${color}`}>
+          {k.icon && (
+            <div className="bm-stat-icon">
+              <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{k.icon}</span>
+            </div>
+          )}
+          <div className="bm-stat-content">
+            <div className="bm-stat-value font-mono truncate">{k.value}</div>
+            <div className="bm-stat-label">{k.label}</div>
+          </div>
         </div>
-        <div className="min-w-0">
-          <div className="font-mono text-xl font-extrabold text-[#0b1f3a] leading-none truncate">{k.value}</div>
-          <div className="text-[11px] text-slate-500 font-semibold mt-1">{k.label}</div>
-        </div>
-      </div>
-    ))}
+      );
+    })}
   </div>
 );
 
