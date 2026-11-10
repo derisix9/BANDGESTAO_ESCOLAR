@@ -11,6 +11,7 @@
 /* Cards de estatística coloridos, separadores de passos e botões "Definir". */
 @import "./styles/status-cards.css";
 @import "./styles/card-highlight.css";
+@import "./styles/dashboard-charts.css";
 @import "./styles/sidebar-effects.css";
 
 :root {
