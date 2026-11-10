@@ -980,19 +980,24 @@ export const RefeitorioView: React.FC<RefeitorioViewProps> = ({ db, currentUserR
       {tab === 'inscricoes' && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="grid grid-cols-3 gap-2 w-full md:max-w-md">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:max-w-md">
               {(Object.keys(SUBSCRIPTION_STATUS_META) as CanteenSubscriptionStatus[]).map((st) => {
                 const active = subStatus === st;
                 return (
                   <button
                     key={st}
+                    type="button"
+                    aria-pressed={active}
                     onClick={() => setSubStatus(active ? 'all' : st)}
-                    className={`text-left bg-white border rounded-xl p-3 transition-colors cursor-pointer ${
-                      active ? 'border-[#0b1f3a] ring-1 ring-[#0b1f3a]' : 'border-slate-200 hover:border-slate-400'
-                    }`}
+                    data-card-hl
+                    data-stat-icon={st === 'ativa' ? 'check_circle' : st === 'suspensa' ? 'pause_circle' : 'cancel'}
+                    className={`bm-stat-card bm-stat-button bm-stat-${st === 'ativa' ? 'green' : st === 'suspensa' ? 'amber' : 'red'} bm-stat-status-button`}
                   >
-                    <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 truncate">{SUBSCRIPTION_STATUS_META[st].label}</div>
-                    <div className="font-mono text-xl font-extrabold text-[#0b1f3a] mt-1 leading-none">{subCounts[st] || 0}</div>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="text-[10px] font-bold uppercase tracking-wide truncate">{SUBSCRIPTION_STATUS_META[st].label}</div>
+                      <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">{st === 'ativa' ? 'check_circle' : st === 'suspensa' ? 'pause_circle' : 'cancel'}</span></span>
+                    </div>
+                    <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{subCounts[st] || 0}</div>
                   </button>
                 );
               })}

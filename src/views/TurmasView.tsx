@@ -1006,7 +1006,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Total de Turmas
             </span>
-            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-[#0b1f3a]">
+            <div className="bm-stat-icon">
               <span className="material-symbols-outlined text-[18px]">meeting_room</span>
             </div>
           </div>
@@ -1018,7 +1018,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
               <span>{realRooms.length} Salas Físicas</span>
             </div>
           </div>
-          <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <div className="mt-2 pt-1.5 flex items-center justify-between text-xs text-white/85">
             <span>Manhã: {morningCount}</span>
             <span>Tarde: {afternoonCount}</span>
           </div>
@@ -1031,7 +1031,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Total de Disciplinas
             </span>
-            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-[#0b1f3a]">
+            <div className="bm-stat-icon">
               <span className="material-symbols-outlined text-[18px]">auto_stories</span>
             </div>
           </div>
@@ -1043,7 +1043,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
               <span className="font-semibold text-[#0b1f3a]">{totalCursos}  Cursos Cadastrados</span>
             </div>
           </div>
-          <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <div className="mt-2 pt-1.5 flex items-center justify-between text-xs text-white/85">
             <span>Total de Alunos: {totalStudentsCount}</span>
           </div>
         </div>
@@ -1055,7 +1055,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Ocupação Média de Salas
             </span>
-            <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center text-[#ac332b]">
+            <div className="bm-stat-icon">
               <span className="material-symbols-outlined text-[18px]">groups</span>
             </div>
           </div>
@@ -1084,7 +1084,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Diretores de Turmas
             </span>
-            <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center text-[#0b1f3a]">
+            <div className="bm-stat-icon">
               <span className="material-symbols-outlined text-[18px]">assignment_ind</span>
             </div>
           </div>
@@ -1105,7 +1105,7 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
               <span>{teachersList.length} Professores</span>
             </div>
           </div>
-          <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <div className="mt-2 pt-1.5 flex items-center justify-between text-xs text-white/85">
             <span className="flex items-center gap-1.5 font-semibold text-slate-700">
               <span className="w-2 h-2 rounded-full bg-emerald-600" />
               Docentes Ativos
@@ -1443,44 +1443,41 @@ export const TurmasView: React.FC<TurmasViewProps> = ({
             <>
               {/* Informações da Turma e Ações Rápidas */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div className="bg-white p-4 rounded-none border border-slate-200 shadow-xs">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Turma / Ciclo</span>
-                  <div className="font-headline text-base font-extrabold text-[#0b1f3a] mt-1">
-                    {activeTimetableClass.name}
+                <div data-card-hl data-stat-icon="meeting_room" className="bm-stat-card bm-stat-tile bm-stat-blue p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider block">Turma / Ciclo</span>
+                    <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">meeting_room</span></span>
                   </div>
-                  <span className="text-xs text-slate-600 font-medium">
-                    {activeTimetableClass.grade} • {activeTimetableClass.cycle || 'Ensino Geral'}
-                  </span>
+                  <div className="font-headline text-base font-extrabold mt-1">{activeTimetableClass.name}</div>
+                  <span className="text-xs font-medium">{activeTimetableClass.grade} • {activeTimetableClass.cycle || 'Ensino Geral'}</span>
                 </div>
 
-                <div className="bg-white p-4 rounded-none border border-slate-200 shadow-xs">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Período / Sala</span>
-                  <div className="font-headline text-base font-extrabold text-[#0b1f3a] mt-1">
-                    {activeTimetableClass.shift}
+                <div data-card-hl data-stat-icon="schedule" className="bm-stat-card bm-stat-tile bm-stat-violet p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider block">Período / Sala</span>
+                    <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">schedule</span></span>
                   </div>
-                  <span className="text-xs text-slate-600 font-medium">
-                    {activeTimetableClass.room || '—'}
-                  </span>
+                  <div className="font-headline text-base font-extrabold mt-1">{activeTimetableClass.shift}</div>
+                  <span className="text-xs font-medium">{activeTimetableClass.room || '—'}</span>
                 </div>
 
-                <div className="bg-white p-4 rounded-none border border-slate-200 shadow-xs">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Diretor(a) de Turma</span>
-                  <div className="font-headline text-base font-extrabold text-[#0b1f3a] mt-1 truncate">
-                    {activeTimetableClass.headTeacherName || 'A designar'}
+                <div data-card-hl data-stat-icon="assignment_ind" className="bm-stat-card bm-stat-tile bm-stat-cyan p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider block">Diretor(a) de Turma</span>
+                    <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">assignment_ind</span></span>
                   </div>
-                  <span className="text-xs text-slate-600 font-medium truncate block">
-                    Delegado: {activeTimetableClass.delegateName || 'A eleger'}
-                  </span>
+                  <div className="font-headline text-base font-extrabold mt-1 truncate">{activeTimetableClass.headTeacherName || 'A designar'}</div>
+                  <span className="text-xs font-medium truncate block">Delegado: {activeTimetableClass.delegateName || 'A eleger'}</span>
                 </div>
 
-                <div className="bg-white p-4 rounded-none border border-slate-200 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Tempo Total</span>
-                    <div className="font-headline text-base font-extrabold text-[#0b1f3a] mt-1 flex items-center gap-1.5">
-                      <span>{(db.timetable || []).filter((t) => String(t.classId) === String(activeTimetableClass.id)).length} Tempos</span>
-                    </div>
+                <div data-card-hl data-stat-icon="timer" className="bm-stat-card bm-stat-tile bm-stat-green p-4 flex flex-col justify-between">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider block">Tempo Total</span>
+                    <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">timer</span></span>
                   </div>
-  
+                  <div className="font-headline text-xl font-extrabold mt-1">
+                    {(db.timetable || []).filter((t) => String(t.classId) === String(activeTimetableClass.id)).length} Tempos
+                  </div>
                 </div>
               </div>
 

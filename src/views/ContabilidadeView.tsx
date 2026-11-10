@@ -259,14 +259,17 @@ export const ContabilidadeView: React.FC<Props> = ({ db, currentUserRole }) => {
         <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              { label: 'Proveitos', value: kz(tb.proveitos), tone: 'text-emerald-700' },
-              { label: 'Custos', value: kz(tb.custos), tone: 'text-red-700' },
-              { label: 'Resultado do período', value: kz(tb.resultado), tone: tb.resultado >= 0 ? 'text-emerald-700' : 'text-red-700' },
-              { label: 'Débitos = Créditos?', value: tb.balanced ? 'Sim, equilibrado' : 'NÃO equilibrado', tone: tb.balanced ? 'text-emerald-700' : 'text-red-700' }
+              { label: 'Proveitos', value: kz(tb.proveitos), color: 'green', icon: 'payments' },
+              { label: 'Custos', value: kz(tb.custos), color: 'red', icon: 'receipt_long' },
+              { label: 'Resultado do período', value: kz(tb.resultado), color: tb.resultado >= 0 ? 'cyan' : 'red', icon: 'account_balance_wallet' },
+              { label: 'Débitos = Créditos?', value: tb.balanced ? 'Sim, equilibrado' : 'NÃO equilibrado', color: tb.balanced ? 'blue' : 'amber', icon: 'balance' }
             ].map((k) => (
-              <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-4">
-                <div className={`font-mono text-lg font-extrabold leading-none ${k.tone}`}>{k.value}</div>
-                <div className="text-[11px] text-slate-500 font-semibold mt-1">{k.label}</div>
+              <div key={k.label} data-card-hl data-stat-icon={k.icon} className={`bm-stat-card bm-stat-tile bm-stat-${k.color} p-4`}>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="font-mono text-lg font-extrabold leading-tight">{k.value}</div>
+                  <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">{k.icon}</span></span>
+                </div>
+                <div className="bm-stat-label text-[11px] font-semibold mt-1">{k.label}</div>
               </div>
             ))}
           </div>

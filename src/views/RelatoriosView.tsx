@@ -519,19 +519,18 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 print:hidden">
         {/* BLOCK 1: MAPA DE APROVEITAMENTO */}
         <div
+          role="button" tabIndex={0} aria-pressed={selectedReport === 'aproveitamento'}
+          data-card-hl data-stat-icon="trending_up"
           onClick={() => setSelectedReport('aproveitamento')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
-            selectedReport === 'aproveitamento'
-              ? 'bg-white border-[#0b1f3a] shadow-md ring-2 ring-[#0b1f3a]/20 scale-[1.01]'
-              : 'bg-white border-slate-200 hover:border-slate-300'
-          }`}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedReport('aproveitamento'); } }}
+          className={`bm-stat-card bm-stat-tile bm-stat-button bm-stat-blue p-4 cursor-pointer transition-all ${selectedReport === 'aproveitamento' ? 'ring-2 ring-white shadow-xl' : 'hover:shadow-lg'}`}
         >
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0b1f3a] flex items-center justify-center">
+              <div className="bm-stat-icon">
                 <span className="material-symbols-outlined text-[22px]">trending_up</span>
               </div>
-              <span className="text-[10px] font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+              <span className="bm-stat-microbadge text-[10px] font-mono font-bold px-2 py-0.5">
                 {aproveitamentoData.length} Turmas
               </span>
             </div>
@@ -545,23 +544,20 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
 
         {/* BLOCK 2: BALANCETE FINANCEIRO — protegido pela regra 'propinas.reports' */}
         <div
+          role="button" tabIndex={canViewFinanceiro ? 0 : -1} aria-pressed={selectedReport === 'financeiro'} aria-disabled={!canViewFinanceiro}
+          data-card-hl data-stat-icon={canViewFinanceiro ? 'account_balance' : 'lock'}
           onClick={() => (canViewFinanceiro ? setSelectedReport('financeiro') : acl.guard('propinas.reports', () => undefined))}
+          onKeyDown={(e) => { if (canViewFinanceiro && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setSelectedReport('financeiro'); } }}
           title={!canViewFinanceiro ? acl.denyMessage('propinas.reports') : undefined}
-          className={`p-4 rounded-2xl border transition-all flex flex-col justify-between ${
-            !canViewFinanceiro
-              ? 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
-              : 'cursor-pointer ' + (selectedReport === 'financeiro'
-                ? 'bg-white border-[#0b1f3a] shadow-md ring-2 ring-[#0b1f3a]/20 scale-[1.01]'
-                : 'bg-white border-slate-200 hover:border-slate-300')
-          }`}
+          className={`bm-stat-card bm-stat-tile bm-stat-button bm-stat-green p-4 transition-all ${!canViewFinanceiro ? 'opacity-60 cursor-not-allowed' : `cursor-pointer ${selectedReport === 'financeiro' ? 'ring-2 ring-white shadow-xl' : 'hover:shadow-lg'}`}`}
         >
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
+              <div className="bm-stat-icon">
                 <span className="material-symbols-outlined text-[22px]">{canViewFinanceiro ? 'account_balance' : 'lock'}</span>
               </div>
               {canViewFinanceiro && (
-                <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                <span className="bm-stat-microbadge text-[10px] font-mono font-bold px-2 py-0.5">
                   Eficácia: {financeiroTotals.taxaGeral}%
                 </span>
               )}
@@ -578,19 +574,18 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
 
         {/* BLOCK 3: MAPA DE ASSIDUIDADE */}
         <div
+          role="button" tabIndex={0} aria-pressed={selectedReport === 'assiduidade'}
+          data-card-hl data-stat-icon="fact_check"
           onClick={() => setSelectedReport('assiduidade')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
-            selectedReport === 'assiduidade'
-              ? 'bg-white border-[#0b1f3a] shadow-md ring-2 ring-[#0b1f3a]/20 scale-[1.01]'
-              : 'bg-white border-slate-200 hover:border-slate-300'
-          }`}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedReport('assiduidade'); } }}
+          className={`bm-stat-card bm-stat-tile bm-stat-button bm-stat-red p-4 cursor-pointer transition-all ${selectedReport === 'assiduidade' ? 'ring-2 ring-white shadow-xl' : 'hover:shadow-lg'}`}
         >
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-red-50 text-[#7a0c0c] flex items-center justify-center">
+              <div className="bm-stat-icon">
                 <span className="material-symbols-outlined text-[22px]">fact_check</span>
               </div>
-              <span className="text-[10px] font-mono font-bold text-red-800 bg-red-50 px-2 py-0.5 rounded">
+              <span className="bm-stat-microbadge text-[10px] font-mono font-bold px-2 py-0.5">
                 {assiduidadeTotals.totalFaltasInj} Faltas
               </span>
             </div>
@@ -604,19 +599,18 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
 
         {/* BLOCK 4: EFETIVO DOCENTE */}
         <div
+          role="button" tabIndex={0} aria-pressed={selectedReport === 'docentes'}
+          data-card-hl data-stat-icon="badge"
           onClick={() => setSelectedReport('docentes')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between ${
-            selectedReport === 'docentes'
-              ? 'bg-white border-[#0b1f3a] shadow-md ring-2 ring-[#0b1f3a]/20 scale-[1.01]'
-              : 'bg-white border-slate-200 hover:border-slate-300'
-          }`}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedReport('docentes'); } }}
+          className={`bm-stat-card bm-stat-tile bm-stat-button bm-stat-violet p-4 cursor-pointer transition-all ${selectedReport === 'docentes' ? 'ring-2 ring-white shadow-xl' : 'hover:shadow-lg'}`}
         >
           <div>
             <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-800 flex items-center justify-center">
+              <div className="bm-stat-icon">
                 <span className="material-symbols-outlined text-[22px]">badge</span>
               </div>
-              <span className="text-[10px] font-mono font-bold text-purple-800 bg-purple-50 px-2 py-0.5 rounded">
+              <span className="bm-stat-microbadge text-[10px] font-mono font-bold px-2 py-0.5">
                 {docentesData.length} Professores
               </span>
             </div>
