@@ -130,7 +130,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               PAINEL PRINCIPAL
             </h1>
             <p className="text-xs text-blue-200 mt-1 font-medium">
-              Ano Letivo {db.settings.currentAcademicYear} • {db.settings.schoolName}
+              Ano Letivo {db.settings.currentAcademicYear}{db.settings.schoolName ? <span className="ml-2">{db.settings.schoolName}</span> : null}
             </p>
           </div>
 
