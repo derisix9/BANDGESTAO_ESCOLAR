@@ -1,0 +1,217 @@
+/* ==========================================================================
+ * PADRÃO GLOBAL BANDMED — indicadores, botões e cartões dos gráficos.
+ * Os botões ficam quadrados e em maiúsculas; os cartões estatísticos mantêm
+ * a identidade de cor e recebem um ícone grande em marca-d'água ao fundo.
+ * ========================================================================== */
+
+/* Botões e controlos que funcionam como botões: texto em maiúsculas e cantos retos. */
+html body :is(button, [role="button"], [role="tab"], [role="menuitem"], input[type="button"], input[type="submit"], input[type="reset"], a[class*="btn"], a[class*="rounded"], a.dashboard-chart-action) {
+  text-transform: uppercase !important;
+  letter-spacing: .025em;
+  border-radius: 0 !important;
+}
+html body :is(button, [role="button"], [role="tab"], [role="menuitem"], input[type="button"], input[type="submit"], input[type="reset"], a[class*="btn"], a[class*="rounded"], a.dashboard-chart-action) :is(.material-symbols-outlined, svg, i) {
+  text-transform: none !important;
+}
+html body :is(button, [role="button"], [role="tab"], [role="menuitem"], a[class*="btn"], a[class*="rounded"], a.dashboard-chart-action) .material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+html body :is(button, [role="button"], [role="tab"], [role="menuitem"], a[class*="btn"], a[class*="rounded"], a.dashboard-chart-action):focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Cartões de indicadores — o raio é aplicado apenas a cartões, nunca a botões. */
+html body .kpi-card.kpi-card,
+html body .bm-stat-card.bm-stat-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 14px !important;
+}
+html body button.bm-stat-card.bm-stat-button {
+  border-radius: 0 !important;
+}
+html body .kpi-card.kpi-card::before,
+html body .bm-stat-card.bm-stat-card::before {
+  content: attr(data-stat-icon);
+  position: absolute;
+  z-index: 0;
+  right: 8px;
+  bottom: -22px;
+  width: auto;
+  height: auto;
+  max-width: 52%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  color: rgb(255 255 255 / .15);
+  font-family: 'Material Symbols Outlined';
+  font-size: clamp(76px, 9vw, 116px);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  transform: rotate(-8deg);
+}
+html body .kpi-card.kpi-card > *,
+html body .bm-stat-card.bm-stat-card > * {
+  position: relative;
+  z-index: 1;
+}
+html body .bm-stat-card.bm-stat-card .bm-stat-icon {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / .28) !important;
+  border-radius: 8px !important;
+  background: rgb(255 255 255 / .16) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18);
+}
+html body .bm-stat-card.bm-stat-card .bm-stat-icon .material-symbols-outlined { color: #fff !important; }
+html body .bm-stat-card.bm-stat-card .bm-stat-content { min-width: 0; }
+html body .bm-stat-card.bm-stat-card .bm-stat-value {
+  color: #fff !important;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  text-shadow: 0 1px 1px rgb(0 0 0 / .12);
+}
+html body .bm-stat-card.bm-stat-card .bm-stat-label {
+  color: rgb(255 255 255 / .88) !important;
+  font-weight: 700;
+  letter-spacing: .035em;
+}
+html body .bm-stat-card.bm-stat-tile {
+  display: block;
+  min-height: 88px;
+  padding: 13px 14px;
+}
+html body .bm-stat-card.bm-stat-mini {
+  display: block;
+  min-width: 64px;
+  min-height: 64px;
+  padding: 8px 7px;
+}
+html body .bm-stat-card.bm-stat-mini::after {
+  right: -9px;
+  bottom: -12px;
+  font-size: 58px;
+  opacity: .55;
+}
+html body .bm-stat-card.bm-stat-button {
+  display: block;
+  width: 100%;
+  min-height: 86px;
+  padding: 12px 13px;
+  text-align: left;
+  cursor: pointer;
+}
+html body .bm-stat-card.bm-stat-button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / .85), 0 9px 18px -14px rgb(0 0 0 / .8);
+}
+html body .bm-stat-card.bm-stat-button :is(span, div, p, strong, small, b) { color: #fff !important; }
+html body .bm-stat-card.bm-stat-button .material-symbols-outlined { text-transform: none !important; }
+
+/* O cartão de indicador pode conter um select: fica legível sem roubar o foco visual. */
+html body .bm-stat-card.bm-stat-card select,
+html body .kpi-card.kpi-card select {
+  position: relative;
+  z-index: 3;
+  min-height: 34px;
+  border: 1px solid rgb(255 255 255 / .72) !important;
+  border-radius: 0 !important;
+  background: rgb(255 255 255 / .96) !important;
+  color: #183b66 !important;
+  text-transform: uppercase;
+}
+
+/* Ícones e textos de apoio mantêm contraste no modo escuro. */
+html[data-color-mode="dark"] body .bm-stat-card.bm-stat-card,
+html[data-color-mode="dark"] body .kpi-card.kpi-card {
+  box-shadow: 0 12px 24px -18px rgb(0 0 0 / .95), inset 0 1px 0 rgb(255 255 255 / .12);
+}
+
+/* Resumos estatísticos internos dos três gráficos do Dashboard. */
+html body .dashboard-chart-summary.dashboard-chart-summary {
+  --summary-top: #2563eb;
+  --summary-bottom: #1647b1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / .24) !important;
+  border-radius: 12px !important;
+  background: linear-gradient(132deg, var(--summary-top), var(--summary-bottom)) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 20px -16px var(--summary-top), inset 0 1px 0 rgb(255 255 255 / .18);
+}
+html body .dashboard-chart-summary.dashboard-chart-summary::after {
+  content: attr(data-stat-icon);
+  position: absolute;
+  z-index: 0;
+  right: 5px;
+  bottom: -22px;
+  color: rgb(255 255 255 / .15);
+  font-family: 'Material Symbols Outlined';
+  font-size: 94px;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  line-height: 1;
+  pointer-events: none;
+}
+html body .dashboard-chart-summary.dashboard-chart-summary > * { position: relative; z-index: 1; }
+html body .dashboard-chart-summary.dashboard-chart-summary .dashboard-chart-summary-label { color: rgb(255 255 255 / .88) !important; }
+html body .dashboard-chart-summary.dashboard-chart-summary .dashboard-chart-summary-value { color: #fff !important; }
+html body .dashboard-chart-summary.dashboard-chart-summary .dashboard-chart-value-unit { color: rgb(255 255 255 / .82) !important; }
+html body .dashboard-chart-summary.dashboard-chart-summary .dashboard-chart-microbadge {
+  border-color: rgb(255 255 255 / .34) !important;
+  background: rgb(255 255 255 / .16) !important;
+  color: #fff !important;
+}
+html body .dashboard-chart-summary--green { --summary-top: #059669; --summary-bottom: #065f46; }
+html body .dashboard-chart-summary--blue { --summary-top: #2563eb; --summary-bottom: #1647b1; }
+html body .dashboard-chart-summary--red { --summary-top: #dc3d45; --summary-bottom: #991b1b; }
+html body .dashboard-chart-summary--amber { --summary-top: #d97706; --summary-bottom: #92400e; }
+html body .dashboard-chart-summary--violet { --summary-top: #8b5cf6; --summary-bottom: #5b21b6; }
+
+/* Pequenos indicadores por sub-sistema: cartão leve, ícone de fundo discreto. */
+html body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #fff, #edf4fc);
+  box-shadow: 0 4px 10px rgb(15 35 60 / .045);
+}
+html body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card)::after {
+  content: attr(data-stat-icon);
+  position: absolute;
+  right: -5px;
+  bottom: -10px;
+  z-index: 0;
+  color: rgb(22 75 134 / .075);
+  font-family: 'Material Symbols Outlined';
+  font-size: 54px;
+  line-height: 1;
+  pointer-events: none;
+}
+html body .dashboard-chart-subsystem.dashboard-chart-subsystem > * { position: relative; z-index: 1; }
+html[data-color-mode="dark"] body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card) { background: linear-gradient(135deg, #263449, #202b3b); border-color: #3b4a62; }
+html[data-color-mode="dark"] body .dashboard-chart-subsystem.dashboard-chart-subsystem:not(.bm-stat-card)::after { color: rgb(191 219 254 / .11); }
+
+@media (max-width: 640px) {
+  html body .bm-stat-card.bm-stat-card { min-height: 82px; padding: 11px; gap: 9px; }
+  html body .bm-stat-card.bm-stat-card::before, html body .kpi-card.kpi-card::before { right: -5px; font-size: 76px; }
+  html body .dashboard-chart-summary.dashboard-chart-summary::after { font-size: 70px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(button, [role="button"], [role="tab"]) { transition: none !important; }
+}
