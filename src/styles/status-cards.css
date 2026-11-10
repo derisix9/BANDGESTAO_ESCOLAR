@@ -1,84 +1,165 @@
-/* ==========================================================================
- * Cards de estatística com cor por função (Dashboard, Fluxo de Caixa...).
- *
- * Mesmo estilo dos cartões de Pagamentos: borda sólida da cor da função e
- * fundo opaco: branco no tema claro, preto no escuro (o realce ao passar o
- * rato continua a vir de card-highlight.css / cardHighlight.ts). Cor = significado:
- *   blue   → alunos / total        green → entradas, cobrado, saldo positivo
- *   red    → saídas, despesas, mora amber → atenção, pendente, assiduidade
- *   violet → pessoal / docentes    cyan  → neutro financeiro (saldo)
- * Uso: <div className="kpi-card kpi-green"> + .kpi-label/.kpi-value/.kpi-icon/
- *      .kpi-foot/.kpi-chip/.kpi-sub/.kpi-unit
+/* ============================================================================
+ * Cartões de indicadores — linguagem visual alinhada ao BANDMED Hospital.
+ * As cores representam a natureza da métrica; o hover apenas destaca o card.
  * ========================================================================== */
-/* Fundo dos cards no modo escuro — mude aqui. */
-:root { --bm-card-dark: #2b3547; }
+:root { --bm-card-dark: #202b3b; }
 
-.kpi-card {
-  --k: 37 99 235;          /* cor base (rgb) */
-  --k-ink: 30 58 138;      /* texto forte no tema claro */
-  --k-soft: 71 85 105;     /* texto secundário no tema claro */
+.kpi-card,
+.bm-stat-card {
+  --k: 37 99 235;
+  --k-dark: 29 78 216;
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  border-radius: 10px;
-  background-color: #ffffff !important; /* claro: branco opaco (o hover é aplicado inline por cardHighlight.ts) */
-  border: 2px solid rgb(var(--k)) !important;
-  color: rgb(var(--k-ink));
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
-}
-.kpi-blue   { --k: 37 99 235;  --k-ink: 30 58 138; }
-.kpi-green  { --k: 5 150 105;  --k-ink: 6 78 59; }
-.kpi-red    { --k: 220 38 38;  --k-ink: 127 29 29; }
-.kpi-amber  { --k: 217 119 6;  --k-ink: 120 53 15; }
-.kpi-violet { --k: 124 58 237; --k-ink: 76 29 149; }
-.kpi-cyan   { --k: 8 145 178;  --k-ink: 22 78 99; }
-
-.kpi-card .kpi-label { color: rgb(var(--k-ink)); opacity: 0.85; }
-.kpi-card .kpi-value { color: rgb(var(--k-ink)); }
-.kpi-card .kpi-unit  { color: rgb(var(--k)); }
-.kpi-card .kpi-sub   { color: rgb(var(--k-ink)); opacity: 0.8; }
-.kpi-card .kpi-icon {
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  border-radius: 8px;
+  min-width: 0;
+  border: 1px solid rgb(255 255 255 / .24) !important;
+  border-radius: 15px !important;
   background-color: rgb(var(--k)) !important;
+  background-image: linear-gradient(132deg, rgb(var(--k)) 0%, rgb(var(--k-dark)) 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 24px -18px rgb(var(--k) / .9), inset 0 1px 0 rgb(255 255 255 / .20);
+}
+
+/* Forma de luz discreta: acrescenta profundidade sem competir com os dados. */
+.kpi-card::after,
+.bm-stat-card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  width: 150px;
+  height: 150px;
+  right: -68px;
+  top: -82px;
+  border: 18px solid rgb(255 255 255 / .10);
+  border-radius: 999px;
+  box-shadow: 0 0 0 18px rgb(255 255 255 / .045);
+}
+
+.kpi-card > *,
+.bm-stat-card > * { position: relative; z-index: 1; }
+
+.kpi-blue, .bm-stat-blue   { --k: 37 99 235;  --k-dark: 22 71 177; }
+.kpi-green, .bm-stat-green { --k: 4 120 87;  --k-dark: 6 95 70; }
+.kpi-red, .bm-stat-red     { --k: 185 28 28;  --k-dark: 153 27 27; }
+.kpi-amber, .bm-stat-amber { --k: 161 98 7;   --k-dark: 133 77 14; }
+.kpi-violet, .bm-stat-violet { --k: 124 58 237; --k-dark: 91 33 182; }
+.kpi-cyan, .bm-stat-cyan   { --k: 14 116 144; --k-dark: 21 94 117; }
+
+/* Texto principal e secundário com contraste consistente. */
+.kpi-card .kpi-label,
+.kpi-card .kpi-value,
+.kpi-card .kpi-unit,
+.kpi-card .kpi-sub,
+.bm-stat-card .bm-stat-label,
+.bm-stat-card .bm-stat-value,
+.bm-stat-card .bm-stat-icon,
+.kpi-card > :is(div, span, p, small, strong),
+.bm-stat-card > :is(div, span, p, small, strong) {
   color: #fff !important;
 }
-.kpi-card .kpi-icon .material-symbols-outlined { color: #fff !important; }
-.kpi-card .kpi-foot { border-top: 1px solid rgb(var(--k) / 0.35) !important; }
+.kpi-card .kpi-label,
+.bm-stat-card .bm-stat-label { opacity: .88; letter-spacing: .045em; }
+.kpi-card .kpi-value,
+.bm-stat-card .bm-stat-value { text-shadow: 0 1px 1px rgb(0 0 0 / .08); }
+.kpi-card .kpi-sub { opacity: .86; }
+.kpi-card .kpi-unit { opacity: .9; }
+
+/* Ícones com tratamento translúcido, semelhante aos cards hospitalares. */
+.kpi-card .kpi-icon,
+.bm-stat-card .bm-stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgb(255 255 255 / .25) !important;
+  border-radius: 10px !important;
+  background: rgb(255 255 255 / .16) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .16);
+}
+.kpi-card .kpi-icon .material-symbols-outlined,
+.bm-stat-card .bm-stat-icon .material-symbols-outlined { color: #fff !important; }
+.kpi-card .kpi-foot { border-top: 1px solid rgb(255 255 255 / .28) !important; }
 .kpi-card .kpi-chip {
-  background-color: rgb(var(--k)) !important;
+  border: 1px solid rgb(255 255 255 / .18);
+  border-radius: 5px;
+  background: rgb(255 255 255 / .16) !important;
   color: #fff !important;
-  border-radius: 4px;
 }
+.kpi-card .kpi-tag-green { background: rgb(3 77 56 / .42) !important; color: #fff !important; }
+.kpi-card .kpi-tag-red   { background: rgb(127 29 29 / .42) !important; color: #fff !important; }
+.kpi-card .kpi-text-red { color: #ffe4e6 !important; opacity: 1; }
+.kpi-card .kpi-text-green { color: #d1fae5 !important; opacity: 1; }
 
-/* Etiquetas com significado próprio, independentes da cor do card */
-.kpi-card .kpi-tag-green { background-color: #059669 !important; color: #fff !important; }
-.kpi-card .kpi-tag-red   { background-color: #dc2626 !important; color: #fff !important; }
-.kpi-card .kpi-text-red   { color: #dc2626 !important; opacity: 1; }
-.kpi-card .kpi-text-green { color: #059669 !important; opacity: 1; }
-html[data-color-mode='dark'] .kpi-card .kpi-tag-green { background-color: #34d399 !important; color: #052e1f !important; }
-html[data-color-mode='dark'] .kpi-card .kpi-tag-red   { background-color: #f87171 !important; color: #3b0a0a !important; }
-html[data-color-mode='dark'] .kpi-card .kpi-text-red   { color: #fca5a5 !important; }
-html[data-color-mode='dark'] .kpi-card .kpi-text-green { color: #6ee7b7 !important; }
-
-/* ---- Tema escuro: fundo translúcido sobre o escuro, texto claro da cor ---- */
-html[data-color-mode='dark'] .kpi-card {
-  background-color: var(--bm-card-dark) !important; /* escuro: #2b3547 opaco */
-  --k-ink: 226 232 240;
+/* Filtros que vivem dentro de cards de indicadores: legíveis e com aspeto de controlo. */
+.kpi-card select,
+.bm-stat-card select {
+  position: relative;
+  z-index: 2;
+  min-height: 34px;
+  border: 1px solid rgb(255 255 255 / .62) !important;
+  border-radius: 8px !important;
+  background-color: rgb(255 255 255 / .96) !important;
+  color: #183b66 !important;
+  box-shadow: 0 2px 6px rgb(6 24 44 / .08);
 }
-html[data-color-mode='dark'] .kpi-blue   { --k: 96 165 250;  --k-text: 191 219 254; }
-html[data-color-mode='dark'] .kpi-green  { --k: 52 211 153;  --k-text: 167 243 208; }
-html[data-color-mode='dark'] .kpi-red    { --k: 248 113 113; --k-text: 254 202 202; }
-html[data-color-mode='dark'] .kpi-amber  { --k: 251 191 36;  --k-text: 253 230 138; }
-html[data-color-mode='dark'] .kpi-violet { --k: 167 139 250; --k-text: 221 214 254; }
-html[data-color-mode='dark'] .kpi-cyan   { --k: 34 211 238;  --k-text: 165 243 252; }
-html[data-color-mode='dark'] .kpi-card .kpi-label,
-html[data-color-mode='dark'] .kpi-card .kpi-value,
-html[data-color-mode='dark'] .kpi-card .kpi-sub { color: rgb(var(--k-text)); opacity: 1; }
-html[data-color-mode='dark'] .kpi-card .kpi-sub { opacity: 0.85; }
-/* chips/ícones com fundo da cor: texto escuro para contraste no escuro */
-html[data-color-mode='dark'] .kpi-card .kpi-chip,
-html[data-color-mode='dark'] .kpi-card .kpi-icon,
-html[data-color-mode='dark'] .kpi-card .kpi-icon .material-symbols-outlined { color: #0b1220 !important; }
+.kpi-card select:focus,
+.bm-stat-card select:focus { outline: 2px solid rgb(255 255 255 / .7); outline-offset: 2px; }
+
+/* A paleta continua viva e equilibrada no tema escuro. */
+html[data-color-mode='dark'] .kpi-blue, html[data-color-mode='dark'] .bm-stat-blue { --k: 37 99 235; --k-dark: 23 57 134; }
+html[data-color-mode='dark'] .kpi-green, html[data-color-mode='dark'] .bm-stat-green { --k: 5 125 91; --k-dark: 3 83 62; }
+html[data-color-mode='dark'] .kpi-red, html[data-color-mode='dark'] .bm-stat-red { --k: 185 48 48; --k-dark: 120 28 28; }
+html[data-color-mode='dark'] .kpi-amber, html[data-color-mode='dark'] .bm-stat-amber { --k: 166 93 17; --k-dark: 112 58 12; }
+html[data-color-mode='dark'] .kpi-violet, html[data-color-mode='dark'] .bm-stat-violet { --k: 105 62 196; --k-dark: 69 39 135; }
+html[data-color-mode='dark'] .kpi-cyan, html[data-color-mode='dark'] .bm-stat-cyan { --k: 8 117 145; --k-dark: 8 77 99; }
+
+/* Layout dos KPI reutilizáveis nas secções (listas, exames, internato, etc.). */
+.bm-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 106px;
+  padding: 15px 16px;
+}
+.bm-stat-card .bm-stat-content { min-width: 0; }
+.bm-stat-card .bm-stat-value { font-size: 1.25rem; line-height: 1.15; font-weight: 800; }
+.bm-stat-card .bm-stat-label { margin-top: 5px; font-size: 11px; font-weight: 600; }
+.bm-stat-card .bm-stat-icon { width: 42px; height: 42px; }
+.bm-stat-card.bm-stat-tile {
+  display: block;
+  min-height: 88px;
+  padding: 13px 14px;
+}
+.bm-stat-card.bm-stat-button {
+  display: block;
+  width: 100%;
+  min-height: 86px;
+  padding: 12px 13px;
+  text-align: left;
+}
+.bm-stat-card.bm-stat-tile :is(span, div, p, strong, small, b),
+.bm-stat-card.bm-stat-button :is(span, div, p, strong, small, b) { color: #fff !important; }
+.bm-stat-card.bm-stat-tile :is(.text-slate-400, .text-slate-500),
+.bm-stat-card.bm-stat-button :is(.text-slate-400, .text-slate-500) { opacity: .84; }
+
+.bm-stat-card[data-solid-card] {
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 150px;
+}
+.bm-stat-card[data-solid-card] :is(span, div, p, strong, small, b) { color: #fff !important; }
+.bm-stat-card[data-solid-card] .material-symbols-outlined { color: #fff !important; }
+.bm-stat-card[data-solid-card] .w-8.h-8 {
+  border: 1px solid rgb(255 255 255 / .25) !important;
+  border-radius: 10px !important;
+  background: rgb(255 255 255 / .16) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .16);
+}
+.bm-stat-card[data-solid-card] > div:last-child { border-top-color: rgb(255 255 255 / .30) !important; }
+
+
 
 /* ==========================================================================
  * Separadores de passos dos modais (Professor / Funcionário):
@@ -153,13 +234,12 @@ html .btn-definir:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2p
 }
 
 /* ==========================================================================
- * Cards de Pagamentos (Propinas) marcados com data-solid-card: mesmo fundo
- * opaco dos cards do Dashboard — branco (claro) / preto (escuro). O hover
- * continua a funcionar: cardHighlight.ts escreve o fundo inline com !important,
- * que ganha a estas regras (e excluímos .card-hl-on por segurança).
+ * Cards de Pagamentos (Propinas): mantêm o gradiente e a paleta da secção.
+ * O fundo-base permanece definido abaixo apenas para compatibilidade com
+ * temas antigos; a imagem de gradiente de .bm-stat-card fica por cima.
  * ========================================================================== */
-html body [data-solid-card]:not(.card-hl-on):not(#_):not(#_) { background-color: #ffffff !important; }
-html[data-color-mode='dark'] body [data-solid-card]:not(.card-hl-on):not(#_):not(#_) { background-color: var(--bm-card-dark) !important; }
+html body [data-solid-card]:not(#_):not(#_) { background-color: rgb(var(--k)) !important; }
+html[data-color-mode='dark'] body [data-solid-card]:not(#_):not(#_) { background-color: rgb(var(--k)) !important; }
 
 /* ==========================================================================
  * Modo claro: o menu lateral (sidebar) usa o azul mais escuro. O cabeçalho
