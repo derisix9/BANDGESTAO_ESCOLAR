@@ -615,10 +615,9 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
         <div data-gr-cards="tri" className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-1">
           {/* 1º Trimestre */}
           <div
-            className={`flex flex-col p-5 rounded-xl justify-between border transition-all ${
-              currentTrimester === '1'
-                ? 'bg-white ring-2 ring-[#0b1f3a] shadow-md border-transparent relative overflow-hidden'
-                : 'bg-slate-50 border-slate-200'
+            data-card-hl data-stat-icon="event_available"
+            className={`bm-stat-card bm-stat-tile bm-stat-blue bm-trimester-card flex flex-col p-5 justify-between transition-all ${
+              currentTrimester === '1' ? 'ring-2 ring-white shadow-xl' : ''
             }`}
           >
             {currentTrimester === '1' && (
@@ -628,7 +627,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
             )}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentTrimester === '1' ? 'bg-[#0b1f3a] text-white' : 'bg-slate-200 text-slate-800'}`}>
+                <span className="bm-trimester-pill px-2.5 py-1 text-xs font-bold">
                   1.º TRIMESTRE
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -647,12 +646,12 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
                       Encerrado
                     </span>
                   ) : currentTrimester === '1' ? (
-                    <span className="flex items-center gap-1 text-[11px] text-[#ac332b] font-bold bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#ac332b] animate-pulse" />
                       Ativo
                     </span>
                   ) : (
-                    <span className="text-[11px] text-slate-500 font-semibold bg-slate-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status text-[11px] font-semibold px-2 py-0.5 rounded-full">
                       Concluído
                     </span>
                   )}
@@ -678,7 +677,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+            <div className="mt-4 pt-3 flex items-center justify-between text-xs">
               <span className="text-slate-600 font-semibold">{trimesterSchedules.t1.weeksCount || 'Não definido'}</span>
               {trimesterSchedules.t1.closed ? (
                 <button
@@ -706,10 +705,9 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
 
           {/* 2º Trimestre */}
           <div
-            className={`flex flex-col p-5 rounded-xl justify-between border transition-all ${
-              currentTrimester === '2'
-                ? 'bg-white ring-2 ring-[#0b1f3a] shadow-md border-transparent relative overflow-hidden'
-                : 'bg-slate-50 border-slate-200'
+            data-card-hl data-stat-icon="schedule"
+            className={`bm-stat-card bm-stat-tile bm-stat-violet bm-trimester-card flex flex-col p-5 justify-between transition-all ${
+              currentTrimester === '2' ? 'ring-2 ring-white shadow-xl' : ''
             }`}
           >
             {currentTrimester === '2' && (
@@ -719,7 +717,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
             )}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentTrimester === '2' ? 'bg-[#0b1f3a] text-white' : 'bg-slate-200 text-slate-800'}`}>
+                <span className="bm-trimester-pill px-2.5 py-1 text-xs font-bold">
                   2.º TRIMESTRE
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -738,12 +736,12 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
                       Encerrado
                     </span>
                   ) : currentTrimester === '2' ? (
-                    <span className="flex items-center gap-1 text-[11px] text-[#ac332b] font-bold bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#ac332b] animate-pulse" />
                       Ativo
                     </span>
                   ) : (
-                    <span className="text-[11px] text-slate-500 font-semibold bg-slate-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status text-[11px] font-semibold px-2 py-0.5 rounded-full">
                       Inativo
                     </span>
                   )}
@@ -769,7 +767,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+            <div className="mt-4 pt-3 flex items-center justify-between text-xs">
               <span className="text-slate-600 font-semibold">{trimesterSchedules.t2.weeksCount || 'Não definido'}</span>
               {trimesterSchedules.t2.closed ? (
                 <button
@@ -797,10 +795,9 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
 
           {/* 3º Trimestre */}
           <div
-            className={`flex flex-col p-5 rounded-xl justify-between border transition-all ${
-              currentTrimester === '3'
-                ? 'bg-white ring-2 ring-[#0b1f3a] shadow-md border-transparent relative overflow-hidden'
-                : 'bg-slate-50 border-slate-200'
+            data-card-hl data-stat-icon="school"
+            className={`bm-stat-card bm-stat-tile bm-stat-cyan bm-trimester-card flex flex-col p-5 justify-between transition-all ${
+              currentTrimester === '3' ? 'ring-2 ring-white shadow-xl' : ''
             }`}
           >
             {currentTrimester === '3' && (
@@ -810,7 +807,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
             )}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentTrimester === '3' ? 'bg-[#0b1f3a] text-white' : 'bg-slate-200 text-slate-800'}`}>
+                <span className="bm-trimester-pill px-2.5 py-1 text-xs font-bold">
                   3.º TRIMESTRE
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -829,12 +826,12 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
                       Encerrado
                     </span>
                   ) : currentTrimester === '3' ? (
-                    <span className="flex items-center gap-1 text-[11px] text-[#ac332b] font-bold bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#ac332b] animate-pulse" />
                       Ativo
                     </span>
                   ) : (
-                    <span className="text-[11px] text-slate-500 font-semibold bg-slate-200 px-2 py-0.5 rounded-full">
+                    <span className="bm-trimester-status text-[11px] font-semibold px-2 py-0.5 rounded-full">
                       Planeado
                     </span>
                   )}
@@ -860,7 +857,7 @@ export const TabAnoLetivo: React.FC<TabAnoLetivoProps> = ({ settings, currentUse
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+            <div className="mt-4 pt-3 flex items-center justify-between text-xs">
               <span className="text-slate-600 font-semibold">{trimesterSchedules.t3.weeksCount || 'Não definido'}</span>
               {trimesterSchedules.t3.closed ? (
                 <button
