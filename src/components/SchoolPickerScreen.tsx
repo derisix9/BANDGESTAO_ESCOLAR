@@ -202,7 +202,6 @@ export const SchoolPickerScreen: React.FC<Props> = ({ schools, adminName, onSele
   };
 
   const hasData = stats.length > 0 && !!overview;
-  const glass = { backgroundColor: 'rgba(255,255,255,0.14)', borderColor: 'rgba(255,255,255,0.22)' };
 
   // ---- Tabela de escolas: ocupação do plano + botão de entrar (sem cartões redundantes) ----
   const entryTable = () => {
@@ -308,7 +307,7 @@ export const SchoolPickerScreen: React.FC<Props> = ({ schools, adminName, onSele
     <div className="min-h-screen w-full bg-[#f8fafc] p-4 sm:p-8 font-body antialiased text-slate-800">
       <div className="max-w-7xl mx-auto flex flex-col gap-6 pb-12">
         {/* Cabeçalho azul, igual ao do Dashboard */}
-        <div className="rounded-2xl bg-[#0b1f3a] text-white p-6 lg:p-7 shadow-md relative overflow-hidden border border-slate-800">
+        <div className="picker-admin-header text-white p-6 lg:p-7 shadow-md relative overflow-hidden">
           <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10 flex items-center justify-end pointer-events-none pr-8">
             <span className="material-symbols-outlined text-[140px]">hub</span>
           </div>
@@ -320,14 +319,14 @@ export const SchoolPickerScreen: React.FC<Props> = ({ schools, adminName, onSele
               </h1>
             </div>
             <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
-              <div className="px-3.5 py-2 rounded-xl text-left border" style={glass}>
-                <span className="text-[10px] uppercase font-bold text-[#bfdbfe] block">Plano Ativo</span>
-                <span className="font-headline text-base font-extrabold text-white">{overview?.planName ?? 'Sem plano'}</span>
+              <div data-stat-icon="workspace_premium" className="picker-admin-stat picker-admin-stat--plan">
+                <span className="picker-admin-stat-label">Plano Activo</span>
+                <span className="picker-admin-stat-value">{overview?.planName ?? 'Sem plano'}</span>
               </div>
               {hasData && (
-                <div className="px-3.5 py-2 rounded-xl text-left border" style={glass}>
-                  <span className="text-[10px] uppercase font-bold text-[#bfdbfe] block">Total Geral</span>
-                  <span className="font-headline text-base font-extrabold text-white">{num(totalAllStudents)} Alunos     |          {totalAllClasses} Turmas</span>
+                <div data-stat-icon="groups" className="picker-admin-stat picker-admin-stat--total">
+                  <span className="picker-admin-stat-label">Total Geral</span>
+                  <span className="picker-admin-stat-value">{num(totalAllStudents)} Alunos · {totalAllClasses} Turmas</span>
                 </div>
               )}
               <div className="flex gap-2">
@@ -336,7 +335,7 @@ export const SchoolPickerScreen: React.FC<Props> = ({ schools, adminName, onSele
                     Voltar
                   </button>
                 )}
-                <button type="button" onClick={onLogout} className="picker-hdr-btn">
+                <button type="button" onClick={onLogout} className="picker-hdr-btn picker-hdr-btn--danger">
                   <span className="material-symbols-outlined text-[18px]">logout</span>Sair
                 </button>
               </div>
