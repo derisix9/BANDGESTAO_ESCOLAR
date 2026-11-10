@@ -42,17 +42,36 @@ function getKpiColor(tone: string | undefined, index: number): typeof KPI_COLOR_
   return KPI_COLOR_ORDER[index % KPI_COLOR_ORDER.length];
 }
 
+/** Ícone semântico para indicadores que não declaram um ícone próprio. */
+function getKpiIcon(label: string): string {
+  const value = label.toLocaleLowerCase('pt-PT');
+  if (/alun|estudant|educand/.test(value)) return 'school';
+  if (/professor|docent|funcion|pessoal/.test(value)) return 'badge';
+  if (/pag|cobran|propina|receit|fatur|multa/.test(value)) return 'payments';
+  if (/despes|sa[ií]da|pagar/.test(value)) return 'receipt_long';
+  if (/assid|presen|falta|atras/.test(value)) return 'fact_check';
+  if (/turma|classe|grupo/.test(value)) return 'groups';
+  if (/sala|quarto|cama|ocupa/.test(value)) return 'meeting_room';
+  if (/hor[aá]rio|agenda|prazo|data/.test(value)) return 'event';
+  if (/exame|prova|nota|avalia|aproveitamento/.test(value)) return 'grading';
+  if (/trabalho|entrega|atividade|actividade/.test(value)) return 'assignment';
+  if (/disciplina|curso|curr[ií]cul/.test(value)) return 'menu_book';
+  if (/plano|document|processo|pedido/.test(value)) return 'folder';
+  if (/armazen|dados|ficheiro/.test(value)) return 'database';
+  if (/notifica|mensagem|comunica/.test(value)) return 'notifications';
+  if (/fornecedor|invent[aá]rio|stock|ativo/.test(value)) return 'inventory_2';
+  return 'analytics';
+}
+
 export const Kpis: React.FC<{ items: Array<{ label: string; value: React.ReactNode; icon?: string; tone?: string }> }> = ({ items }) => (
   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
     {items.map((k, index) => {
       const color = getKpiColor(k.tone, index);
       return (
-        <div key={k.label} data-card-hl className={`bm-stat-card bm-stat-${color}`}>
-          {k.icon && (
-            <div className="bm-stat-icon">
-              <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{k.icon}</span>
-            </div>
-          )}
+        <div key={k.label} data-card-hl data-stat-icon={k.icon || getKpiIcon(k.label)} className={`bm-stat-card bm-stat-${color}`}>
+          <div className="bm-stat-icon">
+            <span className="material-symbols-outlined text-[22px]" aria-hidden="true">{k.icon || getKpiIcon(k.label)}</span>
+          </div>
           <div className="bm-stat-content">
             <div className="bm-stat-value font-mono truncate">{k.value}</div>
             <div className="bm-stat-label">{k.label}</div>

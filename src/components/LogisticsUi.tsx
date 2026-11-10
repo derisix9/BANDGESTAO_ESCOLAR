@@ -61,21 +61,16 @@ export const LogisticsKpiGrid: React.FC<{
   items: Array<{ label: string; value: React.ReactNode; icon: string; tone?: 'default' | 'warn' | 'danger' }>;
 }> = ({ items }) => (
   <div className={`grid grid-cols-2 ${items.length >= 4 ? 'lg:grid-cols-4' : 'sm:grid-cols-3'} gap-3`}>
-    {items.map((k) => {
-      const tone =
-        k.tone === 'danger'
-          ? 'bg-red-50 text-red-700'
-          : k.tone === 'warn'
-            ? 'bg-amber-50 text-amber-700'
-            : 'bg-slate-100 text-[#0b1f3a]';
+    {items.map((k, index) => {
+      const color = k.tone === 'danger' ? 'red' : k.tone === 'warn' ? 'amber' : ['blue', 'green', 'violet', 'cyan'][index % 4];
       return (
-        <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-3">
-          <div className={`w-10 h-10 flex items-center justify-center rounded-lg shrink-0 ${tone}`}>
+        <div key={k.label} data-card-hl data-stat-icon={k.icon} className={`bm-stat-card bm-stat-${color}`}>
+          <div className="bm-stat-icon">
             <span className="material-symbols-outlined text-[22px]">{k.icon}</span>
           </div>
-          <div className="min-w-0">
-            <div className="font-mono text-xl font-extrabold text-[#0b1f3a] leading-none truncate">{k.value}</div>
-            <div className="text-[11px] text-slate-500 font-semibold mt-1">{k.label}</div>
+          <div className="bm-stat-content min-w-0">
+            <div className="bm-stat-value font-mono text-xl font-extrabold leading-none truncate">{k.value}</div>
+            <div className="bm-stat-label text-[11px] font-semibold mt-1">{k.label}</div>
           </div>
         </div>
       );

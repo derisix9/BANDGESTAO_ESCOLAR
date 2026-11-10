@@ -73,16 +73,31 @@ export function Badge({ tone, children }: { tone: string; children: React.ReactN
   return <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${tone}`}>{children}</span>;
 }
 
-export function Kpis({ items }: { items: Array<{ label: string; value: React.ReactNode; tone?: 'default' | 'warn' | 'danger' }> }) {
-  const toneCls = { default: 'text-slate-900', warn: 'text-amber-700', danger: 'text-red-700' };
+export function Kpis({ items }: { items: Array<{ label: string; value: React.ReactNode; tone?: 'default' | 'warn' | 'danger'; icon?: string }> }) {
+  const colors = ['blue', 'green', 'violet', 'cyan'];
+  const iconFor = (label: string) => {
+    const value = label.toLocaleLowerCase('pt-PT');
+    if (/alun|estudant/.test(value)) return 'school';
+    if (/pag|propina|cobran|receit/.test(value)) return 'payments';
+    if (/docent|professor/.test(value)) return 'badge';
+    if (/turma|classe/.test(value)) return 'groups';
+    if (/mensag|notifica/.test(value)) return 'notifications';
+    if (/presen|falta|assid/.test(value)) return 'fact_check';
+    return 'analytics';
+  };
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {items.map((k) => (
-        <div key={k.label} className="bg-white border border-slate-200 rounded-xl p-3">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">{k.label}</p>
-          <p className={`text-xl font-extrabold mt-1 ${toneCls[k.tone || 'default']}`}>{k.value}</p>
-        </div>
-      ))}
+      {items.map((k, index) => {
+        const icon = k.icon || iconFor(k.label);
+        const color = k.tone === 'danger' ? 'red' : k.tone === 'warn' ? 'amber' : colors[index % colors.length];
+        return (
+          <div key={k.label} data-card-hl data-stat-icon={icon} className={`bm-stat-card bm-stat-tile bm-stat-${color}`}>
+            <div className="bm-stat-icon"><span className="material-symbols-outlined" aria-hidden="true">{icon}</span></div>
+            <p className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">{k.label}</p>
+            <p className="bm-stat-value text-xl font-extrabold mt-1">{k.value}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }
