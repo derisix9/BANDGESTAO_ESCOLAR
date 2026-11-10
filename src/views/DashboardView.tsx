@@ -119,8 +119,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
   return (
     <div className="flex flex-col w-full gap-6 pb-12">
-      {/* Top Header in Sidebar Blue #0b1f3a */}
-      <div data-app-header className="rounded-2xl bg-[#0b1f3a] text-white p-6 lg:p-7 shadow-md relative overflow-hidden border border-slate-800">
+      {/* Cabeçalho principal no azul dos botões do sistema */}
+      <div data-app-header className="rounded-2xl bm-dashboard-header text-white p-6 lg:p-7 shadow-md relative overflow-hidden border">
         <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10 flex items-center justify-end pointer-events-none pr-8">
           <span className="material-symbols-outlined text-[140px]">dashboard</span>
         </div>
