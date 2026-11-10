@@ -241,3 +241,320 @@ html[data-color-mode="dark"] body .dashboard-chart-subsystem.dashboard-chart-sub
 @media (prefers-reduced-motion: reduce) {
   html body :is(button, [role="button"], [role="tab"]) { transition: none !important; }
 }
+
+
+/* --------------------------------------------------------------------------
+   Correcções finas das áreas assinaladas nas capturas
+   -------------------------------------------------------------------------- */
+
+/* Faz prevalecer os gradientes de KPI sobre regras antigas de cartões/tile. */
+html body .bm-stat-card.bm-stat-card {
+  background-color: rgb(var(--k)) !important;
+  background-image: linear-gradient(132deg, rgb(var(--k)) 0%, rgb(var(--k-dark)) 100%) !important;
+  border: 1px solid rgb(255 255 255 / .24) !important;
+  color: #fff !important;
+}
+html body .bm-stat-card.bm-stat-card :is(span, div, p, strong, small, b, h1, h2, h3, h4, h5, h6) {
+  color: #fff !important;
+}
+html body .bm-stat-card.bm-stat-card .bm-stat-icon,
+html body .bm-stat-card.bm-stat-card .bm-stat-icon .material-symbols-outlined {
+  color: #fff !important;
+}
+
+/* Os três cartões trimestrais deixam de receber fundos alternados ou linhas no rodapé. */
+html body .bm-trimester-grid > .bm-trimester-card {
+  background-color: rgb(var(--k)) !important;
+  background-image: linear-gradient(132deg, rgb(var(--k)) 0%, rgb(var(--k-dark)) 100%) !important;
+}
+html body .bm-trimester-card .bm-trimester-footer {
+  border: 0 !important;
+  border-top: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+html body .bm-trimester-card .bm-trimester-footer::before,
+html body .bm-trimester-card .bm-trimester-footer::after { content: none !important; display: none !important; }
+
+/* Cartões dos serviços de Integrações — as imagens originais são mantidas. */
+html body .bm-integration-service {
+  --integration-top: #2563eb;
+  --integration-bottom: #12498a;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 286px;
+  border: 1px solid rgb(255 255 255 / .28) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(138deg, var(--integration-top), var(--integration-bottom)) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 24px -18px rgb(7 25 52 / .8), inset 0 1px 0 rgb(255 255 255 / .18);
+  text-transform: none !important;
+}
+html body .bm-integration-service::before {
+  content: attr(data-stat-icon);
+  position: absolute;
+  z-index: 0;
+  right: -8px;
+  bottom: -24px;
+  color: rgb(255 255 255 / .13);
+  font-family: 'Material Symbols Outlined';
+  font-size: 116px;
+  line-height: 1;
+  pointer-events: none;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+html body .bm-integration-service > * { position: relative; z-index: 1; }
+html body .bm-integration-service:hover:not(:disabled) {
+  transform: translateY(-4px);
+  border-color: rgb(255 255 255 / .66) !important;
+  box-shadow: 0 18px 30px -18px rgb(7 25 52 / .85), inset 0 1px 0 rgb(255 255 255 / .22);
+}
+html body .bm-integration-logo {
+  display: flex;
+  width: 92px;
+  height: 92px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  border: 1px solid rgb(255 255 255 / .58);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 14px rgb(5 22 48 / .18);
+}
+html body .bm-integration-logo img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+html body .bm-integration-title { color: #fff !important; }
+html body .bm-integration-description { color: rgb(239 246 255 / .90) !important; }
+html body .bm-integration-status {
+  border-radius: 0 !important;
+  background: rgb(255 255 255 / .94) !important;
+  box-shadow: 0 2px 6px rgb(7 25 52 / .10);
+}
+html body .bm-integration-status.bg-emerald-50 { color: #047857 !important; border-color: #a7f3d0 !important; }
+html body .bm-integration-status.bg-amber-50 { color: #92400e !important; border-color: #fcd34d !important; }
+html body .bm-integration-status.bg-slate-100 { color: #475569 !important; border-color: #cbd5e1 !important; }
+html body .bm-integration-action { color: #fff !important; text-transform: uppercase; letter-spacing: .04em; }
+html body .bm-integration-service .material-symbols-outlined { color: inherit !important; }
+
+/* Os controlos principais da página Integrações também usam o azul do sistema. */
+html body .bm-integration-action-button {
+  border: 1px solid #2563eb !important;
+  border-radius: 0 !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  text-transform: uppercase !important;
+}
+html body .bm-integration-action-button:hover:not(:disabled) { background: #1d4ed8 !important; }
+html body .bm-integration-action-button * { color: #fff !important; }
+
+/* Configurações > Instituição: cartões de activar/desactivar sub-sistemas. */
+html body .bm-subsystem-preset {
+  border: 1px solid #1d4ed8 !important;
+  border-radius: 0 !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 3px 8px rgb(11 31 58 / .12);
+}
+html body .bm-subsystem-preset:hover:not(:disabled) { background: #1d4ed8 !important; }
+html body .bm-subsystem-preset:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2px; }
+
+html body .bm-subsystem-card {
+  --sub-top: #2563eb;
+  --sub-bottom: #1647b1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 136px;
+  border: 1px solid rgb(255 255 255 / .30) !important;
+  border-radius: 14px !important;
+  background: linear-gradient(132deg, var(--sub-top), var(--sub-bottom)) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 24px -18px rgb(7 25 52 / .8), inset 0 1px 0 rgb(255 255 255 / .16);
+}
+html body .bm-subsystem-card[data-subsystem-tone="1"] { --sub-top: #059669; --sub-bottom: #065f46; }
+html body .bm-subsystem-card[data-subsystem-tone="2"] { --sub-top: #7c3aed; --sub-bottom: #5b21b6; }
+html body .bm-subsystem-card[data-subsystem-tone="3"] { --sub-top: #0891b2; --sub-bottom: #155e75; }
+html body .bm-subsystem-card[data-subsystem-tone="4"] { --sub-top: #d97706; --sub-bottom: #92400e; }
+html body .bm-subsystem-card.is-disabled { --sub-top: #64748b; --sub-bottom: #334155; filter: saturate(.72); }
+html body .bm-subsystem-card::before {
+  content: attr(data-stat-icon);
+  position: absolute;
+  z-index: 0;
+  right: 16px;
+  bottom: -26px;
+  color: rgb(255 255 255 / .14);
+  font-family: 'Material Symbols Outlined';
+  font-size: 132px;
+  line-height: 1;
+  pointer-events: none;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+html body .bm-subsystem-card > * { position: relative; z-index: 1; }
+html body .bm-subsystem-card :is(.bm-subsystem-level, .bm-subsystem-name, .bm-subsystem-description, .bm-subsystem-meta, .bm-subsystem-meta-item, .bm-subsystem-meta-label, .bm-subsystem-action-label, .bm-subsystem-action-hint) { color: #fff !important; }
+html body .bm-subsystem-level { opacity: .82; }
+html body .bm-subsystem-dot { background: rgb(255 255 255 / .65) !important; }
+html body .bm-subsystem-symbol {
+  border: 1px solid rgb(255 255 255 / .42);
+  border-radius: 9px;
+  background: rgb(255 255 255 / .17);
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18);
+}
+html body .bm-subsystem-symbol .material-symbols-outlined { color: #fff !important; }
+html body .bm-subsystem-status {
+  border: 1px solid rgb(255 255 255 / .38);
+  border-radius: 0;
+  background: rgb(255 255 255 / .18);
+  color: #fff !important;
+}
+html body .bm-subsystem-status--off { background: rgb(15 23 42 / .24); }
+html body .bm-subsystem-chip,
+html body .bm-subsystem-grade {
+  border: 1px solid rgb(255 255 255 / .25);
+  border-radius: 0;
+  background: rgb(255 255 255 / .15);
+  color: #fff !important;
+}
+html body .bm-subsystem-toggle { border: 1px solid rgb(255 255 255 / .45); border-radius: 999px; background: rgb(15 23 42 / .24); }
+html body .bm-subsystem-toggle.is-on { background: rgb(255 255 255 / .32); }
+html body .bm-subsystem-toggle > div { background: #fff; }
+html body .bm-subsystem-card:hover { transform: translateY(-2px); box-shadow: 0 16px 28px -18px rgb(7 25 52 / .9), inset 0 1px 0 rgb(255 255 255 / .22); }
+
+/* Compacto de Turmas no topo do Dashboard. */
+html body .bm-dashboard-class-total {
+  min-width: 142px;
+  min-height: 62px;
+  padding: 8px 12px;
+  border-radius: 10px !important;
+  background-image: linear-gradient(132deg, #2563eb, #1647b1) !important;
+}
+html body .bm-dashboard-class-total::before { right: 0; bottom: -12px; font-size: 66px; color: rgb(255 255 255 / .16); }
+html body .bm-dashboard-class-total .bm-stat-label { margin-top: 0; font-size: 9px; }
+html body .bm-dashboard-class-total .bm-stat-value { margin-top: 3px; font-size: 1.15rem; }
+
+/* Painel do Administrador: faixa azul e cartões de Plano Activo / Total Geral. */
+html body .picker-admin-header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #1d4ed8;
+  border-radius: 14px;
+  background: linear-gradient(132deg, #2563eb, #1647b1) !important;
+  color: #fff !important;
+}
+html body .picker-admin-header::after {
+  content: 'dashboard';
+  position: absolute;
+  z-index: 0;
+  right: 14px;
+  bottom: -52px;
+  color: rgb(255 255 255 / .10);
+  font-family: 'Material Symbols Outlined';
+  font-size: 190px;
+  line-height: 1;
+  pointer-events: none;
+}
+html body .picker-admin-header > * { position: relative; z-index: 1; }
+html body .picker-admin-stat {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  min-width: 150px;
+  max-width: 260px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 9px 13px;
+  border: 1px solid rgb(255 255 255 / .42);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgb(11 31 58 / .32), rgb(11 31 58 / .16));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .16), 0 4px 10px rgb(11 31 58 / .12);
+}
+html body .picker-admin-stat::after {
+  content: attr(data-stat-icon);
+  position: absolute;
+  z-index: 0;
+  right: 3px;
+  bottom: -13px;
+  color: rgb(255 255 255 / .16);
+  font-family: 'Material Symbols Outlined';
+  font-size: 64px;
+  line-height: 1;
+  pointer-events: none;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+html body .picker-admin-stat > * { position: relative; z-index: 1; }
+html body .picker-admin-stat-label { color: rgb(219 234 254 / .95); font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+html body .picker-admin-stat-value { color: #fff; font-size: 15px; font-weight: 800; line-height: 1.25; }
+
+/* Voltar azul e Sair vermelho no painel de selecção do Administrador. */
+html body .picker-hdr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 40px;
+  padding: .55rem .9rem;
+  border: 1px solid #1d4ed8 !important;
+  border-radius: 0 !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase !important;
+  box-shadow: 0 3px 8px rgb(11 31 58 / .16);
+}
+html body .picker-hdr-btn:hover:not(:disabled) { background: #1d4ed8 !important; border-color: #1e40af !important; }
+html body .picker-hdr-btn--danger { background: #dc2626 !important; border-color: #b91c1c !important; }
+html body .picker-hdr-btn--danger:hover:not(:disabled) { background: #b91c1c !important; border-color: #991b1b !important; }
+html body .picker-hdr-btn * { color: #fff !important; }
+
+@media (max-width: 640px) {
+  html body .bm-dashboard-class-total { min-width: 116px; }
+  html body .picker-admin-stat { min-width: 132px; max-width: none; flex: 1 1 130px; }
+  html body .bm-subsystem-card { min-height: 0; }
+}
+
+/* Manter a mesma identidade dos botões do Administrador no tema escuro. */
+html[data-color-mode="dark"] body .picker-hdr-btn {
+  background: #2563eb !important;
+  border-color: #1d4ed8 !important;
+  color: #fff !important;
+}
+html[data-color-mode="dark"] body .picker-hdr-btn:hover:not(:disabled) {
+  background: #1d4ed8 !important;
+  border-color: #1e40af !important;
+}
+html[data-color-mode="dark"] body .picker-hdr-btn--danger {
+  background: #dc2626 !important;
+  border-color: #b91c1c !important;
+}
+html[data-color-mode="dark"] body .picker-hdr-btn--danger:hover:not(:disabled) {
+  background: #b91c1c !important;
+  border-color: #991b1b !important;
+}
+
+/* Remover definitivamente os traços decorativos dos cartões estatísticos.
+   A marca-d'água dos ícones permanece em ::before; desaparecem apenas o aro
+   luminoso, o brilho interno superior e os separadores de rodapé. */
+html body .bm-stat-card.bm-stat-card,
+html body .kpi-card.kpi-card {
+  box-shadow: 0 10px 22px -17px rgb(var(--k) / .82) !important;
+}
+html body .bm-stat-card.bm-stat-card::after,
+html body .kpi-card.kpi-card::after {
+  content: none !important;
+  display: none !important;
+}
+html body .kpi-card.kpi-card .kpi-foot {
+  border-top: 0 !important;
+  border-top-color: transparent !important;
+  box-shadow: none !important;
+}
+html body .bm-stat-card.bm-stat-card[data-solid-card] > div:last-child {
+  border-top: 0 !important;
+  border-top-color: transparent !important;
+}
