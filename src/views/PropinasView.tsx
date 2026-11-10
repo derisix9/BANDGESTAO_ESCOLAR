@@ -236,7 +236,7 @@ export const PropinasView: React.FC<PropinasViewProps> = ({ db, currentUserRole 
       {/* KPI Cards Strip - Cards de Estatística com Cores Correspondentes ao Sistema */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 print:hidden">
         {/* Total Facturado - Azul suave com elementos institucionais #0b1f3a */}
-        <div data-solid-card className="bg-[#eff4ff] rounded-none p-4 sm:p-5 border-2 border-[#0b1f3a] shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div data-solid-card className="bm-stat-card bm-stat-blue bg-[#eff4ff] rounded-none p-4 sm:p-5 border-2 border-[#0b1f3a] shadow-xs flex flex-col justify-between relative overflow-hidden">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] uppercase font-black text-[#0b1f3a] tracking-wider block">
               Total Facturado
@@ -257,7 +257,7 @@ export const PropinasView: React.FC<PropinasViewProps> = ({ db, currentUserRole 
         </div>
 
         {/* Total Cobrado - Verde esmeralda com indicadores de liquidação */}
-        <div data-solid-card className="bg-emerald-50 rounded-none p-4 sm:p-5 border-2 border-emerald-500 shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div data-solid-card className="bm-stat-card bm-stat-green bg-emerald-50 rounded-none p-4 sm:p-5 border-2 border-emerald-500 shadow-xs flex flex-col justify-between relative overflow-hidden">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] uppercase font-black text-emerald-900 tracking-wider block">
               Total Cobrado (Liquidado)
@@ -278,7 +278,7 @@ export const PropinasView: React.FC<PropinasViewProps> = ({ db, currentUserRole 
         </div>
 
         {/* Em Atraso - Fundo vinho/avermelhado para destacar valores vencidos e juros */}
-        <div data-solid-card className="bg-red-50 rounded-none p-4 sm:p-5 border-2 border-[#7a0c0c] shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div data-solid-card className="bm-stat-card bm-stat-red bg-red-50 rounded-none p-4 sm:p-5 border-2 border-[#7a0c0c] shadow-xs flex flex-col justify-between relative overflow-hidden">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] uppercase font-black text-[#7a0c0c] tracking-wider block">
               Em Atraso (Mora Ativa)
@@ -299,7 +299,7 @@ export const PropinasView: React.FC<PropinasViewProps> = ({ db, currentUserRole 
         </div>
 
         {/* Pendente - Fundo âmbar/dourado para faturas dentro do prazo */}
-        <div data-solid-card className="bg-amber-50 rounded-none p-4 sm:p-5 border-2 border-amber-500 shadow-xs flex flex-col justify-between relative overflow-hidden">
+        <div data-solid-card className="bm-stat-card bm-stat-amber bg-amber-50 rounded-none p-4 sm:p-5 border-2 border-amber-500 shadow-xs flex flex-col justify-between relative overflow-hidden">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] uppercase font-black text-amber-950 tracking-wider block">
               Pendente (A Vencer)

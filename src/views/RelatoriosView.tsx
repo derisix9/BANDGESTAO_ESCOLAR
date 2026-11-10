@@ -779,23 +779,23 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
         {selectedReport === 'aproveitamento' && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 print:hidden">
-              <div data-card-hl className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-blue p-3 bg-slate-50 rounded-xl border border-slate-100">
                 <span className="text-[10px] uppercase font-bold text-slate-500">Total de Turmas</span>
                 <div className="text-xl font-extrabold text-[#0b1f3a] mt-0.5">{aproveitamentoTotals.totalTurmas}</div>
               </div>
-              <div data-card-hl className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
+              <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-green p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
                 <span className="text-[10px] uppercase font-bold text-emerald-800">Percentagem de Aprovados</span>
                 <div className="text-xl font-extrabold text-emerald-700 mt-0.5">
                   {aproveitamentoTotals.totals.percentagem.MF !== null ? `${aproveitamentoTotals.totals.percentagem.MF}%` : 'Sem notas'}
                 </div>
               </div>
-              <div data-card-hl className="p-3 bg-blue-50/50 rounded-xl border border-blue-100">
+              <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-violet p-3 bg-blue-50/50 rounded-xl border border-blue-100">
                 <span className="text-[10px] uppercase font-bold text-blue-800">Média Geral</span>
                 <div className="text-xl font-extrabold text-[#0b1f3a] font-mono mt-0.5">
                   {aproveitamentoTotals.totals.averageGrade !== null ? aproveitamentoTotals.totals.averageGrade.toFixed(1) : 'Sem notas'}
                 </div>
               </div>
-              <div data-card-hl className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-cyan p-3 bg-slate-50 rounded-xl border border-slate-100">
                 <span className="text-[10px] uppercase font-bold text-slate-500">Total Alunos Avaliados</span>
                 <div className="text-xl font-extrabold text-slate-800 mt-0.5">
                   {aproveitamentoTotals.totals.avaliados.MF}

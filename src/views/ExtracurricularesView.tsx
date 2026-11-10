@@ -546,8 +546,8 @@ export const ExtracurricularesView: React.FC<ExtracurricularesViewProps> = ({ db
             <button
               key={st}
               onClick={() => setStatusFilter(active ? 'all' : st)}
-              className={`text-left bg-white border rounded-xl p-3 transition-colors cursor-pointer ${
-                active ? 'border-[#0b1f3a] ring-1 ring-[#0b1f3a]' : 'border-slate-200 hover:border-slate-400'
+              className={`bm-stat-card bm-stat-button bm-stat-${(['blue', 'green', 'amber', 'violet', 'cyan', 'red'] as const)[ACTIVITY_STATUS_ORDER.indexOf(st)] || 'blue'} border rounded-xl cursor-pointer transition-shadow ${
+                active ? 'ring-2 ring-offset-2 ring-[#0b1f3a]' : 'border-slate-200'
               }`}
             >
               <div className="flex items-center gap-1.5 text-slate-500">
@@ -558,7 +558,7 @@ export const ExtracurricularesView: React.FC<ExtracurricularesViewProps> = ({ db
             </button>
           );
         })}
-        <div data-card-hl className="bg-white border border-slate-200 rounded-xl p-3">
+        <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-cyan bg-white border border-slate-200 rounded-xl p-3">
           <div className="flex items-center gap-1.5 text-slate-500">
             <span className="material-symbols-outlined text-[16px]">groups</span>
             <span className="text-[10px] font-bold uppercase tracking-wide truncate">Participantes</span>

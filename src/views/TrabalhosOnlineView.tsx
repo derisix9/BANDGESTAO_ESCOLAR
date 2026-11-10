@@ -98,7 +98,7 @@ export const TrabalhosOnlineView: React.FC<Props> = ({ db, currentUser, currentU
         eyebrow="GESTÃO DE ENSINO A DISTÂNCIA"
         title="TRABALHOS ONLINE"
         description="Publique trabalhos com prazo; os alunos entregam por aqui e a correção é feita no mesmo lugar."
-        actions={<IconButton variant="solid" icon="add" label="Novo trabalho" disabled={!canManage} onClick={() => { setMessage(null); setForm(emptyForm); setFormOpen(true); }} />}
+        actions={<IconButton variant="solid" icon="add" label="Cadastrar" showText disabled={!canManage} onClick={() => { setMessage(null); setForm(emptyForm); setFormOpen(true); }} />}
       />
       <Kpis items={[
         { label: 'Trabalhos', value: assignments.length },
