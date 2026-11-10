@@ -129,7 +129,7 @@ function DocumentosTab({ db, role }: { db: SchoolDatabase; role: UserRole }) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-3">
-        <div data-card-hl className="bm-stat-card bm-stat-tile bm-stat-blue bg-white border border-slate-200 rounded-xl p-3"><p className="text-[10px] font-bold uppercase text-slate-400">Total</p><p className="text-xl font-bold text-[#0b1f3a]">{docs.length}</p></div>
+        <div data-card-hl data-stat-icon="description" className="bm-stat-card bm-stat-tile bm-stat-blue p-3"><p className="text-[10px] font-bold uppercase text-slate-400">Total</p><p className="text-xl font-bold text-[#0b1f3a]">{docs.length}</p></div>
         <div className="bg-white border border-slate-200 rounded-xl p-3"><p className="text-[10px] font-bold uppercase text-slate-400">Emitidos</p><p className="text-xl font-bold text-emerald-700">{issuedCount}</p></div>
         <div className="bg-white border border-slate-200 rounded-xl p-3"><p className="text-[10px] font-bold uppercase text-slate-400">Anulados</p><p className="text-xl font-bold text-red-700">{voidedCount}</p></div>
       </div>

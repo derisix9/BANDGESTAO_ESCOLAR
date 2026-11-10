@@ -692,22 +692,23 @@ export const AdmissoesView: React.FC<AdmissoesViewProps> = ({ db, currentUserRol
 
       {/* Resumo por estado */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 no-print">
-        {ADMISSION_STATUS_ORDER.map((st) => {
+        {ADMISSION_STATUS_ORDER.map((st, index) => {
           const meta = ADMISSION_STATUS_META[st];
           const active = statusFilter === st;
           return (
             <button
               key={st}
               onClick={() => setStatusFilter(active ? 'all' : st)}
-              className={`text-left bg-white border rounded-xl p-3 transition-colors cursor-pointer ${
-                active ? 'border-[#0b1f3a] ring-1 ring-[#0b1f3a]' : 'border-slate-200 hover:border-slate-400'
-              }`}
+              aria-pressed={active}
+              data-card-hl
+              data-stat-icon={meta.icon}
+              className={`bm-stat-card bm-stat-button bm-stat-${['blue', 'green', 'amber', 'red', 'violet', 'cyan', 'blue', 'green'][index % 8]} text-left transition-all cursor-pointer ${active ? 'ring-2 ring-white ring-offset-2 ring-offset-[#0b1f3a]' : ''}`}
             >
-              <div className="flex items-center gap-1.5 text-slate-500">
-                <span className="material-symbols-outlined text-[16px]">{meta.icon}</span>
-                <span className="text-[10px] font-bold uppercase tracking-wide truncate">{meta.label}</span>
+              <div className="flex items-center gap-2">
+                <span className="bm-stat-icon"><span className="material-symbols-outlined text-[18px]">{meta.icon}</span></span>
+                <span className="bm-stat-label text-[10px] font-bold uppercase tracking-wide truncate">{meta.label}</span>
               </div>
-              <div className="font-mono text-xl font-extrabold text-[#0b1f3a] mt-1 leading-none">{countsInYear.map[st] || 0}</div>
+              <div className="bm-stat-value font-mono text-xl font-extrabold mt-2 leading-none">{countsInYear.map[st] || 0}</div>
             </button>
           );
         })}

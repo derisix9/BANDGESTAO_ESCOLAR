@@ -722,21 +722,25 @@ export const RefeitorioView: React.FC<RefeitorioViewProps> = ({ db, currentUserR
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <div className="bg-white border border-slate-200 rounded-xl p-3">
-              <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Esperados</div>
-              <div className="font-mono text-xl font-extrabold text-[#0b1f3a] mt-1 leading-none">{expectedCount}</div>
+            <div data-card-hl data-stat-icon="groups" className="bm-stat-card bm-stat-tile bm-stat-blue">
+              <div className="bm-stat-icon"><span className="material-symbols-outlined">groups</span></div>
+              <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Esperados</div>
+              <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{expectedCount}</div>
             </div>
-            <div className="bg-white border border-slate-200 rounded-xl p-3">
-              <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Servidas</div>
-              <div className="font-mono text-xl font-extrabold text-emerald-700 mt-1 leading-none">{counts.served}</div>
+            <div data-card-hl data-stat-icon="restaurant" className="bm-stat-card bm-stat-tile bm-stat-green">
+              <div className="bm-stat-icon"><span className="material-symbols-outlined">restaurant</span></div>
+              <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Servidas</div>
+              <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{counts.served}</div>
             </div>
-            <div className="bg-white border border-slate-200 rounded-xl p-3">
-              <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Ausentes</div>
-              <div className="font-mono text-xl font-extrabold text-amber-700 mt-1 leading-none">{counts.absent}</div>
+            <div data-card-hl data-stat-icon="person_off" className="bm-stat-card bm-stat-tile bm-stat-amber">
+              <div className="bm-stat-icon"><span className="material-symbols-outlined">person_off</span></div>
+              <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Ausentes</div>
+              <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{counts.absent}</div>
             </div>
-            <div className="bg-white border border-slate-200 rounded-xl p-3">
-              <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Avulsas</div>
-              <div className="font-mono text-xl font-extrabold text-violet-700 mt-1 leading-none">{counts.extra}</div>
+            <div data-card-hl data-stat-icon="add_circle" className="bm-stat-card bm-stat-tile bm-stat-violet">
+              <div className="bm-stat-icon"><span className="material-symbols-outlined">add_circle</span></div>
+              <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Avulsas</div>
+              <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{counts.extra}</div>
             </div>
           </div>
 
@@ -1144,21 +1148,25 @@ export const RefeitorioView: React.FC<RefeitorioViewProps> = ({ db, currentUserR
           ) : (
             <>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <div className="bg-white border border-slate-200 rounded-xl p-3">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Servidas</div>
-                  <div className="font-mono text-xl font-extrabold text-emerald-700 mt-1 leading-none">{report.totals.served}</div>
+                <div data-card-hl data-stat-icon="restaurant" className="bm-stat-card bm-stat-tile bm-stat-green">
+                  <div className="bm-stat-icon"><span className="material-symbols-outlined">restaurant</span></div>
+                  <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Servidas</div>
+                  <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{report.totals.served}</div>
                 </div>
-                <div className="bg-white border border-slate-200 rounded-xl p-3">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Ausências</div>
-                  <div className="font-mono text-xl font-extrabold text-amber-700 mt-1 leading-none">{report.totals.absent}</div>
+                <div data-card-hl data-stat-icon="person_off" className="bm-stat-card bm-stat-tile bm-stat-amber">
+                  <div className="bm-stat-icon"><span className="material-symbols-outlined">person_off</span></div>
+                  <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Ausências</div>
+                  <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{report.totals.absent}</div>
                 </div>
-                <div className="bg-white border border-slate-200 rounded-xl p-3">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Avulsas</div>
-                  <div className="font-mono text-xl font-extrabold text-violet-700 mt-1 leading-none">{report.totals.extra}</div>
+                <div data-card-hl data-stat-icon="add_circle" className="bm-stat-card bm-stat-tile bm-stat-violet">
+                  <div className="bm-stat-icon"><span className="material-symbols-outlined">add_circle</span></div>
+                  <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Avulsas</div>
+                  <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{report.totals.extra}</div>
                 </div>
-                <div className="bg-white border border-slate-200 rounded-xl p-3">
-                  <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">Dias com serviço</div>
-                  <div className="font-mono text-xl font-extrabold text-[#0b1f3a] mt-1 leading-none">{report.days.length}</div>
+                <div data-card-hl data-stat-icon="calendar_month" className="bm-stat-card bm-stat-tile bm-stat-blue">
+                  <div className="bm-stat-icon"><span className="material-symbols-outlined">calendar_month</span></div>
+                  <div className="bm-stat-label text-[10px] font-bold uppercase tracking-wide">Dias com serviço</div>
+                  <div className="bm-stat-value font-mono text-xl font-extrabold mt-1 leading-none">{report.days.length}</div>
                 </div>
               </div>
 

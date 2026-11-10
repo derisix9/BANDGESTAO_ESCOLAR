@@ -734,27 +734,27 @@ export const AssiduidadeView: React.FC<AssiduidadeViewProps> = ({
 
       {/* KPI Stats Strip */}
       <div className="print:hidden grid grid-cols-2 sm:grid-cols-6 gap-3 text-center">
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-blue p-3" data-card-hl data-stat-icon="groups">
           <span className="text-[10px] uppercase font-bold text-slate-500 block">Total Alunos</span>
           <span className="font-headline text-xl font-bold text-[#0b1f3a]">{totalStudents}</span>
         </div>
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-green p-3" data-card-hl data-stat-icon="check_circle">
           <span className="text-[10px] uppercase font-bold text-emerald-800 block">Presentes (P)</span>
           <span className="font-headline text-xl font-bold text-emerald-800">{countP}</span>
         </div>
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-amber p-3" data-card-hl data-stat-icon="event_busy">
           <span className="text-[10px] uppercase font-bold text-amber-800 block">Faltas Just. (FJ)</span>
           <span className="font-headline text-xl font-bold text-amber-800">{countFJ}</span>
         </div>
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-red p-3" data-card-hl data-stat-icon="warning">
           <span className="text-[10px] uppercase font-bold text-[#7a0c0c] block">Faltas Inj. (FI)</span>
           <span className="font-headline text-xl font-bold text-[#7a0c0c]">{countFI}</span>
         </div>
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-violet p-3" data-card-hl data-stat-icon="schedule">
           <span className="text-[10px] uppercase font-bold text-orange-800 block">Atrasos (A)</span>
           <span className="font-headline text-xl font-bold text-orange-800">{countA}</span>
         </div>
-        <div className="bg-white p-3 rounded-none border border-slate-300">
+        <div className="bm-stat-card bm-stat-tile bm-stat-cyan p-3" data-card-hl data-stat-icon="insights">
           <span className="text-[10px] uppercase font-bold text-[#0b1f3a] block">Taxa Presença</span>
           <span className="font-headline text-xl font-bold text-[#0b1f3a]">{presenceRate}%</span>
         </div>

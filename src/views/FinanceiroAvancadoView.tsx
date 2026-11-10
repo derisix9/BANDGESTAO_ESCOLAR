@@ -298,8 +298,12 @@ function ConciliacaoTab({ db, role }: { db: SchoolDatabase; role: UserRole }) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-        {[['Por conciliar', pendingLines.length, 'text-amber-700'], ['Conciliadas', conciliadas.length, 'text-emerald-700'], ['Ignoradas', ignoradas.length, 'text-slate-500'], ['Valor por conciliar', kz(pendingLines.filter((l) => l.amount > 0).reduce((t, l) => t + l.amount, 0)), 'text-[#0b1f3a]']].map(([label, value, color]) => (
-          <div key={String(label)} className="bg-white border border-slate-200 rounded-xl p-3"><div className="text-[10px] uppercase font-bold text-slate-400">{label}</div><div className={`text-lg font-black ${color}`}>{value}</div></div>
+        {[['Por conciliar', pendingLines.length, 'amber', 'pending_actions'], ['Conciliadas', conciliadas.length, 'green', 'task_alt'], ['Ignoradas', ignoradas.length, 'violet', 'do_not_disturb_on'], ['Valor por conciliar', kz(pendingLines.filter((l) => l.amount > 0).reduce((t, l) => t + l.amount, 0)), 'blue', 'account_balance']].map(([label, value, color, icon]) => (
+          <div key={String(label)} data-card-hl data-stat-icon={String(icon)} className={`bm-stat-card bm-stat-tile bm-stat-${color}`}>
+            <div className="bm-stat-icon"><span className="material-symbols-outlined" aria-hidden="true">{icon}</span></div>
+            <div className="bm-stat-label text-[10px] uppercase font-bold">{label}</div>
+            <div className="bm-stat-value text-lg font-black">{value}</div>
+          </div>
         ))}
       </div>
       <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3">

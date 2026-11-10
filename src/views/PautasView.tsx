@@ -949,25 +949,25 @@ export const PautasView: React.FC<PautasViewProps> = ({ db, currentUserRole, cur
 
       {/* KPI Stats Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center no-print print:hidden">
-        <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+        <div className="bm-stat-card bm-stat-tile bm-stat-blue p-3" data-card-hl data-stat-icon="leaderboard">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Média da Turma</span>
           <span className="font-headline text-2xl font-extrabold text-[#0b1f3a]">{averageScore}</span>
           <span className="text-[10px] text-slate-400">     Valores</span>
         </div>
 
-        <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+        <div className="bm-stat-card bm-stat-tile bm-stat-green p-3" data-card-hl data-stat-icon="insights">
           <span className="text-[10px] uppercase font-bold text-emerald-700 block">Taxa de Aproveitamento</span>
           <span className="font-headline text-2xl font-extrabold text-emerald-700">{approvalRate}%</span>
           <span className="text-[10px] text-slate-400">          {approvedCount} de {activeStudentsCount} alunos aptos</span>
         </div>
 
-        <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+        <div className="bm-stat-card bm-stat-tile bm-stat-red p-3" data-card-hl data-stat-icon="warning">
           <span className="text-[10px] uppercase font-bold text-[#7a0c0c] block">Em Recurso / Reprovados</span>
           <span className="font-headline text-2xl font-extrabold text-[#7a0c0c]">{resourceCount}  </span>
           <span className="text-[10px] text-slate-400">           Classificação &lt; 10 valores</span>
         </div>
 
-        <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+        <div className="bm-stat-card bm-stat-tile bm-stat-amber p-3" data-card-hl data-stat-icon="payments">
           <span className="text-[10px] uppercase font-bold text-amber-700 block">Alunos com Propinas Pendentes</span>
           <span className="font-headline text-2xl font-extrabold text-amber-800">{debtorStudentsCount}   </span>
           <span className="text-[10px] text-slate-400">

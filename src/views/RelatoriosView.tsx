@@ -822,23 +822,20 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
         {selectedReport === 'financeiro' && canViewFinanceiro && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 print:hidden">
-              <div className="p-4 bg-emerald-50/60 rounded-xl border border-emerald-100">
-                <span className="text-[10px] uppercase font-bold text-emerald-800">Total Cobrado Efetivo (Kz)</span>
-                <div className="text-xl font-extrabold text-emerald-700 font-mono mt-0.5">
-                  {financeiroTotals.totalCobrado.toLocaleString('pt-AO')} Kz
-                </div>
+              <div data-card-hl data-stat-icon="payments" className="bm-stat-card bm-stat-tile bm-stat-green">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">payments</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Total Cobrado Efetivo (Kz)</span>
+                <div className="bm-stat-value text-xl font-extrabold font-mono mt-1">{financeiroTotals.totalCobrado.toLocaleString('pt-AO')} Kz</div>
               </div>
-              <div className="p-4 bg-red-50/60 rounded-xl border border-red-100">
-                <span className="text-[10px] uppercase font-bold text-[#7a0c0c]">Em Mora / Pendente (Kz)</span>
-                <div className="text-xl font-extrabold text-[#7a0c0c] font-mono mt-0.5">
-                  {financeiroTotals.totalMora.toLocaleString('pt-AO')} Kz
-                </div>
+              <div data-card-hl data-stat-icon="warning" className="bm-stat-card bm-stat-tile bm-stat-red">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">warning</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Em Mora / Pendente (Kz)</span>
+                <div className="bm-stat-value text-xl font-extrabold font-mono mt-1">{financeiroTotals.totalMora.toLocaleString('pt-AO')} Kz</div>
               </div>
-              <div className="p-4 bg-blue-50/60 rounded-xl border border-blue-100">
-                <span className="text-[10px] uppercase font-bold text-blue-800">Eficácia Global de Cobrança</span>
-                <div className="text-xl font-extrabold text-[#0b1f3a] mt-0.5">
-                  {financeiroTotals.taxaGeral}%
-                </div>
+              <div data-card-hl data-stat-icon="monitoring" className="bm-stat-card bm-stat-tile bm-stat-blue">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">monitoring</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Eficácia Global de Cobrança</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">{financeiroTotals.taxaGeral}%</div>
               </div>
             </div>
 
@@ -912,23 +909,20 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
         {selectedReport === 'assiduidade' && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 print:hidden">
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                <span className="text-[10px] uppercase font-bold text-slate-500">Taxa Média de Assiduidade</span>
-                <div className="text-xl font-extrabold text-emerald-700 mt-0.5">
-                  {assiduidadeTotals.avgAssiduidade}%
-                </div>
+              <div data-card-hl data-stat-icon="fact_check" className="bm-stat-card bm-stat-tile bm-stat-green">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">fact_check</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Taxa Média de Assiduidade</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">{assiduidadeTotals.avgAssiduidade}%</div>
               </div>
-              <div className="p-4 bg-amber-50/60 rounded-xl border border-amber-100">
-                <span className="text-[10px] uppercase font-bold text-amber-800">Alunos em Risco por Faltas</span>
-                <div className="text-xl font-extrabold text-amber-800 mt-0.5">
-                  {assiduidadeTotals.totalRisco} Alunos
-                </div>
+              <div data-card-hl data-stat-icon="warning" className="bm-stat-card bm-stat-tile bm-stat-amber">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">warning</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Alunos em Risco por Faltas</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">{assiduidadeTotals.totalRisco} Alunos</div>
               </div>
-              <div className="p-4 bg-red-50/60 rounded-xl border border-red-100">
-                <span className="text-[10px] uppercase font-bold text-[#7a0c0c]">Faltas Injustificadas</span>
-                <div className="text-xl font-extrabold text-[#7a0c0c] mt-0.5">
-                  {assiduidadeTotals.totalFaltasInj}
-                </div>
+              <div data-card-hl data-stat-icon="event_busy" className="bm-stat-card bm-stat-tile bm-stat-red">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">event_busy</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Faltas Injustificadas</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">{assiduidadeTotals.totalFaltasInj}</div>
               </div>
             </div>
 
@@ -1004,24 +998,24 @@ export const RelatoriosView: React.FC<RelatoriosViewProps> = ({ db, currentUserR
         {selectedReport === 'docentes' && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 print:hidden">
-              <div className="p-4 bg-purple-50/60 rounded-xl border border-purple-100">
-                <span className="text-[10px] uppercase font-bold text-purple-800">Total de Professores Ativos</span>
-                <div className="text-xl font-extrabold text-purple-900 mt-0.5">{docentesData.length}</div>
+              <div data-card-hl data-stat-icon="badge" className="bm-stat-card bm-stat-tile bm-stat-violet">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">badge</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Total de Professores Ativos</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">{docentesData.length}</div>
               </div>
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                <span className="text-[10px] uppercase font-bold text-slate-500">Carga Horária Semanal Total</span>
-                <div className="text-xl font-extrabold text-slate-800 font-mono mt-0.5">
-                  {docentesData.reduce((acc, t) => acc + parseInt(t.weeklyHours, 10), 0)}h
-                </div>
+              <div data-card-hl data-stat-icon="schedule" className="bm-stat-card bm-stat-tile bm-stat-blue">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">schedule</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Carga Horária Semanal Total</span>
+                <div className="bm-stat-value text-xl font-extrabold font-mono mt-1">{docentesData.reduce((acc, t) => acc + parseInt(t.weeklyHours, 10), 0)}h</div>
               </div>
-              <div className="p-4 bg-emerald-50/60 rounded-xl border border-emerald-100">
-                <span className="text-[10px] uppercase font-bold text-emerald-800">Assiduidade Média Docente</span>
-                <div className="text-xl font-extrabold text-emerald-700 mt-0.5">
+              <div data-card-hl data-stat-icon="monitor_heart" className="bm-stat-card bm-stat-tile bm-stat-green">
+                <div className="bm-stat-icon"><span className="material-symbols-outlined">monitor_heart</span></div>
+                <span className="bm-stat-label text-[10px] uppercase font-bold">Assiduidade Média Docente</span>
+                <div className="bm-stat-value text-xl font-extrabold mt-1">
                   {(() => {
                     const withData = docentesData.filter((t) => t.attendanceRateValue !== null);
                     if (withData.length === 0) return 'Sem dados';
-                    const avg =
-                      withData.reduce((acc, t) => acc + (t.attendanceRateValue || 0), 0) / withData.length;
+                    const avg = withData.reduce((acc, t) => acc + (t.attendanceRateValue || 0), 0) / withData.length;
                     return `${Math.round(avg * 10) / 10}%`;
                   })()}
                 </div>

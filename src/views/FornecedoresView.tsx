@@ -237,14 +237,9 @@ export const FornecedoresView: React.FC<FornecedoresViewProps> = ({ db, currentU
           { label: 'Ativos', value: activeCount, icon: 'check_circle' },
           { label: 'Inativos', value: suppliers.length - activeCount, icon: 'pause_circle' }
         ].map((k) => (
-          <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-100 text-[#0b1f3a] flex items-center justify-center rounded-lg">
-              <span className="material-symbols-outlined text-[22px]">{k.icon}</span>
-            </div>
-            <div>
-              <div className="font-mono text-xl font-extrabold text-[#0b1f3a] leading-none">{k.value}</div>
-              <div className="text-[11px] text-slate-500 font-semibold mt-1">{k.label}</div>
-            </div>
+          <div key={k.label} data-card-hl data-stat-icon={k.icon} className={`bm-stat-card bm-stat-${k.label === 'Ativos' ? 'green' : k.label === 'Inativos' ? 'amber' : 'blue'}`}>
+            <div className="bm-stat-icon"><span className="material-symbols-outlined text-[22px]">{k.icon}</span></div>
+            <div className="bm-stat-content"><div className="bm-stat-value font-mono text-xl font-extrabold leading-none">{k.value}</div><div className="bm-stat-label text-[11px] font-semibold mt-1">{k.label}</div></div>
           </div>
         ))}
       </div>

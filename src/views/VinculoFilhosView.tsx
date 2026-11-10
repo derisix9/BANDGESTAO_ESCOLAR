@@ -247,18 +247,12 @@ export const VinculoFilhosView: React.FC<VinculoFilhosViewProps> = ({ db, curren
           { label: 'Vínculos registados', value: totalActiveLinks, icon: 'link' },
           { label: 'Alunos sem Encarregado', value: withoutAccess.length, icon: 'link_off', warn: withoutAccess.length > 0 },
           { label: 'Sugestões por rever', value: totalSuggestions, icon: 'lightbulb', warn: totalSuggestions > 0 }
-        ].map((k) => (
-          <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-3">
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-lg ${
-                k.warn ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-[#0b1f3a]'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[22px]">{k.icon}</span>
-            </div>
-            <div>
-              <div className="font-mono text-xl font-extrabold text-[#0b1f3a] leading-none">{k.value}</div>
-              <div className="text-[11px] text-slate-500 font-semibold mt-1">{k.label}</div>
+        ].map((k, index) => (
+          <div key={k.label} data-card-hl data-stat-icon={k.icon} className={`bm-stat-card bm-stat-${k.warn ? 'amber' : ['blue', 'green', 'cyan', 'violet'][index]}`}>
+            <div className="bm-stat-icon"><span className="material-symbols-outlined text-[22px]">{k.icon}</span></div>
+            <div className="bm-stat-content">
+              <div className="bm-stat-value font-mono text-xl font-extrabold leading-none">{k.value}</div>
+              <div className="bm-stat-label text-[11px] font-semibold mt-1">{k.label}</div>
             </div>
           </div>
         ))}

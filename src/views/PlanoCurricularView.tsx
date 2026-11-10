@@ -390,9 +390,12 @@ export const PlanoCurricularView: React.FC<PlanoCurricularViewProps> = ({ db, cu
             <button
               key={st}
               onClick={() => setStatusFilter(active ? 'all' : st)}
-              className={`text-left bg-white border rounded-xl p-3 transition-colors cursor-pointer ${
-                active ? 'border-[#0b1f3a] ring-1 ring-[#0b1f3a]' : 'border-slate-200 hover:border-slate-400'
-              }`}
+              aria-pressed={active}
+              data-card-hl
+              data-stat-icon={meta.icon}
+              className={`bm-stat-card bm-stat-button text-left border p-3 cursor-pointer ${
+                st === 'aprovado' ? 'bm-stat-green' : st === 'arquivado' ? 'bm-stat-cyan' : 'bm-stat-amber'
+              } ${active ? 'ring-2 ring-white/80 shadow-lg' : ''}`}
             >
               <div className="flex items-center gap-1.5 text-slate-500">
                 <span className="material-symbols-outlined text-[16px]">{meta.icon}</span>
