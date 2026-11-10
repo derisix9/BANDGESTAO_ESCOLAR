@@ -13,6 +13,7 @@
 @import "./styles/card-highlight.css";
 @import "./styles/dashboard-charts.css";
 @import "./styles/sidebar-effects.css";
+@import "./styles/system-ui-standard.css";
 
 :root {
   --primary-navy: #0B1F3A;
