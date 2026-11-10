@@ -672,13 +672,11 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
 
                   {/* Toggle Switch */}
                   <div
-                    className={`bm-subsystem-toggle w-12 h-6 transition-colors relative flex items-center p-0.5 ${isSelected ? 'is-on' : 'is-off'}`}
+                    className={`bm-subsystem-toggle transition-colors ${isSelected ? 'is-on' : 'is-off'}`}
+                    aria-hidden="true"
                   >
-                    <div
-                      className={`w-5 h-5 rounded-full bg-white transition-transform shadow-xs ${
-                        isSelected ? 'translate-x-6' : 'translate-x-0'
-                      }`}
-                    />
+                    <span className="bm-subsystem-toggle-label">{isSelected ? 'ACTIVO' : 'ATIVAR'}</span>
+                    <span className="bm-subsystem-toggle-knob" />
                   </div>
                 </div>
               </div>
