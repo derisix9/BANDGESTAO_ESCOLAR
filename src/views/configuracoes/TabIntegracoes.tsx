@@ -26,18 +26,21 @@ const TONE: Record<Tone, string> = {
 };
 
 /** Cartão de serviço: imagem + estado. Ao clicar abre a área de configuração desse serviço. */
-const ServiceCard: React.FC<{ img: string; title: string; desc: string; status: string; tone: Tone; onOpen: () => void }> = ({ img, title, desc, status, tone, onOpen }) => (
+const ServiceCard: React.FC<{ img: string; title: string; desc: string; status: string; tone: Tone; icon: string; onOpen: () => void }> = ({ img, title, desc, status, tone, icon, onOpen }) => (
   <button
     type="button"
     onClick={onOpen}
     aria-label={`Configurar ${title}`}
-    className="group text-left p-5 rounded-2xl bg-white border border-slate-200 shadow-xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#0b1f3a]/40 transition-all cursor-pointer flex flex-col items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0b1f3a]"
+    data-stat-icon={icon}
+    className="bm-integration-service group text-left p-5 border shadow-xs transition-all cursor-pointer flex flex-col items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
   >
-    <img src={img} alt="" width={80} height={80} loading="lazy" className="w-20 h-20 object-contain rounded-2xl shadow-sm" />
-    <span className="font-headline font-bold text-slate-900 text-sm text-center">{title}</span>
-    <span className="text-[11px] text-slate-500 text-center leading-snug">{desc}</span>
-    <span className={`px-2 py-0.5 rounded-md border text-[10px] font-bold ${TONE[tone]}`}>{status}</span>
-    <span className="mt-auto text-[11px] font-bold text-[#0b1f3a] group-hover:text-[#ac332b] flex items-center gap-1">
+    <span className="bm-integration-logo">
+      <img src={img} alt="" width={80} height={80} loading="lazy" className="w-20 h-20 object-contain" />
+    </span>
+    <span className="bm-integration-title font-headline font-bold text-sm text-center">{title}</span>
+    <span className="bm-integration-description text-[11px] text-center leading-snug">{desc}</span>
+    <span className={`bm-integration-status px-2 py-0.5 border text-[10px] font-bold ${TONE[tone]}`}>{status}</span>
+    <span className="bm-integration-action mt-auto text-[11px] font-bold flex items-center gap-1">
       Configurar <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
     </span>
   </button>
@@ -231,7 +234,7 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
           <button
             type="button"
             onClick={handleTestPing}
-            className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center gap-1.5 transition-colors self-start"
+            className="bm-integration-action-button px-3.5 py-2 font-bold text-xs flex items-center gap-1.5 transition-colors self-start"
           >
             <span className="material-symbols-outlined text-[16px]">network_check</span>
             <span>{testingPing ? 'A testar conexões...' : 'Testar Conexões de API'}</span>
@@ -245,28 +248,28 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
           <p className="text-xs text-slate-500">Escolha um serviço para abrir a respetiva configuração.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             <ServiceCard
-              img="/integracoes/express.png" title="Multicaixa Express"
+              img="/integracoes/express.png" icon="account_balance_wallet" title="Multicaixa Express"
               desc="Pagamentos por referência no ATM, no Express ou no banco. A propina fica paga sozinha."
               status={expressOn ? 'LIGADO' : 'NÃO LIGADO'} tone={expressOn ? 'ok' : 'off'} onOpen={() => setView('express')}
             />
             <ServiceCard
-              img="/integracoes/sms.png" title="SMS"
+              img="/integracoes/sms.png" icon="sms" title="SMS"
               desc="Avisos críticos aos encarregados (ex.: propina em atraso). Operadora e remetente."
               status={chOn.sms ? 'LIGADO' : smsProvider.trim() && smsSenderId.trim() ? 'PARAMETRIZADO' : 'NÃO LIGADO'}
               tone={chOn.sms ? 'ok' : smsProvider.trim() && smsSenderId.trim() ? 'warn' : 'off'} onOpen={() => setView('sms')}
             />
             <ServiceCard
-              img="/integracoes/whatsapp.png" title="WhatsApp"
+              img="/integracoes/whatsapp.png" icon="chat" title="WhatsApp"
               desc="Mensagens com modelo aprovado (Meta Cloud ou Twilio)."
               status={chOn.whatsapp ? 'LIGADO' : 'NÃO LIGADO'} tone={chOn.whatsapp ? 'ok' : 'off'} onOpen={() => setView('whatsapp')}
             />
             <ServiceCard
-              img="/integracoes/cobranca.svg" title="Notificações de Cobrança"
+              img="/integracoes/cobranca.svg" icon="notifications_active" title="Notificações de Cobrança"
               desc="Disparos automáticos, push e servidor de notificações."
               status={cobrancaOn ? 'AUTOMÁTICO ATIVO' : 'DESLIGADO'} tone={cobrancaOn ? 'ok' : 'off'} onOpen={() => setView('cobranca')}
             />
             <ServiceCard
-              img="/integracoes/agt.svg" title="AGT · SAF-T (AO)"
+              img="/integracoes/agt.svg" icon="receipt_long" title="AGT · SAF-T (AO)"
               desc="Certificado de software e série de faturação."
               status={agtCertificate.trim() ? 'CERTIFICADO DECLARADO' : 'SEM CERTIFICADO'} tone={agtCertificate.trim() ? 'ok' : 'warn'} onOpen={() => setView('agt')}
             />
@@ -280,7 +283,7 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
           <button
             type="button"
             onClick={() => setView('hub')}
-            className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center gap-1.5 transition-colors"
+            className="bm-integration-action-button px-3 py-2 font-bold text-xs flex items-center gap-1.5 transition-colors"
           >
             <span className="material-symbols-outlined text-[16px]">arrow_back</span>
             Voltar às integrações

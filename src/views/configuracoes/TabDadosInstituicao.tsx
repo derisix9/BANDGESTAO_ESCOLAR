@@ -548,7 +548,7 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
               onClick={() =>
                 applyPreset(['pre_escolar', 'primario', 'secundario_1', 'secundario_2', 'superior'])
               }
-              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors"
+              className="bm-subsystem-preset px-2.5 py-1 text-[11px] font-bold transition-colors"
               title="Ativa todos os 5 sub-sistemas de ensino"
             >
               Todos
@@ -558,7 +558,7 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
               onClick={() =>
                 applyPreset(['pre_escolar', 'primario', 'secundario_1'])
               }
-              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors"
+              className="bm-subsystem-preset px-2.5 py-1 text-[11px] font-bold transition-colors"
               title="Pré-Escolar ao Iº Ciclo"
             >
               Nível 1-3
@@ -566,7 +566,7 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
             <button
               type="button"
               onClick={() => applyPreset(['secundario_2'])}
-              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors"
+              className="bm-subsystem-preset px-2.5 py-1 text-[11px] font-bold transition-colors"
               title="Apenas 10.ª à 13.ª classe"
             >
               Nível 4
@@ -574,7 +574,7 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
             <button
               type="button"
               onClick={() => applyPreset(['superior'])}
-              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors"
+              className="bm-subsystem-preset px-2.5 py-1 text-[11px] font-bold transition-colors"
               title="Bacharelato, Licenciatura e Mestrado"
             >
               Nível 5
@@ -589,65 +589,66 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
             return (
               <div
                 key={subsystem.id}
+                role="button"
+                tabIndex={0}
                 onClick={() => toggleSubsystem(subsystem.id)}
-                className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4 ${
-                  isSelected
-                    ? 'border-[#0b1f3a] bg-blue-50/20 shadow-xs'
-                    : 'border-slate-200 bg-white hover:border-slate-300 opacity-70 hover:opacity-100'
-                }`}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleSubsystem(subsystem.id);
+                  }
+                }}
+                data-stat-icon={subsystem.icon}
+                data-subsystem-tone={idx % 5}
+                aria-label={`${isSelected ? 'Desativar' : 'Ativar'} ${subsystem.fullName}`}
+                className={`bm-subsystem-card ${isSelected ? 'is-selected' : 'is-disabled'} p-5 border transition-all cursor-pointer flex flex-col lg:flex-row lg:items-center justify-between gap-4`}
               >
                 {/* Lado Esquerdo: Identificação do Sub-sistema */}
                 <div className="flex items-start gap-4">
                   <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                      isSelected ? 'bg-[#0b1f3a] text-white shadow-xs' : 'bg-slate-100 text-slate-400'
-                    }`}
+                    className="bm-subsystem-symbol w-12 h-12 flex items-center justify-center shrink-0 transition-colors"
                   >
                     <span className="material-symbols-outlined text-[26px]">{subsystem.icon}</span>
                   </div>
 
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[11px] font-mono uppercase font-bold text-[#ac332b]">
+                      <span className="bm-subsystem-level text-[11px] font-mono uppercase font-bold">
                         Nível 0{idx + 1}
                       </span>
-                      <span className="w-1 h-1 rounded-full bg-slate-300" />
-                      <h4 className="font-headline font-bold text-sm lg:text-base text-slate-900">
+                      <span className="bm-subsystem-dot w-1 h-1 rounded-full" />
+                      <h4 className="bm-subsystem-name font-headline font-bold text-sm lg:text-base">
                         {subsystem.fullName}
                       </h4>
                       {isSelected ? (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">
+                        <span className="bm-subsystem-status px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                           Ativo no Sistema
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                        <span className="bm-subsystem-status bm-subsystem-status--off px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                           Desativado
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs text-slate-600 max-w-2xl">{subsystem.description}</p>
+                    <p className="bm-subsystem-description text-xs max-w-2xl">{subsystem.description}</p>
 
                     {/* Classes e Regime do Sub-sistema */}
-                    <div className="flex items-center gap-3 mt-1 flex-wrap text-xs">
-                      <div className="flex items-center gap-1 text-slate-500">
-                        <span className="font-semibold text-slate-700">Regime:</span>
-                        <span className="bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-700 font-medium">
+                    <div className="bm-subsystem-meta flex items-center gap-3 mt-1 flex-wrap text-xs">
+                      <div className="bm-subsystem-meta-item flex items-center gap-1">
+                        <span className="bm-subsystem-meta-label font-semibold">Regime:</span>
+                        <span className="bm-subsystem-chip px-2 py-0.5 text-[11px] font-medium">
                           {subsystem.regime}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1 text-slate-500">
-                        <span className="font-semibold text-slate-700">Classes/Anos:</span>
+                      <div className="bm-subsystem-meta-item flex items-center gap-1">
+                        <span className="bm-subsystem-meta-label font-semibold">Classes/Anos:</span>
                         <div className="flex items-center gap-1 flex-wrap">
                           {subsystem.grades.map((g) => (
                             <span
                               key={g}
-                              className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
-                                isSelected
-                                  ? 'bg-blue-100 text-[#0b1f3a]'
-                                  : 'bg-slate-100 text-slate-500'
-                              }`}
+                              className="bm-subsystem-grade px-2 py-0.5 text-[10px] font-bold font-mono"
                             >
                               {g}
                             </span>
@@ -659,21 +660,19 @@ export const TabDadosInstituicao: React.FC<TabDadosInstituicaoProps> = ({
                 </div>
 
                 {/* Lado Direito: Toggle Switch e Status */}
-                <div className="flex items-center justify-between lg:justify-end gap-3 shrink-0 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-100">
+                <div className="bm-subsystem-controls flex items-center justify-between lg:justify-end gap-3 shrink-0 pt-2 lg:pt-0">
                   <div className="text-right hidden sm:block">
-                    <span className="text-[11px] font-bold text-slate-900 block">
+                    <span className="bm-subsystem-action-label text-[11px] font-bold block">
                       {isSelected ? 'Sub-sistema Selecionado' : 'Clique para Ativar'}
                     </span>
-                    <span className="text-[10px] text-slate-400">
+                    <span className="bm-subsystem-action-hint text-[10px]">
                       {isSelected ? 'Disponível em todos os formulários' : 'Oculto nos formulários'}
                     </span>
                   </div>
 
                   {/* Toggle Switch */}
                   <div
-                    className={`w-12 h-6 rounded-full transition-colors relative flex items-center p-0.5 ${
-                      isSelected ? 'bg-[#0b1f3a]' : 'bg-slate-300'
-                    }`}
+                    className={`bm-subsystem-toggle w-12 h-6 transition-colors relative flex items-center p-0.5 ${isSelected ? 'is-on' : 'is-off'}`}
                   >
                     <div
                       className={`w-5 h-5 rounded-full bg-white transition-transform shadow-xs ${
