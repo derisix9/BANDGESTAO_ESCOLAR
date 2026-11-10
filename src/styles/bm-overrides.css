@@ -71,6 +71,30 @@ html body header[data-app-header]:not(#_):not(#_) input::placeholder {
 html body header[data-app-header]:not(#_):not(#_) select option { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; background-color: #ffffff !important; }
 html body header[data-app-header]:not(#_):not(#_) button:not(.bg-white *):hover { background-color: var(--bm-header-hover) !important; }
 
+/* Texto digitado, lupa, botão «limpar» e selector do Ano Letivo: sempre na cor do cabeçalho.
+   (Regras próprias, sem a exclusão de .bg-white, para vencer theme-dark.css que força branco/azul-claro.) */
+html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_) :is(input, button, .material-symbols-outlined),
+html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_),
+html body header[data-app-header] select:not(#_):not(#_),
+html body header[data-app-header] span[title='Ano Letivo Ativo da instituição']:not(#_):not(#_) {
+  color: var(--bm-header-fg) !important;
+  -webkit-text-fill-color: var(--bm-header-fg) !important;
+  caret-color: var(--bm-header-fg) !important;
+  opacity: 1 !important;
+}
+html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_)::placeholder {
+  color: var(--bm-header-ph) !important;
+  -webkit-text-fill-color: var(--bm-header-ph) !important;
+  opacity: 1 !important;
+}
+html body header[data-app-header] select:not(#_):not(#_) { border: 0 !important; background-color: transparent !important; font-size: 13px !important; }
+
+/* Faixa «Painel Principal»: mesma cor do menu lateral (claro: azul do sidebar; escuro: #1f3960). */
+html body .bm-dashboard-header:not(#_):not(#_) {
+  background: var(--bm-hnav-bg) !important;
+  border-color: var(--bm-hnav-bg) !important;
+}
+
 /* Caixa de pesquisa */
 html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_) {
   border: 1px solid var(--bm-header-line) !important;
