@@ -160,8 +160,8 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
     if (active && payload && payload.length) {
       const currentDay = weeklyData.find((d) => d.dia === label)?.diaCompleto || label;
       return (
-        <div className="bg-white p-3.5 rounded-xl shadow-xl border border-slate-200 text-xs min-w-[240px] z-50">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2">
+        <div className="dashboard-chart-tooltip">
+          <div className="dashboard-chart-tooltip-title flex items-center justify-between">
             <span className="font-bold text-[#0b1f3a] text-[13px]">{currentDay}</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 text-[#0b1f3a] font-bold">
               Assiduidade Real
@@ -205,8 +205,8 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-3.5 rounded-xl shadow-xl border border-slate-200 text-xs min-w-[250px] z-50">
-          <div className="border-b border-slate-100 pb-2 mb-2">
+        <div className="dashboard-chart-tooltip">
+          <div className="dashboard-chart-tooltip-title">
             <h4 className="font-bold text-[#0b1f3a] text-sm">{data.fullName}</h4>
             <span className="text-[10px] text-slate-400">Métricas Consolidadas no Banco de Dados</span>
           </div>
@@ -236,44 +236,38 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xs border border-slate-200">
+    <div className="dashboard-chart-panel">
       {/* Header com os Sub-sistemas Dinâmicos */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div className="dashboard-chart-header">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="dashboard-chart-kicker">
               Monitorização Académica & Assiduidade
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-blue-50 text-[#0b1f3a] font-mono text-[10px] font-extrabold border border-blue-100">
+            <span className="dashboard-chart-badge">
               {activeSubsystems.length} Sub-sistemas Ativos
             </span>
           </div>
-          <h2 className="font-headline text-lg font-bold text-[#0b1f3a] mt-0.5">
-            MONITORAMENTO GERAL
+          <h2 className="dashboard-chart-title">
+            MONITORIZAÇÃO GERAL
           </h2>
         </div>
 
         {/* Toggle Semana vs Sub-sistema */}
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs self-start sm:self-auto">
+        <div className="dashboard-chart-switch self-start sm:self-auto">
           <button
             type="button"
             onClick={() => setViewMode('semana')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              viewMode === 'semana'
-                ? 'bg-white text-[#0b1f4a] shadow-xs'
-                : 'text-slate-500 hover:text-slate-800 font-medium'
-            }`}
+            className="font-bold"
+            aria-pressed={viewMode === 'semana'}
           >
             Visão Semanal
           </button>
           <button
             type="button"
             onClick={() => setViewMode('subsistema')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              viewMode === 'subsistema'
-                ? 'bg-white text-[#0b1f4a] shadow-xs'
-                : 'text-slate-500 hover:text-slate-800 font-medium'
-            }`}
+            className="font-bold"
+            aria-pressed={viewMode === 'subsistema'}
           >
             Por Sub-sistema
           </button>
@@ -281,7 +275,7 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
       </div>
 
       {/* LISTA DINÂMICA DOS SUB-SISTEMAS ATIVOS DA ESCOLA (Substitui as métricas estáticas de ciclo) */}
-      <div className="w-full bg-slate-50 rounded-xl p-4 border border-slate-100 mb-4">
+      <div className="dashboard-chart-subsystems w-full rounded-xl p-4 mb-5">
         <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center justify-between">
           <span>Sub-sistemas de Ensino em Funcionamento:</span>
           <span className="text-[10px] text-slate-400 font-normal">
@@ -293,7 +287,7 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
           {subsystemStats.map((sub) => (
             <div
               key={sub.id}
-              className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-slate-300 transition-colors"
+              className="dashboard-chart-subsystem"
               title={`${sub.fullName} — ${sub.studentCount} alunos matriculados, ${sub.classesCount} turmas`}
             >
               <span
@@ -317,31 +311,36 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
       </div>
 
       {/* CHART INTERATIVO (RECHARTS) COM TOOLTIP COMPLETO */}
-      <div className="w-full h-64">
+      <div className="dashboard-chart-plot">
         <ResponsiveContainer width="100%" height="100%">
           {viewMode === 'semana' ? (
             <BarChart
               data={weeklyData}
-              margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
-              barGap={4}
+              margin={{ top: 14, right: 18, left: 4, bottom: 4 }}
+              barGap={7}
+              barCategoryGap="18%"
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <CartesianGrid strokeDasharray="4 5" vertical={false} stroke="#e7edf5" />
               <XAxis
                 dataKey="dia"
-                tick={{ fontSize: 11, fill: '#64748b' }}
-                axisLine={{ stroke: '#e2e8f0' }}
+                tick={{ fontSize: 10, fill: '#71839a' }}
+                axisLine={false}
                 tickLine={false}
+                tickMargin={10}
               />
               <YAxis
                 domain={[85, 100]}
-                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                tick={{ fontSize: 10, fill: '#71839a' }}
                 axisLine={false}
                 tickLine={false}
+                tickMargin={8}
+                width={44}
                 tickFormatter={(v) => `${v}%`}
               />
-              <Tooltip content={<CustomWeeklyTooltip />} cursor={{ fill: '#f8fafc' }} />
+              <Tooltip content={<CustomWeeklyTooltip />} cursor={{ fill: 'rgba(37, 99, 235, 0.055)' }} />
               <Legend
-                wrapperStyle={{ paddingTop: 10, fontSize: 11 }}
+                wrapperStyle={{ paddingTop: 14, fontSize: 10 }}
+                iconType="circle"
                 formatter={(value) => {
                   const s = subsystemStats.find((item) => item.id === value);
                   return s ? s.shortName : value;
@@ -353,37 +352,40 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
                   dataKey={sub.id}
                   name={sub.id}
                   fill={sub.color}
-                  radius={[3, 3, 0, 0]}
-                  maxBarSize={22}
+                  radius={[7, 7, 2, 2]}
+                  maxBarSize={28}
                 />
               ))}
             </BarChart>
           ) : (
             <BarChart
               data={subsystemComparisonData}
-              margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+              margin={{ top: 14, right: 18, left: 4, bottom: 4 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <CartesianGrid strokeDasharray="4 5" vertical={false} stroke="#e7edf5" />
               <XAxis
                 dataKey="name"
-                tick={{ fontSize: 11, fill: '#64748b' }}
-                axisLine={{ stroke: '#e2e8f0' }}
+                tick={{ fontSize: 10, fill: '#71839a' }}
+                axisLine={false}
                 tickLine={false}
+                tickMargin={10}
               />
               <YAxis
                 domain={[80, 100]}
-                tick={{ fontSize: 10, fill: '#94a3b8' }}
+                tick={{ fontSize: 10, fill: '#71839a' }}
                 axisLine={false}
                 tickLine={false}
+                tickMargin={8}
+                width={44}
                 tickFormatter={(v) => `${v}%`}
               />
-              <Tooltip content={<CustomSubsystemTooltip />} cursor={{ fill: '#f8fafc' }} />
+              <Tooltip content={<CustomSubsystemTooltip />} cursor={{ fill: 'rgba(37, 99, 235, 0.055)' }} />
               <Bar
                 dataKey="taxaAssiduidade"
                 name="Assiduidade Média (%)"
-                fill="#0b1f3a"
-                radius={[4, 4, 0, 0]}
-                maxBarSize={36}
+                fill="#2563eb"
+                radius={[8, 8, 2, 2]}
+                maxBarSize={42}
               />
             </BarChart>
           )}

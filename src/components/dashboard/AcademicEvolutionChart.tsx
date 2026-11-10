@@ -130,8 +130,8 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-4 rounded-xl shadow-2xl border border-slate-200 text-xs min-w-[260px] z-50">
-          <div className="border-b border-slate-100 pb-2 mb-2 flex items-center justify-between">
+        <div className="dashboard-chart-tooltip">
+          <div className="dashboard-chart-tooltip-title flex items-center justify-between">
             <span className="font-bold text-[#0b1f3a] text-sm">{data.trimestre}</span>
             <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-[#0b1f3a] border border-blue-200">
               {data.estado}
@@ -174,20 +174,20 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xs border border-slate-200">
+    <div className="dashboard-chart-panel">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div className="dashboard-chart-header">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="dashboard-chart-kicker">
               Rendimento Curricular e Pautas
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-blue-50 text-[#0b1f3a] font-mono text-[10px] font-extrabold border border-blue-100">
+            <span className="dashboard-chart-badge">
               Escala de 0–20 Valores
             </span>
           </div>
-          <h2 className="font-headline text-lg font-bold text-[#0b1f3a] mt-0.5">
-            EVOLUÇÃO ACADEMICA
+          <h2 className="dashboard-chart-title">
+            EVOLUÇÃO ACADÉMICA
           </h2>
         </div>
 
@@ -195,7 +195,7 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
           <button
             type="button"
             onClick={onNavigateToPautas}
-            className="text-xs font-bold text-[#0b1f3a] hover:text-[#7a0c0c] flex items-center gap-1 self-start sm:self-auto transition-colors"
+            className="dashboard-chart-action self-start sm:self-auto"
           >
             <span>Ver Pautas</span>
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -204,29 +204,29 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
       </div>
 
       {/* Mini Resumo das Médias dos 3 Trimestres */}
-      <div className="grid grid-cols-3 gap-2.5 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-5">
         {trimesterAcademicData.map((item) => (
-          <div key={item.trimestre} className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+          <div key={item.trimestre} className="dashboard-chart-summary">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">{item.nomeCurto}</span>
+              <span className="dashboard-chart-summary-label">{item.nomeCurto}</span>
               {item.totalNotas > 0 ? (
-                <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
-                  {item.taxaAprovacao}%
+                <span className="dashboard-chart-microbadge dashboard-chart-microbadge--green">
+                  {item.taxaAprovacao}% aproveitamento
                 </span>
               ) : (
-                <span className="text-[9px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+                <span className="dashboard-chart-microbadge">
                   Sem notas
                 </span>
               )}
             </div>
-            <div className="font-headline text-base font-extrabold text-[#0b1f3a] mt-1">
+            <div className="dashboard-chart-summary-value">
               {item.totalNotas > 0 ? (
                 <>
                   {item.mediaValores}{' '}
-                  <span className="text-[10px] font-normal text-slate-400 font-mono">/ 20 val</span>
+                  <span className="dashboard-chart-value-unit">/ 20 valores</span>
                 </>
               ) : (
-                <span className="text-sm font-bold text-slate-400">—</span>
+                <span className="text-sm font-bold">—</span>
               )}
             </div>
           </div>
@@ -234,50 +234,62 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
       </div>
 
       {/* Gráfico Composed Chart: Barras de Média + Linha de % de Aprovação */}
-      <div className="w-full h-64">
+      <div className="dashboard-chart-plot">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={trimesterAcademicData}
-            margin={{ top: 10, right: 15, left: -10, bottom: 0 }}
+            margin={{ top: 14, right: 22, left: 2, bottom: 4 }}
           >
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+            <CartesianGrid strokeDasharray="4 5" vertical={false} stroke="#e7edf5" />
             <XAxis
               dataKey="nomeCurto"
-              tick={{ fontSize: 11, fill: '#64748b' }}
-              axisLine={{ stroke: '#e2e8f0' }}
+              tick={{ fontSize: 10, fill: '#71839a' }}
+              axisLine={false}
               tickLine={false}
+              tickMargin={10}
             />
             {/* Eixo Y da Esquerda: Média Escolar (0 a 20) */}
             <YAxis
               yAxisId="left"
               domain={[0, 20]}
-              tick={{ fontSize: 10, fill: '#0b1f3a' }}
+              tick={{ fontSize: 10, fill: '#71839a' }}
               axisLine={false}
               tickLine={false}
+              tickMargin={8}
+              width={38}
               tickFormatter={(v) => `${v}v`}
             />
             {/* Eixo Y da Direita: Taxa de Aprovação (0 a 100%) */}
             <YAxis
               yAxisId="right"
               orientation="right"
-              domain={[60, 100]}
-              tick={{ fontSize: 10, fill: '#059669' }}
+              domain={[0, 100]}
+              tick={{ fontSize: 10, fill: '#0b9872' }}
               axisLine={false}
               tickLine={false}
+              tickMargin={8}
+              width={42}
               tickFormatter={(v) => `${v}%`}
             />
-            <Tooltip content={<CustomAcademicTooltip />} cursor={{ fill: '#f8fafc' }} />
+            <Tooltip content={<CustomAcademicTooltip />} cursor={{ fill: 'rgba(37, 99, 235, 0.055)' }} />
             <Legend
-              wrapperStyle={{ paddingTop: 10, fontSize: 11 }}
+              wrapperStyle={{ paddingTop: 14, fontSize: 10 }}
+              iconType="circle"
               formatter={(val) => (val === 'mediaValores' ? 'Média Curricular (0-20 val)' : 'Taxa de Aproveitamento (%)')}
             />
+            <defs>
+              <linearGradient id="academicAverageGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#2b67b1" />
+                <stop offset="100%" stopColor="#123d70" />
+              </linearGradient>
+            </defs>
             <Bar
               yAxisId="left"
               dataKey="mediaValores"
               name="mediaValores"
-              fill="#0b1f3a"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={42}
+              fill="url(#academicAverageGradient)"
+              radius={[7, 7, 2, 2]}
+              maxBarSize={46}
             />
             <Line
               yAxisId="right"
@@ -285,8 +297,9 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
               dataKey="taxaAprovacao"
               name="taxaAprovacao"
               stroke="#059669"
-              strokeWidth={3}
-              dot={{ r: 5, fill: '#059669', stroke: '#ffffff', strokeWidth: 2 }}
+              strokeWidth={3.5}
+              dot={{ r: 5, fill: '#0b9872', stroke: '#ffffff', strokeWidth: 2 }}
+              activeDot={{ r: 7, fill: '#0b9872', stroke: '#ffffff', strokeWidth: 2 }}
             />
           </ComposedChart>
         </ResponsiveContainer>

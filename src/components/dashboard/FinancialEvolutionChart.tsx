@@ -109,8 +109,8 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-4 rounded-xl shadow-2xl border border-slate-200 text-xs min-w-[260px] z-50">
-          <div className="border-b border-slate-100 pb-2 mb-2 flex items-center justify-between">
+        <div className="dashboard-chart-tooltip">
+          <div className="dashboard-chart-tooltip-title flex items-center justify-between">
             <span className="font-bold text-[#0b1f3a] text-sm">{data.mesCompleto}</span>
             <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
               {data.taxaCobranca}% Cobrado
@@ -153,22 +153,22 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-xs border border-slate-200">
+    <div className="dashboard-chart-panel">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div className="dashboard-chart-header">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              rendimento Financeiro e FATURAS
+            <span className="dashboard-chart-kicker">
+              Rendimento Financeiro e Faturas
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-mono text-[10px] font-extrabold border border-emerald-200">
+            <span className="dashboard-chart-badge dashboard-chart-badge--green">
               AOA
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-slate-100 text-[#0b1f3a] font-mono text-[10px] font-extrabold border border-slate-200">
+            <span className="dashboard-chart-badge">
               Ano Letivo {academicYearDisplay}
             </span>
           </div>
-          <h2 className="font-headline text-lg font-bold text-[#0b1f3a] mt-0.5">
+          <h2 className="dashboard-chart-title">
             EVOLUÇÃO FINANCEIRA
           </h2>
         </div>
@@ -177,7 +177,7 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
           <button
             type="button"
             onClick={onNavigateToPropinas}
-            className="text-xs font-bold text-[#0b1f3a] hover:text-[#7a0c0c] flex items-center gap-1 self-start sm:self-auto transition-colors"
+            className="dashboard-chart-action self-start sm:self-auto"
           >
             <span>Ver Faturas</span>
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -186,34 +186,34 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
       </div>
 
       {/* KPI Cards Financeiros Sintéticos */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-          <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+        <div className="dashboard-chart-summary dashboard-chart-summary--green">
+          <span className="dashboard-chart-summary-label">
             Total Cobrado no Ano Letivo {academicYearDisplay}
           </span>
-          <div className="font-headline text-lg font-extrabold text-emerald-700 mt-0.5">
+          <div className="dashboard-chart-summary-value">
             {totals.totalCobrado.toLocaleString()}{' '}
-            <span className="text-xs text-slate-500 font-normal">Kz</span>
+            <span className="dashboard-chart-value-unit">Kz</span>
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-          <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">
+        <div className="dashboard-chart-summary">
+          <span className="dashboard-chart-summary-label">
             Faturação Curricular Prevista
           </span>
-          <div className="font-headline text-lg font-extrabold text-[#0b1f3a] mt-0.5">
+          <div className="dashboard-chart-summary-value">
             {totals.totalFaturado.toLocaleString()}{' '}
-            <span className="text-xs text-slate-500 font-normal">Kz</span>
+            <span className="dashboard-chart-value-unit">Kz</span>
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-          <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">
+        <div className="dashboard-chart-summary dashboard-chart-summary--red">
+          <span className="dashboard-chart-summary-label">
             Eficácia Global de Cobrança
           </span>
-          <div className="font-headline text-lg font-extrabold text-[#7a0c0c] mt-0.5 flex items-center justify-between">
+          <div className="dashboard-chart-summary-value">
             <span>{totals.taxaGeral}%</span>
-            <span className="text-[11px] font-mono font-normal text-slate-500">
+            <span className="dashboard-chart-value-unit">
               {totals.totalPendente.toLocaleString()} Kz em mora
             </span>
           </div>
@@ -221,11 +221,11 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
       </div>
 
       {/* Gráfico Recharts Interativo de Evolução Financeira */}
-      <div className="w-full h-64">
+      <div className="dashboard-chart-plot">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={monthlyFinancialData}
-            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+            margin={{ top: 14, right: 18, left: 4, bottom: 4 }}
           >
             <defs>
               <linearGradient id="colorCobrado" x1="0" y1="0" x2="0" y2="1">
@@ -237,40 +237,47 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
                 <stop offset="95%" stopColor="#0b1f3a" stopOpacity={0.0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+            <CartesianGrid strokeDasharray="4 5" vertical={false} stroke="#e7edf5" />
             <XAxis
               dataKey="mes"
-              tick={{ fontSize: 11, fill: '#64748b' }}
-              axisLine={{ stroke: '#e2e8f0' }}
-              tickLine={false}
-            />
-            <YAxis
-              tick={{ fontSize: 10, fill: '#94a3b8' }}
+              tick={{ fontSize: 10, fill: '#71839a' }}
               axisLine={false}
               tickLine={false}
+              tickMargin={10}
+              minTickGap={8}
+            />
+            <YAxis
+              tick={{ fontSize: 10, fill: '#71839a' }}
+              axisLine={false}
+              tickLine={false}
+              tickMargin={8}
+              width={48}
               tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`}
             />
-            <Tooltip content={<CustomFinancialTooltip />} cursor={{ stroke: '#cbd5e1', strokeDasharray: '3 3' }} />
+            <Tooltip content={<CustomFinancialTooltip />} cursor={{ stroke: '#a9bdd4', strokeDasharray: '4 4' }} />
             <Legend
-              wrapperStyle={{ paddingTop: 10, fontSize: 11 }}
+              wrapperStyle={{ paddingTop: 14, fontSize: 10 }}
+              iconType="circle"
               formatter={(value) => (value === 'cobrado' ? 'Cobrança Realizada (Kz)' : 'Faturação Prevista (Kz)')}
             />
             <Area
               type="monotone"
               dataKey="faturado"
               stroke="#0b1f3a"
-              strokeWidth={2}
+              strokeWidth={2.5}
               fillOpacity={1}
               fill="url(#colorFaturado)"
+              activeDot={{ r: 5, fill: '#173d6a', stroke: '#fff', strokeWidth: 2 }}
               name="faturado"
             />
             <Area
               type="monotone"
               dataKey="cobrado"
               stroke="#059669"
-              strokeWidth={2.5}
+              strokeWidth={3}
               fillOpacity={1}
               fill="url(#colorCobrado)"
+              activeDot={{ r: 6, fill: '#059669', stroke: '#fff', strokeWidth: 2 }}
               name="cobrado"
             />
           </AreaChart>
