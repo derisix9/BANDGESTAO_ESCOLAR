@@ -73,21 +73,32 @@ html body header[data-app-header]:not(#_):not(#_) button:not(.bg-white *):hover 
 
 /* Texto digitado, lupa, botão «limpar» e selector do Ano Letivo: sempre na cor do cabeçalho.
    (Regras próprias, sem a exclusão de .bg-white, para vencer theme-dark.css que força branco/azul-claro.) */
-html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_) :is(input, button, .material-symbols-outlined),
-html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_),
-html body header[data-app-header] select:not(#_):not(#_),
-html body header[data-app-header] span[title='Ano Letivo Ativo da instituição']:not(#_):not(#_) {
+html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_):not(#_):not(#_):not(#_) :is(input, button, .material-symbols-outlined),
+html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_):not(#_):not(#_):not(#_),
+html body header[data-app-header] select:not(#_):not(#_):not(#_):not(#_):not(#_),
+html body header[data-app-header] span[title='Ano Letivo Ativo da instituição']:not(#_):not(#_):not(#_):not(#_):not(#_) {
   color: var(--bm-header-fg) !important;
   -webkit-text-fill-color: var(--bm-header-fg) !important;
   caret-color: var(--bm-header-fg) !important;
   opacity: 1 !important;
 }
-html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_)::placeholder {
+html body header[data-app-header] input[data-on-navy='search']:not(#_):not(#_):not(#_):not(#_):not(#_)::placeholder {
   color: var(--bm-header-ph) !important;
   -webkit-text-fill-color: var(--bm-header-ph) !important;
   opacity: 1 !important;
 }
-html body header[data-app-header] select:not(#_):not(#_) { border: 0 !important; background-color: transparent !important; font-size: 13px !important; }
+html body header[data-app-header] select:not(#_):not(#_):not(#_):not(#_):not(#_) { border: 0 !important; background-color: transparent !important; font-size: 13px !important; }
+
+/* Cartão «Total de Turmas» do Painel Principal: maior */
+html body .bm-dashboard-class-total:not(#_):not(#_):not(#_) {
+  min-width: 200px;
+  min-height: 88px;
+  padding: 12px 16px;
+  border-radius: 12px !important;
+}
+html body .bm-dashboard-class-total:not(#_):not(#_):not(#_) .bm-stat-label { font-size: 12px; }
+html body .bm-dashboard-class-total:not(#_):not(#_):not(#_) .bm-stat-value { font-size: 1.9rem; margin-top: 4px; }
+html body .bm-dashboard-class-total:not(#_):not(#_):not(#_)::before { font-size: 84px; }
 
 /* Faixa «Painel Principal»: mesma cor do menu lateral (claro: azul do sidebar; escuro: #1f3960). */
 html body .bm-dashboard-header:not(#_):not(#_) {
