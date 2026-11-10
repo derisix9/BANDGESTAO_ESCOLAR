@@ -451,22 +451,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <button
                 onClick={() => onNavigate('pautas')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-center gap-0.5 transition-all group"
+                data-tone="primary"
+                className="p-2 border flex flex-col items-center justify-center text-center gap-0.5 transition-all group cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[#0b1f3a] group-hover:scale-110 transition-transform text-[20px]">
+                <span className="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-[20px]">
                   assignment_turned_in
                 </span>
-                <span className="font-bold text-xs text-[#0b1f3a]">Lançar Notas</span>
+                <span className="font-bold text-xs text-white">Lançar Notas</span>
               </button>
 
               <button
                 onClick={() => onNavigate('propinas')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-center gap-0.5 transition-all group"
+                data-tone="success"
+                className="p-2 border flex flex-col items-center justify-center text-center gap-0.5 transition-all group cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[#0b1f3a] group-hover:scale-110 transition-transform text-[20px]">
+                <span className="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-[20px]">
                   receipt_long
                 </span>
-                <span className="font-bold text-xs text-[#0b1f3a]">Emitir Recibo</span>
+                <span className="font-bold text-xs text-white">Emitir Recibo</span>
               </button>
 
               <button
@@ -484,13 +486,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     }
                   );
                 }}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-center gap-0.5 transition-all group cursor-pointer"
+                data-tone="warning"
+                className="p-2 border flex flex-col items-center justify-center text-center gap-0.5 transition-all group cursor-pointer"
                 title="Emitir Boletim Oficial de Notas com os 3 Trimestres"
               >
-                <span className="material-symbols-outlined text-[#7a0c0c] group-hover:scale-110 transition-transform text-[20px]">
+                <span className="material-symbols-outlined text-white group-hover:scale-110 transition-transform text-[20px]">
                   assignment
                 </span>
-                <span className="font-bold text-xs text-[#7a0c0c]">Boletim de Notas</span>
+                <span className="font-bold text-xs text-white">Boletim de Notas</span>
               </button>
             </div>
           </div>
