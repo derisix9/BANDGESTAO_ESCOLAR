@@ -1,30 +1,49 @@
 import { describe, it, expect } from 'vitest';
-import { parseCssColor, pickHighlightColors, isNeutralColor } from '../src/utils/cardHighlight';
+import { setCardHighlight } from '../src/utils/cardHighlight';
 
-const c = (s: string) => parseCssColor(s)!;
+function makeCard() {
+  const classes = new Set<string>();
+  const attributes = new Map<string, string>();
+  const style = {
+    transition: '',
+    backgroundColor: 'linear-gradient(135deg, #2563eb, #1647b1)',
+    color: '#ffffff'
+  };
+  const classList = {
+    add: (name: string) => classes.add(name),
+    remove: (name: string) => classes.delete(name),
+    contains: (name: string) => classes.has(name)
+  };
+  const card = {
+    classList,
+    style,
+    parentElement: null,
+    setAttribute: (name: string, value: string) => attributes.set(name, value)
+  } as unknown as HTMLElement;
+  return { card, classes, attributes, style };
+}
 
 describe('cardHighlight', () => {
-  it('lê rgb/rgba', () => {
-    expect(c('rgb(37, 99, 235)')).toEqual({ r: 37, g: 99, b: 235, a: 1 });
-    expect(c('rgba(37, 99, 235, 0.1)').a).toBeCloseTo(0.1);
+  it('destaca o card sem mudar fundo ou cor do texto', () => {
+    const { card, classes, style, attributes } = makeCard();
+    const background = style.backgroundColor;
+    const color = style.color;
+
+    setCardHighlight(card, true);
+
+    expect(classes.has('card-hl-on')).toBe(true);
+    expect(style.backgroundColor).toBe(background);
+    expect(style.color).toBe(color);
+    expect(attributes.get('data-hl-t')).toBe('1');
   });
-  it('borda colorida → fundo 100 % da cor da borda, texto branco', () => {
-    const r = pickHighlightColors({ border: c('rgb(37, 99, 235)'), text: c('rgb(30,58,138)'), background: c('rgb(255,255,255)') });
-    expect(r).toEqual({ bg: 'rgb(37, 99, 235)', fg: '#ffffff', mode: 'color' });
-  });
-  it('borda colorida clara (tema escuro) → texto escuro', () => {
-    const r = pickHighlightColors({ border: c('rgb(96, 165, 250)'), text: c('rgb(191,219,254)'), background: c('rgb(11,18,32)') });
-    expect(r.fg).toBe('#0b1220');
-    expect(r.bg).toBe('rgb(96, 165, 250)');
-  });
-  it('borda branca/preta → azul do menu lateral com texto branco', () => {
-    const r = pickHighlightColors({ border: c('rgb(255,255,255)'), text: c('rgb(15,23,42)'), background: c('rgb(255,255,255)') });
-    expect(r).toEqual({ bg: '#12498a', fg: '#ffffff', mode: 'invert' });
-    const d = pickHighlightColors({ border: c('rgb(0,0,0)'), text: c('rgb(226,232,240)'), background: c('rgb(11,18,32)') });
-    expect(d).toEqual({ bg: '#12498a', fg: '#ffffff', mode: 'invert' });
-  });
-  it('sem borda também inverte', () => {
-    expect(pickHighlightColors({ border: null, text: c('rgb(0,0,0)'), background: c('rgb(255,255,255)') }).mode).toBe('invert');
-    expect(isNeutralColor(c('rgb(128,128,128)'))).toBe(true);
+
+  it('remove apenas as classes de destaque ao sair do card', () => {
+    const { card, classes, style } = makeCard();
+    setCardHighlight(card, true);
+    setCardHighlight(card, false);
+
+    expect(classes.has('card-hl-on')).toBe(false);
+    expect(style.backgroundColor).toBe('linear-gradient(135deg, #2563eb, #1647b1)');
+    expect(style.color).toBe('#ffffff');
   });
 });
