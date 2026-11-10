@@ -120,6 +120,15 @@
     border-radius: 12px !important;
   }
   html body aside [data-sb-item]:not(#_):not(#_) { border-radius: 12px !important; }
+  /* Item activo do menu (ex.: «Regras de Notas») e modo minimizado: cantos suaves, nunca quadrados */
+  html body aside nav [data-sb-item]:not(#_):not(#_):not(#_),
+  html body aside nav [data-sb-active]:not(#_):not(#_):not(#_),
+  html body aside nav button:not(#_):not(#_):not(#_):not([class*='rounded-full']) {
+    border-radius: 12px !important;
+    overflow: hidden;
+  }
+  html body aside [data-sb-active]:not(#_):not(#_):not(#_)::before,
+  html body aside [data-sb-active]:not(#_):not(#_):not(#_)::after { border-radius: 12px !important; }
 
   /* 3. Cards de sub-sistemas e de integrações */
   html body .bm-subsystem-card:not(#_):not(#_),

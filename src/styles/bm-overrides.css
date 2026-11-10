@@ -25,11 +25,70 @@ html body button[data-tone]:not(#_):not(#_):not(#_) :is(span, svg, i, .material-
 html body button[data-tone='warning']:not(#_):not(#_):not(#_) { background-color: #d97706 !important; border-color: #d97706 !important; color: #fff !important; }
 html body button[data-tone='warning']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #b45309 !important; }
 
-/* Cabeçalho (barra superior): mesma cor azul dos botões primários (#2563eb) */
-html body header[data-app-header]:not(#_):not(#_):not(#_),
-html body [data-hnav-bar]:not(#_):not(#_):not(#_) {
-  background-color: #2563eb !important;
+/* Cabeçalho (barra superior)
+   Modo CLARO  -> fundo branco; textos, ícones e bordas no azul escuro do menu lateral (--bm-sidebar-blue).
+   Modo ESCURO -> fundo azul-ardósia (#1f3960, igual ao menu lateral) com textos e ícones brancos.
+   A barra de navegação do modo «Cabeçalho» ([data-hnav-bar]) mantém sempre o azul do menu lateral. */
+:root {
+  --bm-header-bg: #ffffff;
+  --bm-header-fg: var(--bm-sidebar-blue, #0a2a52);
+  --bm-header-line: rgba(10, 42, 82, 0.45);
+  --bm-header-hover: rgba(10, 42, 82, 0.08);
+  --bm-header-sep: rgba(10, 42, 82, 0.22);
+  --bm-header-ph: rgba(10, 42, 82, 0.6);
+  --bm-hnav-bg: var(--bm-sidebar-blue, #0a2a52);
 }
+html[data-color-mode='dark'] {
+  --bm-header-bg: #1f3960;
+  --bm-header-fg: #ffffff;
+  --bm-header-line: rgba(255, 255, 255, 0.55);
+  --bm-header-hover: rgba(255, 255, 255, 0.12);
+  --bm-header-sep: rgba(255, 255, 255, 0.28);
+  --bm-header-ph: rgba(255, 255, 255, 0.78);
+  --bm-hnav-bg: #1f3960;
+}
+
+html body header[data-app-header]:not(#_):not(#_):not(#_) {
+  background-color: var(--bm-header-bg) !important;
+  color: var(--bm-header-fg) !important;
+  border-bottom: 1px solid var(--bm-header-sep) !important;
+}
+html body [data-hnav-bar]:not(#_):not(#_):not(#_) {
+  background-color: var(--bm-hnav-bg) !important;
+  color: #ffffff !important;
+}
+
+/* Textos e ícones do cabeçalho (não toca nos painéis brancos de pesquisa/notificações). */
+html body header[data-app-header]:not(#_):not(#_) :is(.material-symbols-outlined, span, button, select, input, a, p):not(.bg-white *):not(.bg-white):not([class*='bg-red']):not([class*='bg-amber']) {
+  color: var(--bm-header-fg) !important;
+  -webkit-text-fill-color: var(--bm-header-fg) !important;
+}
+html body header[data-app-header]:not(#_):not(#_) input::placeholder {
+  color: var(--bm-header-ph) !important;
+  -webkit-text-fill-color: var(--bm-header-ph) !important;
+  opacity: 1 !important;
+}
+html body header[data-app-header]:not(#_):not(#_) select option { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; background-color: #ffffff !important; }
+html body header[data-app-header]:not(#_):not(#_) button:not(.bg-white *):hover { background-color: var(--bm-header-hover) !important; }
+
+/* Caixa de pesquisa */
+html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_) {
+  border: 1px solid var(--bm-header-line) !important;
+  background-color: transparent !important;
+}
+html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_):hover,
+html body header[data-app-header] [data-on-navy='searchbox']:not(#_):not(#_):focus-within {
+  border-color: var(--bm-header-fg) !important;
+}
+
+/* Avatar: redondo, com borda suave para dar destaque */
+html body header[data-app-header] img.rounded-full:not(#_):not(#_) {
+  border-radius: 50% !important;
+  border: 2px solid var(--bm-header-line) !important;
+  box-shadow: 0 0 0 3px var(--bm-header-hover), 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+}
+/* Separador à esquerda do avatar */
+html body header[data-app-header] .border-l:not(#_):not(#_) { border-left-color: var(--bm-header-sep) !important; }
 
 /* Hoje no calendário */
 html body [data-today='true']:not(#_):not(#_):not(#_),
