@@ -22,6 +22,15 @@ html body button[data-tone='grey']:not(#_):not(#_):not(#_) { background-color: #
 html body button[data-tone='grey']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #475569 !important; }
 html body button[data-tone]:not(#_):not(#_):not(#_) :is(span, svg, i, .material-symbols-outlined) { color: #fff !important; -webkit-text-fill-color: #fff !important; }
 
+html body button[data-tone='warning']:not(#_):not(#_):not(#_) { background-color: #d97706 !important; border-color: #d97706 !important; color: #fff !important; }
+html body button[data-tone='warning']:not(#_):not(#_):not(#_):hover:not(:disabled) { background-color: #b45309 !important; }
+
+/* Cabeçalho (barra superior): mesma cor azul dos botões primários (#2563eb) */
+html body header[data-app-header]:not(#_):not(#_):not(#_),
+html body [data-hnav-bar]:not(#_):not(#_):not(#_) {
+  background-color: #2563eb !important;
+}
+
 /* Hoje no calendário */
 html body [data-today='true']:not(#_):not(#_):not(#_),
 html body [data-solid-blue='true']:not(#_):not(#_):not(#_) {

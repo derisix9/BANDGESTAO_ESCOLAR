@@ -2,6 +2,8 @@
    CANTOS QUADRADOS
    Quadrados (border-radius: 0): botões, formulários, caixas de diálogo/modais, tabelas, caixas de texto,
    seletores (selects e listas de opções) e abas.
+   EXCEÇÕES ARREDONDADAS (secção final deste ficheiro): botões de ação das tabelas, itens do menu lateral e
+   cards de activação de sub-sistemas / integrações.
    NÃO mexe em: botões de ação (ícones das linhas das tabelas — data-gr-act — e <IconButton> — data-action-btn),
    nada dentro do menu lateral (<aside>), nem em elementos circulares (avatares, "pílulas", interruptores: rounded-full).
    Vem DEPOIS de todos os outros ficheiros (ver main.tsx) e usa !important para vencer o tema Laravel e o tema escuro.
@@ -95,4 +97,34 @@
       border-radius: 0 !important;
     }
   }
+}
+
+/* =============================================================================
+   ÚNICAS EXCEÇÕES COM CANTOS ARREDONDADOS
+   1. Botões de ação (ícones das linhas das tabelas): data-gr-act, <IconButton> e botões só-ícone dentro de <td>
+   2. Itens do menu lateral (<aside>), incluindo o modo minimizado
+   3. Cards de activação de sub-sistemas e de integrações (Multicaixa, etc.)
+   Ficheiro carregado por último e com :not(#_) para vencer system-ui-standard.css, index.css e o tema escuro.
+   ========================================================================== */
+@media screen {
+  /* 1. Botões de ação */
+  html body [data-gr-act]:not(#_):not(#_),
+  html body [data-action-btn]:not(#_):not(#_),
+  html body td button:not(#_):not(#_):has(> .material-symbols-outlined:only-child),
+  html body td a[role='button']:not(#_):not(#_):has(> .material-symbols-outlined:only-child) {
+    border-radius: 8px !important;
+  }
+
+  /* 2. Menu lateral */
+  html body aside :is(button, a, [role='button'], [data-sb-item]):not(#_):not(#_):not([class*='rounded-full']) {
+    border-radius: 12px !important;
+  }
+  html body aside [data-sb-item]:not(#_):not(#_) { border-radius: 12px !important; }
+
+  /* 3. Cards de sub-sistemas e de integrações */
+  html body .bm-subsystem-card:not(#_):not(#_),
+  html body .bm-integration-service:not(#_):not(#_) {
+    border-radius: 16px !important;
+  }
+  html body .bm-integration-logo:not(#_):not(#_) { border-radius: 12px !important; }
 }
