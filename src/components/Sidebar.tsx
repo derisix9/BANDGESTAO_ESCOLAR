@@ -334,23 +334,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         {rail ? (
           <>
-            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              <div className="h-16 flex items-center justify-center bg-black/20 border-b border-slate-700/50 shrink-0">
+            <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+              {/* Logo fixo: não desloca ao rolar o menu */}
+              <div data-sb-brand="" className="h-16 flex items-center justify-center bg-black/20 border-b border-slate-700/50 shrink-0 z-10">
                 <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm overflow-hidden">
                   <img src="/school_emblem.png" alt="BandMed" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
                 </div>
               </div>
-              <nav className="py-3 flex-1" aria-label="Menu lateral minimizado">
+              <nav className="py-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden" aria-label="Menu lateral minimizado">
                 {NAV_GROUPS.map((group, i) => renderRailGroup(group, i))}
               </nav>
             </div>
           </>
         ) : (<>
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          {/* Brand Header */}
-          <div className="h-16 px-4 flex items-center justify-between bg-black/20 border-b border-slate-700/50">
+        <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          {/* Brand Header — FIXO: logo e nome ficam sempre visíveis; só o menu abaixo rola */}
+          <div data-sb-brand="" className="h-16 px-4 flex items-center justify-between bg-black/20 border-b border-slate-700/50 shrink-0 z-10">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm shrink-0 overflow-hidden">
+              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center p-1 shadow-sm shrink-0 overflow-hidden">
                 <img
                   src="/school_emblem.png"
                   alt="BandMed Emblema"
@@ -360,14 +361,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
               <div className="flex flex-col min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base tracking-tight text-white font-headline">BAND<span className="text-sky-300">MED</span></span>
+                  <span data-sb-brand-name="" className="font-extrabold text-[26px] leading-none tracking-tight text-white font-headline">BAND<span className="text-sky-300">MED</span></span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Navigation Items — organizados por categoria, cada uma expansível */}
-          <nav className="p-3 flex-1">
+          {/* Navigation Items — organizados por categoria, cada uma expansível (só esta zona rola) */}
+          <nav className="p-3 flex-1 min-h-0 overflow-y-auto">
             {NAV_GROUPS.map((group) => renderGroup(group))}
           </nav>
         </div>
