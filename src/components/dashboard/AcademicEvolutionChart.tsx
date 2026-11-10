@@ -206,7 +206,7 @@ export const AcademicEvolutionChart: React.FC<AcademicEvolutionChartProps> = ({
       {/* Mini Resumo das Médias dos 3 Trimestres */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-5">
         {trimesterAcademicData.map((item) => (
-          <div key={item.trimestre} className="dashboard-chart-summary">
+          <div key={item.trimestre} data-card-hl data-stat-icon="school" className="dashboard-chart-summary dashboard-chart-summary--blue">
             <div className="flex items-center justify-between">
               <span className="dashboard-chart-summary-label">{item.nomeCurto}</span>
               {item.totalNotas > 0 ? (

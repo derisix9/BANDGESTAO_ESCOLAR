@@ -187,7 +187,7 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
 
       {/* KPI Cards Financeiros Sintéticos */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-        <div className="dashboard-chart-summary dashboard-chart-summary--green">
+        <div data-card-hl data-stat-icon="payments" className="dashboard-chart-summary dashboard-chart-summary--green">
           <span className="dashboard-chart-summary-label">
             Total Cobrado no Ano Letivo {academicYearDisplay}
           </span>
@@ -197,7 +197,7 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
           </div>
         </div>
 
-        <div className="dashboard-chart-summary">
+        <div data-card-hl data-stat-icon="receipt_long" className="dashboard-chart-summary dashboard-chart-summary--blue">
           <span className="dashboard-chart-summary-label">
             Faturação Curricular Prevista
           </span>
@@ -207,7 +207,7 @@ export const FinancialEvolutionChart: React.FC<FinancialEvolutionChartProps> = (
           </div>
         </div>
 
-        <div className="dashboard-chart-summary dashboard-chart-summary--red">
+        <div data-card-hl data-stat-icon="insights" className="dashboard-chart-summary dashboard-chart-summary--red">
           <span className="dashboard-chart-summary-label">
             Eficácia Global de Cobrança
           </span>

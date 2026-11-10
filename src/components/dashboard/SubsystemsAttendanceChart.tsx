@@ -284,26 +284,21 @@ export const SubsystemsAttendanceChart: React.FC<SubsystemsAttendanceChartProps>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-          {subsystemStats.map((sub) => (
+          {subsystemStats.map((sub, index) => (
             <div
               key={sub.id}
-              className="dashboard-chart-subsystem"
+              className={`dashboard-chart-subsystem bm-stat-card bm-stat-tile bm-stat-${['blue', 'green', 'violet', 'cyan', 'amber'][index % 5]}`}
+              data-card-hl
+              data-stat-icon="groups"
               title={`${sub.fullName} — ${sub.studentCount} alunos matriculados, ${sub.classesCount} turmas`}
             >
-              <span
-                className="w-3 h-3 rounded-full shrink-0"
-                style={{ backgroundColor: sub.color }}
-              />
-              <div className="min-w-0">
-                <div className="text-[11px] font-bold text-slate-800 truncate" title={sub.shortName}>
-                  {sub.shortName}
-                </div>
-                <div className="text-[11px] font-mono font-extrabold text-[#0b1f3a]">
-                  {sub.avgAttendance !== null ? `${sub.avgAttendance}%` : 'Sem dados'}{' '}
-                  <span className="text-[10px] font-normal text-slate-400">
-                    ({sub.studentCount} al.)
-                  </span>
-                </div>
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-3 h-3 rounded-full shrink-0 ring-2 ring-white/25" style={{ backgroundColor: sub.color }} />
+                <div className="bm-stat-label text-[11px] font-bold truncate" title={sub.shortName}>{sub.shortName}</div>
+              </div>
+              <div className="bm-stat-value text-[11px] font-mono font-extrabold mt-2">
+                {sub.avgAttendance !== null ? `${sub.avgAttendance}%` : 'Sem dados'}{' '}
+                <span className="text-[10px] font-normal opacity-80">({sub.studentCount} al.)</span>
               </div>
             </div>
           ))}
