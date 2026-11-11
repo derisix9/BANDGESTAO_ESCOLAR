@@ -39,6 +39,12 @@ const LOGIN_BG_STYLE: React.CSSProperties = {
 
 const DEFAULT_NEW_AVATAR = '/avatar-padrao.png';
 
+/**
+ * Registo de novas escolas no ecrã de login.
+ * false = botão "Registar" escondido (ninguém consegue abrir o formulário). true = volta a aparecer.
+ */
+const REGISTRATION_ENABLED = false;
+
 type ViewMode = 'login' | 'register-admin' | 'register-institution' | 'forgot' | 'mfa' | 'mfa-enroll' | 'new-password' | 'force-password' | 'confirming-registration' | 'registration-done';
 
 interface AdminFormState {
@@ -803,19 +809,21 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess }) => {
                 </button>
               </form>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 text-center">
-                <span className="text-xs text-slate-500">Ainda não tem uma conta? </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    resetRegistrationFlow();
-                    setMode('register-admin');
-                  }}
-                  className="text-xs font-bold text-[#0b1f3a] hover:text-[#7a0c0c] hover:underline"
-                >
-                                 Registar
-                </button>
-              </div>
+              {REGISTRATION_ENABLED && (
+                <div className="mt-6 pt-4 border-t border-slate-100 text-center">
+                  <span className="text-xs text-slate-500">Ainda não tem uma conta? </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      resetRegistrationFlow();
+                      setMode('register-admin');
+                    }}
+                    className="text-xs font-bold text-[#0b1f3a] hover:text-[#7a0c0c] hover:underline"
+                  >
+                                   Registar
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
