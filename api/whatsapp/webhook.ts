@@ -1,7 +1,7 @@
 /** Webhook oficial Meta WhatsApp Cloud API — GET de verificação e POST de mensagens. */
 import { createHmac } from 'node:crypto';
 import { Buffer } from 'node:buffer';
-import { RateLimiter } from '../_guard';
+import { RateLimiter } from '../_guard.ts';
 import {
   callerFromWhatsAppLink, createAdminClient, env, isWhatsAppRuntimeConfigured,
   linkWhatsAppFromCode, normalizeE164, safeEqualText, sendWhatsAppText
