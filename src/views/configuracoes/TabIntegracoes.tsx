@@ -4,7 +4,8 @@ import { InstitutionSettings, UserRole } from '../../types';
 import { dbService } from '../../services/db';
 import { isGatewayConfigured } from '../../utils/notificationGateway';
 import { PaymentGateway } from './PaymentGateway';
-import { AiProviders, aiProvidersAvailable } from './AiProviders';
+import { aiProvidersAvailable } from './AiProviders';
+import { AiAssistantSettings } from './AiAssistantSettings';
 import { NotificationChannels } from './NotificationChannels';
 import { paymentsEnabled } from '../../services/paymentGateway';
 import { notify } from '../../components/Notice';
@@ -279,7 +280,7 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
             />
             <ServiceCard
               img="/integracoes/ia.svg" icon="smart_toy" title="BANDGESTÃO AI"
-              desc="Assistente no WhatsApp. Chaves de IA da escola: OpenAI, Gemini, Claude, Groq ou OpenRouter (também gratuitas)."
+              desc="Assistente de gestão no WhatsApp: chaves de IA (também gratuitas), ligação do número e documentos."
               status={aiCount > 0 ? `${aiCount} FORNECEDOR${aiCount > 1 ? 'ES' : ''} ACTIVO${aiCount > 1 ? 'S' : ''}` : 'SEM CHAVE'} tone={aiCount > 0 ? 'ok' : 'off'} onOpen={() => setView('ia')}
             />
           </div>
@@ -435,7 +436,7 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
         </>
       )}
 
-      {view === 'ia' && <AiProviders isAdmin={currentUserRole === 'admin'} />}
+      {view === 'ia' && <AiAssistantSettings role={currentUserRole} />}
 
       {view === 'whatsapp' && <NotificationChannels isAdmin={currentUserRole === 'admin'} only="whatsapp" />}
 

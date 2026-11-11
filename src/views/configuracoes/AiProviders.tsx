@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { supabase } from '../../services/supabase';
+import { aiApi } from './aiApi';
 
 /**
  * Configurações → Integrações → BANDGESTÃO AI.
@@ -13,19 +13,7 @@ type StoredProvider = {
 };
 type State = { canManage: boolean; available: number; catalog: CatalogItem[]; providers: StoredProvider[] };
 
-async function api(init: RequestInit = {}) {
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
-  if (!token) throw new Error('A sessão expirou. Entre novamente no BANDGESTÃO.');
-  const response = await fetch('/api/whatsapp/providers', {
-    ...init,
-    headers: { ...(init.headers || {}), Authorization: `Bearer ${token}`, ...(init.body ? { 'Content-Type': 'application/json' } : {}) }
-  });
-  let body: any = {};
-  try { body = await response.json(); } catch { /* sem JSON */ }
-  if (!response.ok || body?.ok === false) throw new Error(String(body?.error || 'Não foi possível concluir o pedido.'));
-  return body;
-}
+const api = (init: RequestInit = {}) => aiApi('/api/whatsapp/providers', init);
 
 /** Estado resumido para o cartão do hub (nº de chaves activas). */
 export async function aiProvidersAvailable(): Promise<number> {
