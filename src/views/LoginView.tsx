@@ -43,7 +43,7 @@ const DEFAULT_NEW_AVATAR = '/avatar-padrao.png';
  * Registo de novas escolas no ecrã de login.
  * false = botão "Registar" escondido (ninguém consegue abrir o formulário). true = volta a aparecer.
  */
-const REGISTRATION_ENABLED = true;
+const REGISTRATION_ENABLED = false;
 
 type ViewMode = 'login' | 'register-admin' | 'register-institution' | 'forgot' | 'mfa' | 'mfa-enroll' | 'new-password' | 'force-password' | 'confirming-registration' | 'registration-done';
 
