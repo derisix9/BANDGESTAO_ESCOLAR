@@ -4,6 +4,7 @@ import { InstitutionSettings, UserRole } from '../../types';
 import { dbService } from '../../services/db';
 import { isGatewayConfigured } from '../../utils/notificationGateway';
 import { PaymentGateway } from './PaymentGateway';
+import { AiProviders, aiProvidersAvailable } from './AiProviders';
 import { NotificationChannels } from './NotificationChannels';
 import { paymentsEnabled } from '../../services/paymentGateway';
 import { notify } from '../../components/Notice';
@@ -16,7 +17,7 @@ interface TabIntegracoesProps {
   registerCommit?: (commit: (() => Partial<InstitutionSettings>) | null) => void;
 }
 
-type View = 'hub' | 'sms' | 'whatsapp' | 'express' | 'cobranca' | 'agt';
+type View = 'hub' | 'sms' | 'whatsapp' | 'express' | 'cobranca' | 'agt' | 'ia';
 type Tone = 'ok' | 'warn' | 'off';
 
 const TONE: Record<Tone, string> = {
@@ -78,10 +79,12 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
   const [view, setView] = useState<View>('hub');
   const [chOn, setChOn] = useState<{ sms: boolean; whatsapp: boolean }>({ sms: false, whatsapp: false });
   const [expressOn, setExpressOn] = useState(false);
+  const [aiCount, setAiCount] = useState(0);
   useEffect(() => { window.scrollTo?.({ top: 0 }); }, [view]);
   useEffect(() => {
     let alive = true;
     paymentsEnabled(true).then((v) => { if (alive) setExpressOn(!!v); }).catch(() => {});
+    aiProvidersAvailable().then((n) => { if (alive) setAiCount(n); }).catch(() => {});
     if (currentUserRole === 'admin') {
       notificationChannelsApi.status().then((st) => {
         if (!alive) return;
@@ -207,7 +210,8 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
     whatsapp: { img: '/integracoes/whatsapp.png', title: 'WhatsApp' },
     express: { img: '/integracoes/express.png', title: 'Multicaixa Express' },
     cobranca: { img: '/integracoes/cobranca.svg', title: 'Notificações de Cobrança' },
-    agt: { img: '/integracoes/agt.svg', title: 'AGT · SAF-T (AO)' }
+    agt: { img: '/integracoes/agt.svg', title: 'AGT · SAF-T (AO)' },
+    ia: { img: '/integracoes/ia.svg', title: 'BANDGESTÃO AI · Inteligência artificial' }
   };
 
   return (
@@ -272,6 +276,11 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
               img="/integracoes/agt.svg" icon="receipt_long" title="AGT · SAF-T (AO)"
               desc="Certificado de software e série de faturação."
               status={agtCertificate.trim() ? 'CERTIFICADO DECLARADO' : 'SEM CERTIFICADO'} tone={agtCertificate.trim() ? 'ok' : 'warn'} onOpen={() => setView('agt')}
+            />
+            <ServiceCard
+              img="/integracoes/ia.svg" icon="smart_toy" title="BANDGESTÃO AI"
+              desc="Assistente no WhatsApp. Chaves de IA da escola: OpenAI, Gemini, Claude, Groq ou OpenRouter (também gratuitas)."
+              status={aiCount > 0 ? `${aiCount} FORNECEDOR${aiCount > 1 ? 'ES' : ''} ACTIVO${aiCount > 1 ? 'S' : ''}` : 'SEM CHAVE'} tone={aiCount > 0 ? 'ok' : 'off'} onOpen={() => setView('ia')}
             />
           </div>
         </section>
@@ -425,6 +434,8 @@ export const TabIntegracoes: React.FC<TabIntegracoesProps> = ({
           <NotificationChannels isAdmin={currentUserRole === 'admin'} only="sms" />
         </>
       )}
+
+      {view === 'ia' && <AiProviders isAdmin={currentUserRole === 'admin'} />}
 
       {view === 'whatsapp' && <NotificationChannels isAdmin={currentUserRole === 'admin'} only="whatsapp" />}
 
