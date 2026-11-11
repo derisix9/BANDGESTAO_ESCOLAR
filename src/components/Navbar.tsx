@@ -8,7 +8,6 @@ import { Lang, tr } from '../i18n';
 import { useLang } from '../i18n/useLang';
 import { PushSupport, pushSupport, requestPushPermission, selectFresh, showSystemNotification } from '../utils/pushNotifications';
 import { registerPushDevice } from '../services/pushDevice';
-import { WhatsappAiLinkModal } from './WhatsappAiLinkModal';
 
 function formatRelativeTime(createdAt?: number, fallback?: string): string {
   if (!createdAt) return fallback || 'recente';
@@ -57,7 +56,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleSidebar
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [whatsappAiOpen, setWhatsappAiOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [hasRecentAlert, setHasRecentAlert] = useState(false);
@@ -260,7 +258,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-    <header data-app-header className={`fixed top-0 left-0 right-0 h-16 bg-[#2563eb] text-white z-30 flex items-center justify-between px-4 lg:px-8 transition-all duration-300 ${
+    <header data-app-header className={`fixed top-0 left-0 right-0 h-16 bg-[#0b1f3a] text-white z-30 flex items-center justify-between px-4 lg:px-8 transition-all duration-300 ${
       headerNav ? 'lg:left-0' : isDesktopSidebarOpen ? 'lg:left-64' : 'lg:left-[4.5rem]'
     } ${headerNav ? '' : 'shadow-md'}`}>
       {/* Left: Hamburger & Search bar (No border, no background fill) */}
@@ -736,20 +734,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* Acesso ao assistente WhatsApp apenas para membros da equipa. */}
-        {['admin', 'director', 'secretaria', 'professor', 'financeiro', 'funcionario'].includes(currentUser.role) && (
-          <button
-            type="button"
-            onClick={() => setWhatsappAiOpen(true)}
-            className="flex items-center justify-center gap-1.5 px-2.5 py-2 mr-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[10px] font-extrabold tracking-wide transition-colors shrink-0"
-            title="Ligar a conta ao BANDGESTÃO AI no WhatsApp"
-            aria-label="Abrir BANDGESTÃO AI"
-          >
-            <span className="material-symbols-outlined text-[19px]">smart_toy</span>
-            <span className="hidden md:inline">BANDGESTÃO AI</span>
-          </button>
-        )}
-
         {/* User Identity Chip */}
         <div className="flex items-center gap-2 pl-2 border-l border-white/20">
           <img
@@ -795,11 +779,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       cancelLabel="Agora não"
       onConfirm={confirmEnablePush}
       onCancel={() => setPushConfirmOpen(false)}
-    />
-    <WhatsappAiLinkModal
-      isOpen={whatsappAiOpen}
-      currentUser={currentUser}
-      onClose={() => setWhatsappAiOpen(false)}
     />
     </>
   );
