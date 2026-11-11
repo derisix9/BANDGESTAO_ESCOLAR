@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="BANDGESTÃO AI">
+  <rect width="128" height="128" rx="28" fill="#0b1f3a"/>
+  <rect x="26" y="40" width="76" height="52" rx="16" fill="#ffffff"/>
+  <rect x="60" y="22" width="8" height="18" rx="4" fill="#38bdf8"/>
+  <circle cx="64" cy="20" r="6" fill="#38bdf8"/>
+  <circle cx="48" cy="66" r="8" fill="#0b1f3a"/>
+  <circle cx="80" cy="66" r="8" fill="#0b1f3a"/>
+  <circle cx="50.5" cy="63.5" r="2.5" fill="#38bdf8"/>
+  <circle cx="82.5" cy="63.5" r="2.5" fill="#38bdf8"/>
+  <path d="M52 82h24" stroke="#0b1f3a" stroke-width="5" stroke-linecap="round"/>
+  <rect x="14" y="56" width="8" height="20" rx="4" fill="#38bdf8"/>
+  <rect x="106" y="56" width="8" height="20" rx="4" fill="#38bdf8"/>
+</svg>
